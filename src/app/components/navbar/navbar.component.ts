@@ -13,14 +13,12 @@ import { Router, RouterLinkActive, RouterLink } from '@angular/router';
   ],
 })
 export class NavbarComponent {
-  private router = inject(Router);
-
   /** Inserted by Angular inject() migration for backwards compatibility */
   constructor(...args: unknown[]);
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  logout() {
-
+  navigateToSignIn() {
+    this.router.navigate(['/signin']); // Navigate to the 'signin' route
   }
 }
