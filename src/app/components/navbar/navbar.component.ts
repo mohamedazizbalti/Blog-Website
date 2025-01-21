@@ -1,11 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLinkActive, RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css'],
+  standalone: true,
+  imports: [
+    RouterLinkActive,
+    RouterLink
+  ],
 })
 export class NavbarComponent {
+  private router = inject(Router);
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
+
+  logout() {
+
+  }
 }

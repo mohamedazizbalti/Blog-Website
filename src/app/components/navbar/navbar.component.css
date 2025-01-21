@@ -1,0 +1,68 @@
+
+/* Logo and Links */
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item .nav-link {
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+
+.navbar .form-control {
+  width: 50%; /* Increased width */
+  max-width: 600px; /* Allow larger maximum width */
+  min-width: 500px; /* Slightly increased minimum width */
+  margin: 0 auto;
+  border-radius: 20px;
+  padding-left: 30px;
+}
+.navbar .form-control:hover,
+.navbar .form-control:focus {
+  border-color: #d93900 !important;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+/* Sign In Button */
+.navbar .btn-danger {
+  background-color: #d93900; /* Picky red */
+  border: none;
+  border-radius: 20px;
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.navbar .btn-danger:hover {
+  background-color: #ae2c00;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+
+  .navbar .nav-item .nav-link {
+    margin-right: 0.5rem;
+  }
+
+  .navbar .btn-danger {
+    font-size: 0.9rem;
+    padding: 0.4rem 1.2rem;
+  }
+}
+.input-container {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
