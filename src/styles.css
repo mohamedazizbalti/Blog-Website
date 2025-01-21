@@ -1,3 +1,15 @@
 @import "./../node_modules/bootstrap/";
 @import "./../node_modules/bootstrap-icons/";
 @import "./../node_modules/@fortawesome/fontawesome-free/";
+
+body {
+  background-color: #121212; /* Dark background */
+  color: white ; /* White text color */
+  font-family: 'Roboto', sans-serif; /* Optional: Set default font */
+}
+
+input, select, textarea {
+  background-color: #333; /* Dark background for input fields */
+  color: white; /* White text */
+  border: 1px solid #444; /* Slightly lighter border */
+}
