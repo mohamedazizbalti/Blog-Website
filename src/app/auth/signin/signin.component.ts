@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import {ContainerComponent} from '../../components/container/container.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -10,7 +11,8 @@ import {ContainerComponent} from '../../components/container/container.component
   imports:[ContainerComponent]
 })
 export class SigninComponent {
-  private router = inject(Router); // Inject the Router service
+  private router = inject(Router);
+  //private authService = inject(AuthService);
   constructor() { }
 
   navigateToSignUp() {
@@ -18,6 +20,7 @@ export class SigninComponent {
   }
 
   signIn(){
+    //this.authService.signin();
     this.router.navigate(['/home']);
   }
 }
