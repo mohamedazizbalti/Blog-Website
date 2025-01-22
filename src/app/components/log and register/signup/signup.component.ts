@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import {ContainerComponent} from '../container/container.component';
 
 @Component({
   selector: 'app-signup',
-  imports: [],
+  imports: [ContainerComponent],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css'
+  styleUrl: './signup.component.css',
+  standalone:true
 })
 export class SignupComponent {
 
