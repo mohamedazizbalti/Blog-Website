@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
-import {SigninComponent} from './components/signin/signin.component';
-import {SignupComponent} from './components/signup/signup.component';
+import {SigninComponent} from './components/log and register/signin/signin.component';
+import {SignupComponent} from './components/log and register/signup/signup.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {ThematicComponent} from './components/thematic/thematic.component';
 import {NotificationComponent} from './components/notification/notification.component';
