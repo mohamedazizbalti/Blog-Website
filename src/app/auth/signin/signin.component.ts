@@ -13,7 +13,7 @@ import { FormControl, FormGroup, ReactiveFormsModule , Validators } from '@angul
 })
 export class SigninComponent {
   private router = inject(Router);
-
+  private authService = inject(AuthService);
   form :FormGroup;
 
   //private authService = inject(AuthService);
@@ -31,9 +31,8 @@ export class SigninComponent {
   signIn(){
     if (this.form.valid) {
 
-      // the authentification
-      //this.authService.signin();
-
+      const {email, password} = this.form.value;
+      this.authService.signin( {email, password});
       this.router.navigate(['/home']);
 
     }

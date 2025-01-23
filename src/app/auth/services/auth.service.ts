@@ -18,6 +18,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
     this.isAuth.set(!!token);
   }
+  /*
   signin(credentials:CredentialsDto){
     return this.http.post<LoginResponseDto>(API.login, credentials).subscribe({
       next: (response) => {
@@ -33,9 +34,19 @@ export class AuthService {
       },
     });;
   }
+  */
+
+  signin(credentials: CredentialsDto) {
+    localStorage.setItem('token',JSON.stringify(credentials));
+    localStorage.setItem('email',credentials.email);
+    localStorage.setItem('userId', String(credentials.password.length) );
+    this.isAuth.set(true); 
+  }
+
   isAuthenticated(): boolean {
     return this.isAuth()
   }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
