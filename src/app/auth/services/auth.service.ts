@@ -24,11 +24,11 @@ export class AuthService {
         localStorage.setItem('token', response.id);
         localStorage.setItem('userId', response.userId.toString());
         localStorage.setItem("email", credentials.email);
-        // this.toastr.success(`Bienvenu chez vous :)`);
-        this.router.navigate(['/home']);
+        this.router.navigate(['']);
         this.isAuth.set(true)
       },
       error: (error) => {
+        console.log(error);
         // this.toastr.error('Veuillez vérifier vos credentials');
       },
     });;
