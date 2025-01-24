@@ -39,10 +39,18 @@
   transition: background-color 0.3s ease;
 }
 
-.btn-danger:hover {
+ .signin{
+   background-color: #28a745;
+ }
+ .signout{
+   background-color: #d93900;
+ }
+.signout:hover {
   background-color: #ae2c00;
 }
-
+.signin:hover {
+  background-color: #218838;
+}
 /* Responsive Adjustments */
 @media (max-width: 768px) {
 

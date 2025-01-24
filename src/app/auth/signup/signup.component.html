@@ -1,3 +1,93 @@
-<app-container title="Sign Up">
-  hello 
+<app-container title="Sign Up" width="800px" maxHeight="650px">
+  <form [formGroup]="form" (ngSubmit)="signUp()" class="signup-form">
+    <div class="row">
+      <div class="col">
+        <!-- First Name -->
+        <div class="form-group">
+          <label for="firstName">First Name :</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+        formControlName="name"
+        placeholder="Enter your first name"
+      />
+    </div>
+      </div>
+      <div class="col">
+    <!-- Last Name -->
+    <div class="form-group">
+      <label for="lastName">Last Name :</label>
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        formControlName="lastName"
+        placeholder="Enter your last name"
+      />
+    </div>
+      </div>
+    </div>
+    <!-- Username -->
+    <div class="form-group">
+      <label for="username">Username :</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        formControlName="username"
+        placeholder="Enter your username"
+      />
+    </div>
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email :</label>
+      <input
+        type="text"
+        id="email"
+        name="email"
+        formControlName="email"
+        placeholder="Enter your email"
+      />
+    </div>
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">Password :</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        formControlName="password"
+        placeholder="Enter your password"
+      />
+    </div>
+    <!-- Password check -->
+    <div class="form-group">
+      <label for="password">Re-enter Password :</label>
+      <input
+        type="password"
+        id="checkPassword"
+        name="checkPpassword"
+        formControlName="checkPassword"
+        placeholder="Re-enter your password"
+      />
+    </div>
+    <!-- Buttons -->
+    <div class="buttons-container">
+      <button
+        type="submit"
+        class="btn btn-signin"
+        [disabled]="!form.valid"
+      >
+        Sign Up
+      </button>
+      <button
+        type="button"
+        class="btn btn-signup"
+        (click)="navigateToSignIn()"
+      >
+        Sign In
+      </button>
+    </div>
+  </form>
 </app-container>

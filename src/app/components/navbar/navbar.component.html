@@ -28,6 +28,18 @@
       </ul>
 
       <ul class="navbar-nav me-2">
+
+        @if (!authService.isAuthenticated()) {
+        <li class="nav-item">
+          <button
+            class="btn btn-danger signin"
+            [routerLink]="['signin']"
+          >
+            Sign in
+          </button>
+        </li>
+      }
+      @else {
         <li class="nav-item">
           <i class="bi bi-bell-fill nav-link "
              [routerLink]="['/notification']"
@@ -36,12 +48,21 @@
           ></i>
         </li>
         <li class="nav-item">
-          <button class="btn btn-danger "
-                  (click)="navigateToSignIn()"
+          <i class="bi bi-person-circle nav-link "
+             [routerLink]="['/profile']"
+             [routerLinkActiveOptions]="{ exact: true }"
+             routerLinkActive="active text-danger"
+          ></i>
+        </li>
+
+        <li class="nav-item">
+          <button class="btn btn-danger signout"
+                  (click)="signout()"
           >
-            sign in
+            Sign out
           </button>
         </li>
+      }
       </ul>
     </div>
   </div>

@@ -45,12 +45,11 @@
   }
 }
 
-/* signin.component.css */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full viewport height */
+  height: 90vh;
   z-index: 10;
 }
 
@@ -59,16 +58,9 @@
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0px 0px 20px rgb(255, 200, 36); /* Yellow shadow */
   padding: 2rem;
-  width: 85%;
-  max-width: 500px;
-  height: 80%;
-  max-height: 600px;
   background-color: #121212;
 }
 .title {
-  text-align: center;
-  margin-top: 10%;
-  margin-bottom: 15%;
   color: #ffc824;
   font-size: 300%;
 }
