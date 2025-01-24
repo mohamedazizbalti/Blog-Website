@@ -30,11 +30,8 @@ export class SigninComponent {
 
   signIn(){
     if (this.form.valid) {
-
       const {email, password} = this.form.value;
       this.authService.signin( {email, password});
-      this.router.navigate(['/home']);
-
     }
   }
 }

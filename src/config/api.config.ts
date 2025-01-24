@@ -1,4 +1,4 @@
 export const API = {
-    login: "", // to change when omar give us the api
+    login: "https://bloggy-dot-tn-backend.vercel.app/auth/login", // to change when omar give us the api
 };
   

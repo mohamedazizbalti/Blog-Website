@@ -1,5 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLinkActive, RouterLink } from '@angular/router';
+import { AuthService } from '../../auth/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -13,12 +15,11 @@ import { Router, RouterLinkActive, RouterLink } from '@angular/router';
   ],
 })
 export class NavbarComponent {
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor(private router: Router) {}
-
-  navigateToSignIn() {
-    this.router.navigate(['/signin']); // Navigate to the 'signin' route
+  private router = inject(Router);
+  authService = inject(AuthService);
+  constructor() {}
+  signout() {
+    this.authService.logout();
+    this.router.navigate(['/signin']);
   }
 }

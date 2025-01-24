@@ -35,13 +35,24 @@
              routerLinkActive="active text-danger"
           ></i>
         </li>
+        @if (!authService.isAuthenticated()) {
         <li class="nav-item">
           <button class="btn btn-danger "
-                  (click)="navigateToSignIn()"
+          [routerLink]="['signin']"
           >
-            sign in
+            Sign in
           </button>
         </li>
+      }
+      @else {
+        <li class="nav-item">
+          <button class="btn btn-danger "
+                  (click)="signout()"
+          >
+            Sign out
+          </button>
+        </li>
+      }
       </ul>
     </div>
   </div>
