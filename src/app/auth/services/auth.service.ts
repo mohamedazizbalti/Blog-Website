@@ -40,7 +40,7 @@ export class AuthService {
     localStorage.setItem('token',JSON.stringify(credentials));
     localStorage.setItem('email',credentials.email);
     localStorage.setItem('userId', String(credentials.password.length) );
-    this.isAuth.set(true); 
+    this.isAuth.set(true);
   }
 
   isAuthenticated(): boolean {
