@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { LoginResponseDto } from '../dto/login-response.dto';
 import { API } from '../../../config/api.config';
 import { Router } from '@angular/router';
+import { RegisterDto } from '../dto/register.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,21 @@ export class AuthService {
       error: (error) => {
         console.log(error);
         this.router.navigate(['/signup']);
+        // this.toastr.error('Veuillez vérifier vos credentials');
+      },
+    });;
+  }
+  signup(registerDto:RegisterDto){
+    return this.http.post<LoginResponseDto>(API.register, registerDto).subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.Authorization);
+        localStorage.setItem("email", registerDto.email);
+        this.router.navigate(['/home']);
+        this.isAuth.set(true)
+      },
+      error: (error) => {
+        console.log(error);
+        this.router.navigate(['/signin']);
         // this.toastr.error('Veuillez vérifier vos credentials');
       },
     });;
