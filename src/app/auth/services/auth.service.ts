@@ -6,6 +6,7 @@ import { LoginResponseDto } from '../dto/login-response.dto';
 import { API } from '../../../config/api.config';
 import { Router } from '@angular/router';
 import { RegisterDto } from '../dto/register.dto';
+import {PopupService} from '../../services/popup.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
   private http = inject(HttpClient);
   public isAuth = signal<boolean>(false);
   private router = inject(Router);
-  constructor() {
+
+  constructor( private popupService :PopupService  ) {
     const token = localStorage.getItem('token');
     this.isAuth.set(!!token);
   }
@@ -29,10 +31,12 @@ export class AuthService {
       },
       error: (error) => {
         console.log(error);
-        this.router.navigate(['']);
+        this.popupService.show(' an error occurred while signing in ! Veuillez vérifier vos credentials ');
+        this.router.navigate(['/home']);
+
         // this.toastr.error('Veuillez vérifier vos credentials');
       },
-    });;
+    });
   }
   signup(registerDto:RegisterDto){
     return this.http.post<LoginResponseDto>(API.register, registerDto).subscribe({
