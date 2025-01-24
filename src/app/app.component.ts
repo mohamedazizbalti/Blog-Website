@@ -18,10 +18,10 @@ import {PopupComponent} from './components/popup/popup.component';
 export class AppComponent {
   title = 'Blog-Website';
 
-  showNavbar$: Observable<boolean>;
+  showNavbarAndFooter$: Observable<boolean>;
 
   constructor(private router: Router) {
-    this.showNavbar$ = this.router.events.pipe(
+    this.showNavbarAndFooter$ = this.router.events.pipe(
       filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
       map((event: NavigationEnd) => {
         const hideNavbarRoutes = ['/signin', '/signup'];
