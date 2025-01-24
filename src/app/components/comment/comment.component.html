@@ -1,0 +1,45 @@
+<div>comment</div>
+<div class="article">
+  <!-- Article Header -->
+  <div class="article-header">
+    <h2>{{ article?.title }}</h2>
+    <p class="content-text">{{ article?.content }}</p>
+  </div>
+
+  <!-- Article Owner Info -->
+<!--   <div class="article-owner">
+    <img [src]="article.owner.image" alt="{{ article.owner.username }}'s profile picture" class="profile-picture" />
+    <span class="owner-name">{{ article.owner.username }}</span>
+  </div> -->
+
+  <!-- Article Images -->
+  @if (article?.images?.length){
+    <h4>Images:</h4>
+    <div class="image-gallery">
+      @for(image of article?.images ; track $index){
+        <img  [src]="image | base64ToBlob" alt="Article image" class="article-image" />
+      }
+    </div>
+  }
+
+
+  <!-- Article Vote Counts -->
+  <div class="article-votes">
+    <button (click)="upvote()">Upvote ({{ article?.upvotes }})</button>
+    <button (click)="downvote()">Downvote ({{ article?.downvotes }})</button>
+  </div>
+
+  <!-- Article Comments -->
+  @if(article?.comments?.length){
+    <div class="article-comments">
+      <h4>Comments:</h4>
+      @for(comment of article?.comments; track $index){
+
+        <div class="">
+        </div>
+      }
+
+    </div>
+  }
+
+</div>

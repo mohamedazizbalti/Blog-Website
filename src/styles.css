@@ -1,6 +1,9 @@
 @import "./../node_modules/bootstrap/";
 @import "./../node_modules/bootstrap-icons/";
 @import "./../node_modules/@fortawesome/fontawesome-free/";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   background-color: #121212; /* Dark background */
