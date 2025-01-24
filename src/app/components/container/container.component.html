@@ -1,7 +1,13 @@
 <div id="bg"></div>
 <div class="container">
-  <div class="box">
-    <h2 class="title ">{{title()}}</h2>
+  <div class="box" [style.width]="width()" [style.max-height]="maxHeight()">
+    <h2 class="title ">
+      <i class="bi bi-arrow-left go-back p-4"
+                          [routerLink]="['']"
+                          [routerLinkActiveOptions]="{ exact: true }"
+                          routerLinkActive="active text-danger"
+    ></i>
+      {{title()}}</h2>
     <ng-content ></ng-content>
   </div>
 </div>
