@@ -6,10 +6,11 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import {FooterComponent} from './components/footer/footer.component';
+import {PopupComponent} from './components/popup/popup.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, CommonModule , FooterComponent],
+  imports: [RouterOutlet, NavbarComponent, CommonModule, FooterComponent, PopupComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   standalone: true,
