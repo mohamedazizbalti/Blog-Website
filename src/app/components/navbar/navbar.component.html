@@ -28,13 +28,7 @@
       </ul>
 
       <ul class="navbar-nav me-2">
-        <li class="nav-item">
-          <i class="bi bi-bell-fill nav-link "
-             [routerLink]="['/notification']"
-             [routerLinkActiveOptions]="{ exact: true }"
-             routerLinkActive="active text-danger"
-          ></i>
-        </li>
+       
         @if (!authService.isAuthenticated()) {
         <li class="nav-item">
           <button class="btn btn-danger "
@@ -45,6 +39,21 @@
         </li>
       }
       @else {
+        <li class="nav-item">
+          <i class="bi bi-bell-fill nav-link "
+             [routerLink]="['/notification']"
+             [routerLinkActiveOptions]="{ exact: true }"
+             routerLinkActive="active text-danger"
+          ></i>
+        </li>
+        <li class="nav-item">
+          <i class="bi bi-person-circle nav-link "
+             [routerLink]="['/profile']"
+             [routerLinkActiveOptions]="{ exact: true }"
+             routerLinkActive="active text-danger"
+          ></i>
+        </li>
+
         <li class="nav-item">
           <button class="btn btn-danger "
                   (click)="signout()"

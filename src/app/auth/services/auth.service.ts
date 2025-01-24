@@ -28,7 +28,7 @@ export class AuthService {
       },
       error: (error) => {
         console.log(error);
-        this.router.navigate(['/signup']);
+        this.router.navigate(['']);
         // this.toastr.error('Veuillez vérifier vos credentials');
       },
     });;
