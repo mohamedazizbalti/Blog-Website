@@ -22,11 +22,13 @@ export class SignupComponent {
       username: new FormControl('', [Validators.required]),
       bio : new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('',  [Validators.required, Validators.minLength(6)])
+      password: new FormControl('',  [Validators.required, Validators.minLength(6)]),
+      checkPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+
     });
   }
   navigateToSignIn() {
-    this.router.navigate(['/signin']); // Navigate to the 'signin' route
+    this.router.navigate(['/signin']);
   }
   signUp(){
     if (this.form.valid) {
