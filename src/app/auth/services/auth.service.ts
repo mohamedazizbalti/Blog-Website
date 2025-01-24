@@ -6,7 +6,7 @@ import { LoginResponseDto } from '../dto/login-response.dto';
 import { API } from '../../../config/api.config';
 import { Router } from '@angular/router';
 import { RegisterDto } from '../dto/register.dto';
-import {PopupService} from '../../services/popup.service';
+import {PopupService} from '../../services/popupService/popup.service';
 
 @Injectable({
   providedIn: 'root'

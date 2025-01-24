@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import {PopupService} from '../../services/popup.service';
+import {PopupService} from '../../services/popupService/popup.service';
 
 @Injectable({
   providedIn: 'root',

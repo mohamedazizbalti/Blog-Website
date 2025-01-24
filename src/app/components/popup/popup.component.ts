@@ -1,9 +1,9 @@
 import {Component, inject} from '@angular/core';
-import {PopupService} from '../../services/popup.service';
+import {PopupService} from '../../services/popupService/popup.service';
 import {NgIf} from '@angular/common';
 
 @Component({
-  selector: 'app-popup',
+  selector: 'app-popupService',
   imports: [
     NgIf
   ],
