@@ -27,6 +27,8 @@
       />
     </div>
       </div>
+      <div class="text-danger small"><br>
+      </div>
     </div>
     <!-- Username -->
     <div class="form-group">
@@ -38,7 +40,21 @@
         formControlName="username"
         placeholder="Enter your username"
       />
+      <!-- Display validation errors -->
+      <div *ngIf="form.get('username')?.pending" class="text-info small">
+        Checking username availability...
+      </div>
+      <div *ngIf="!form.get('username')?.pending" class="text-info small">
+        <div *ngIf="form.get('username')?.hasError('usernameTaken')" class="text-danger small">
+          Username is already taken.
+        </div>
+        <div *ngIf="!form.get('username')?.hasError('usernameTaken')" class="text-danger small"><br>
+        </div>
+      </div>
+
     </div>
+
+
     <!-- Email -->
     <div class="form-group">
       <label for="email">Email :</label>
@@ -50,6 +66,31 @@
         placeholder="Enter your email"
       />
     </div>
+    <!-- Display validation errors -->
+    <div *ngIf="form.get('email')?.touched " class="text-danger small">
+
+      <div *ngIf="form.get('email')?.hasError('email')">
+         enter a valid email !
+      </div>
+
+      <div *ngIf="!form.get('email')?.hasError('email')">
+
+        <div *ngIf="form.get('email')?.pending" class="text-info small">
+         Checking username availability...
+        </div>
+        <div *ngIf="!form.get('email')?.pending" class="text-info small">
+          <div *ngIf="form.get('email')?.hasError('emailTaken')" class="text-danger">
+            Username is already taken.
+          </div>
+        <div *ngIf="!form.get('email')?.hasError('emailTaken')" class="small"><br>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!form.get('email')?.touched " class="text-danger small"><br>
+    </div>
+
     <!-- Password -->
     <div class="form-group">
       <label for="password">Password :</label>
@@ -61,6 +102,13 @@
         placeholder="Enter your password"
       />
     </div>
+    <!-- display errors -->
+    <div *ngIf="form.get('password')?.hasError('minlength') && form.get('password')?.touched" class="text-danger small">
+      Password must be at least 6 characters long.
+    </div>
+    <div *ngIf="!form.get('password')?.hasError('minlength') || !form.get('password')?.touched" class="small"><br>
+    </div>
+
     <!-- Password check -->
     <div class="form-group">
       <label for="password">Re-enter Password :</label>
@@ -72,12 +120,21 @@
         placeholder="Re-enter your password"
       />
     </div>
+
+    <!-- Display validation errors -->
+    <div *ngIf="form.hasError('passwordsMismatch') && form.get('checkPassword')?.touched" class="text-danger small">
+      Passwords do not match.
+    </div>
+    <div *ngIf="!form.hasError('passwordsMismatch') || !form.get('checkPassword')?.touched" class="small">
+      <br>
+    </div>
+
     <!-- Buttons -->
     <div class="buttons-container">
       <button
         type="submit"
         class="btn btn-signin"
-        [disabled]="!form.valid"
+        [disabled]="isdisabledBtn()"
       >
         Sign Up
       </button>

@@ -1,6 +1,6 @@
 
   .form-group {
-    margin-bottom: 2%;
+    margin-bottom: 0;
   }
 
   .form-group label {
@@ -21,7 +21,7 @@
   .buttons-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 5%;
+    margin-top: 1%;
     margin-left: 10%;
     margin-right: 10%;
   }
@@ -53,3 +53,6 @@
     background-color: #d60505; /* Darker blue on hover */
   }
 
+  .small{
+    font-size: 0.7rem;
+  }

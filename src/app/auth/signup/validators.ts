@@ -1,5 +1,5 @@
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import {debounceTime, distinctUntilChanged, Observable, of} from 'rxjs';
 import { catchError, switchMap, map } from 'rxjs/operators';
 import {UserService} from '../../services/userService/user.service';
 
@@ -10,6 +10,8 @@ export class UniqueValidators {
         return of(null);
       }
       return of(control.value).pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
         switchMap(value => userService.isUsernameTaken(value)),
         map(isTaken => (isTaken ? { usernameTaken: true } : null)),
         catchError(() => of(null))
@@ -23,6 +25,8 @@ export class UniqueValidators {
         return of(null);
       }
       return of(control.value).pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
         switchMap(value => userService.isEmailTaken(value)),
         map(isTaken => (isTaken ? { emailTaken: true } : null)),
         catchError(() => of(null))

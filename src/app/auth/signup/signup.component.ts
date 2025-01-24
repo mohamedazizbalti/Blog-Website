@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {ContainerComponent} from '../../components/container/container.component';
 import { Router } from '@angular/router';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators} from '@angular/forms';
@@ -8,7 +9,7 @@ import {UserService} from '../../services/userService/user.service';
 
 @Component({
   selector: 'app-signup',
-  imports: [ContainerComponent, ReactiveFormsModule],
+  imports: [ContainerComponent, ReactiveFormsModule, CommonModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
   standalone:true
@@ -49,4 +50,9 @@ export class SignupComponent {
       this.authService.signup({name,lastName,username,bio,email, password});
     }
   }
+
+  isdisabledBtn(){
+    return this.form.get('password')?.hasError("required") || this.form.get('checkPassword')?.hasError("required") || this.form.get("username")?.hasError("required") || this.form.get("email")?.hasError("required") ;
+  }
+
 }
