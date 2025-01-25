@@ -47,7 +47,7 @@
   @if(article()?.comments?.length){
     <div class="article-comments">
       <h4>Comments:</h4>
-      @for(comment of article()?.comments; track $index){
+        @for(comment of article()?.comments; track $index){
 
         <div class="comment">
           <app-comment [article]="comment"> </app-comment>

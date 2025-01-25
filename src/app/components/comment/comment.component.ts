@@ -6,16 +6,16 @@ import { ArticleComponent } from "../article/article.component";
 
 @Component({
   selector: 'app-comment',
-  imports: [Base64ToBlobPipe, VotingComponent, ArticleComponent],
+  imports: [Base64ToBlobPipe],
   templateUrl: './comment.component.html',
   standalone: true,
   styleUrl: './comment.component.css'
 })
 export class CommentComponent {
   ngOnInit(){
-    console.log("hello");
+    console.log("creating comment " );
   }
-  @Input() article? : Article;
+  @Input() article! : Article;
   upvote(){
     // this.article.upvotes++;
   }

@@ -2,8 +2,8 @@
 <div class="article">
   <!-- Article Header -->
   <div class="article-header">
-    <h2>{{ article?.title }}</h2>
-    <p class="content-text">{{ article?.content }}</p>
+    <h2>{{ article.title }}</h2>
+    <p class="content-text">{{ article.content }}</p>
   </div>
 
   <!-- Article Owner Info -->
@@ -13,10 +13,10 @@
   </div> -->
 
   <!-- Article Images -->
-  @if (article?.images?.length){
+  @if (article.images?.length){
     <h4>Images:</h4>
     <div class="image-gallery">
-      @for(image of article?.images ; track $index){
+      @for(image of article.images ; track $index){
         <img  [src]="image | base64ToBlob" alt="Article image" class="article-image" />
       }
     </div>
@@ -24,17 +24,16 @@
 
 
   <!-- Article Vote Counts -->
-  <app-voting></app-voting>
 
 
   <!-- Article Comments -->
-  @if(article?.comments?.length){
+  @if(article.comments.length){
     <div class="article-comments">
       <h4>Comments:</h4>
-      @for(comment of article?.comments; track $index){
+      @for(comment of article.comments; track $index){
 
-        <div class="">
-          <app-article [article]="comment"> </app-article>
+        <div class="comment">
+          <app-comment [article]="comment"> </app-comment>
         </div>
       }
 
