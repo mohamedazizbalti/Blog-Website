@@ -14,22 +14,27 @@ export class VotingComponent {
 
   numberOfDislike = input<number>(0)  ;
   numberOfLike  = input<number>(0) ;
+  userReaction = input<string>("null");
 
   onLike = output<number>();
   onDislike = output<number>();
 
-  isLiked : boolean = false;
-  isDisliked : boolean = false;
+
+  isLiked : boolean = this.userReaction() == "upvote";
+  isDisliked : boolean = this.userReaction() == "downvote";
 
   likeCliked(){
     console.log("liked ! ");
     if(!this.isLiked ){ // ye3ni mekenitch liked 9bel
       this.onLike.emit(1);
+    }else{ // ye3ni kenit like , on va faire unlike
+      this.onLike.emit(-1);
     }
+
     if(this.isDisliked ){ // ye3ni ken disliked , donc on va decrementer le nombre de dislike
       this.onDislike.emit(-1);
     }
-    this.isLiked = true ;
+    this.isLiked = !this.isLiked ;
     this.isDisliked = false ;
   }
 
@@ -37,11 +42,13 @@ export class VotingComponent {
     console.log("disliked ! ");
     if(!this.isDisliked ){ // mekenitch dislike
       this.onDislike.emit(1);
+    }else{
+      this.onDislike.emit(-1);
     }
     if(this.isLiked ){
       this.onLike.emit(-1);
     }
-    this.isDisliked = true ;
+    this.isDisliked = !this.isDisliked ;
     this.isLiked = false ;
   }
 }

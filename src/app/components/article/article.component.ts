@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, input, Input} from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
 import { CommentComponent } from '../comment/comment.component';
@@ -17,7 +17,7 @@ export class ArticleComponent {
     console.log("hello");
   }
 
-  @Input() article? : Article;
+  article = input<Article>() ;
 
   upvote(nb: number){
     // this.article.upvotes += 1;
