@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'base64ToBlob',
+  standalone: true
 })
 export class Base64ToBlobPipe implements PipeTransform {
   transform(base64: string, mimeType: string = 'image/png'): string {

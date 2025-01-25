@@ -24,10 +24,8 @@
 
 
   <!-- Article Vote Counts -->
-  <div class="article-votes">
-    <button (click)="upvote()">Upvote ({{ article?.upvotes }})</button>
-    <button (click)="downvote()">Downvote ({{ article?.downvotes }})</button>
-  </div>
+  <app-voting></app-voting>
+
 
   <!-- Article Comments -->
   @if(article?.comments?.length){
