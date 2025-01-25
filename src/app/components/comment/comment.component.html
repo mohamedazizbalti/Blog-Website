@@ -34,6 +34,7 @@
       @for(comment of article?.comments; track $index){
 
         <div class="">
+          <app-article [article]="comment"> </app-article>
         </div>
       }
 
