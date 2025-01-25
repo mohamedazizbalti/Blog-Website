@@ -1,0 +1,10 @@
+.logo {
+  max-width: 6rem;
+  height: 100%;
+  display: block;
+}
+.name {
+  max-width: 100%;
+  height: 2.5rem;
+  display: block;
+}
