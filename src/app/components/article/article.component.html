@@ -26,6 +26,7 @@
   <app-voting
     [numberOfDislike]="article()?.downvotes ?? 0"
     [numberOfLike]="article()?.upvotes ?? 0"
+    [voters]="article()?.voters ?? []"
     (onLike)="upvote($event)"
     (onDislike)="downvote($event)"
   >
@@ -35,6 +36,7 @@
   <app-voting
     [numberOfDislike]="test1"
     [numberOfLike]="test2"
+    [voters]="[]"
     (onLike)="upvote2($event)"
     (onDislike)="downvote2($event)"
   >

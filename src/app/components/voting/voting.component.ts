@@ -1,5 +1,6 @@
 import {Component, inject, input, output} from '@angular/core';
 import {AuthService} from '../../auth/services/auth.service';
+import {Voter} from '../../shared/models/Voter.model';
 
 @Component({
   selector: 'app-voting',
@@ -14,14 +15,15 @@ export class VotingComponent {
 
   numberOfDislike = input<number>(0)  ;
   numberOfLike  = input<number>(0) ;
-  userReaction = input<string>("null");
+  voters = input<Voter[]>([]);
 
   onLike = output<number>();
   onDislike = output<number>();
 
+  userReaction = this.voters().find(voter => voter.voterId === localStorage.getItem("userId"))?.vote || null;
 
-  isLiked : boolean = this.userReaction() == "upvote";
-  isDisliked : boolean = this.userReaction() == "downvote";
+  isLiked : boolean = this.userReaction == "upvote";
+  isDisliked : boolean = this.userReaction == "downvote";
 
   likeCliked(){
     console.log("liked ! ");

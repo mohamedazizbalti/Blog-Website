@@ -1,4 +1,5 @@
 import { User } from "./user.model";
+import {Voter} from './Voter.model';
 
 export class Article {
   constructor(
@@ -11,7 +12,7 @@ export class Article {
     public comments : Article[],
     public upvotes : number,
     public downvotes : number,
-    public voters : any[],
+    public voters : Voter[],
     public slug : string|null,
     public createdAt : string,
     public updatedAt: string
