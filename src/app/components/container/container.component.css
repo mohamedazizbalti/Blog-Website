@@ -6,7 +6,7 @@
   right: 0;
   bottom: 0;
   width: 100%;
-  background-image: url('https://swag.ee/nfg/4657e5688a55402d.svg');
+  background-image: url('/logo/logo2.png');
   background-size: 126px 126px;
   height: 100vh;
   width: 100vw;
@@ -54,14 +54,14 @@
 }
 
 .box {
-  border: 2px solid #ffc824; /* White border */
+  border: 2px solid #d93900; /* White border */
   border-radius: 10px; /* Rounded corners */
-  box-shadow: 0px 0px 20px rgb(255, 200, 36); /* Yellow shadow */
+  box-shadow: 0px 0px 20px #ae2c00; /* Yellow shadow */
   padding: 2rem;
   background-color: #121212;
 }
 .title {
-  color: #ffc824;
+  color: #d93900;
   font-size: 300%;
 }
 
