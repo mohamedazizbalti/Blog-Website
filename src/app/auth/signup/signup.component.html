@@ -40,17 +40,18 @@
         formControlName="username"
         placeholder="Enter your username"
       />
+
       <!-- Display validation errors -->
-      <div *ngIf="form.get('username')?.pending" class="text-info small">
-        Checking username availability...
-      </div>
-      <div *ngIf="!form.get('username')?.pending" class="text-info small">
-        <div *ngIf="form.get('username')?.hasError('usernameTaken')" class="text-danger small">
-          Username is already taken.
-        </div>
-        <div *ngIf="!form.get('username')?.hasError('usernameTaken')" class="text-danger small"><br>
-        </div>
-      </div>
+      @if (form.get('username')?.pending){
+        <div class="text-info small"> Checking username availability... </div>
+      } @else {
+        @if(form.get('username')?.hasError('usernameTaken')){
+          <div class="text-danger small"> Username is already taken. </div>
+        }
+        @else{
+          <div class=" small"><br></div>
+        }
+      }
 
     </div>
 
@@ -67,29 +68,27 @@
       />
     </div>
     <!-- Display validation errors -->
-    <div *ngIf="form.get('email')?.touched " class="text-danger small">
-
-      <div *ngIf="form.get('email')?.hasError('email')">
-         enter a valid email !
-      </div>
-
-      <div *ngIf="!form.get('email')?.hasError('email')">
-
-        <div *ngIf="form.get('email')?.pending" class="text-info small">
-         Checking username availability...
-        </div>
-        <div *ngIf="!form.get('email')?.pending" class="text-info small">
-          <div *ngIf="form.get('email')?.hasError('emailTaken')" class="text-danger">
-            Username is already taken.
-          </div>
-        <div *ngIf="!form.get('email')?.hasError('emailTaken')" class="small"><br>
-        </div>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="!form.get('email')?.touched " class="text-danger small"><br>
-    </div>
+    @if(form.get('email')?.touched){
+      @if(form.get('email')?.hasError('email')){
+        <div class="text-danger small">enter a valid email !</div>
+      }
+      @else{
+        @if(form.get('email')?.pending){
+          <div class="text-info small">Checking username availability...</div>
+        }
+        @else{
+          @if(form.get('email')?.hasError('emailTaken')){
+            <div class="text-danger small"> Username is already taken.</div>
+          }
+          @else{
+            <div class="small"><br></div>
+          }
+        }
+      }
+    }
+    @else{
+      <div class="small"><br></div>
+    }
 
     <!-- Password -->
     <div class="form-group">
@@ -103,11 +102,12 @@
       />
     </div>
     <!-- display errors -->
-    <div *ngIf="form.get('password')?.hasError('minlength') && form.get('password')?.touched" class="text-danger small">
-      Password must be at least 6 characters long.
-    </div>
-    <div *ngIf="!form.get('password')?.hasError('minlength') || !form.get('password')?.touched" class="small"><br>
-    </div>
+    @if(form.get('password')?.hasError('minlength') && form.get('password')?.touched){
+      <div class="text-danger small"> Password must be at least 6 characters long. </div>
+    }
+    @else{
+      <div class="small"><br></div>
+    }
 
     <!-- Password check -->
     <div class="form-group">
@@ -122,12 +122,12 @@
     </div>
 
     <!-- Display validation errors -->
-    <div *ngIf="form.hasError('passwordsMismatch') && form.get('checkPassword')?.touched" class="text-danger small">
-      Passwords do not match.
-    </div>
-    <div *ngIf="!form.hasError('passwordsMismatch') || !form.get('checkPassword')?.touched" class="small">
-      <br>
-    </div>
+    @if(form.hasError('passwordsMismatch') && form.get('checkPassword')?.touched){
+      <div class="text-danger small"> Passwords do not match. </div>
+    }
+    @else{
+      <div class="small"><br></div>
+    }
 
     <!-- Buttons -->
     <div class="buttons-container">

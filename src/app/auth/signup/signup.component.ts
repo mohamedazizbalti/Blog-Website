@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {ContainerComponent} from '../../components/container/container.component';
 import { Router } from '@angular/router';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators} from '@angular/forms';
@@ -9,7 +8,7 @@ import {UserService} from '../../services/userService/user.service';
 
 @Component({
   selector: 'app-signup',
-  imports: [ContainerComponent, ReactiveFormsModule, CommonModule],
+  imports: [ContainerComponent, ReactiveFormsModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
   standalone:true
