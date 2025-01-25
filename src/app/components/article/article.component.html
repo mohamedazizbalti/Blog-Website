@@ -23,7 +23,22 @@
   }
 
   <!-- Article Vote Counts -->
-  <app-voting></app-voting>
+  <app-voting
+    [numberOfDislike]="article?.downvotes ?? 0"
+    [numberOfLike]="article?.upvotes ?? 0"
+    (onLike)="upvote($event)"
+    (onDislike)="downvote($event)"
+  >
+  </app-voting>
+
+  <!-- these are just to test and to see how to use the voting thkss --> 
+  <app-voting
+    [numberOfDislike]="test1"
+    [numberOfLike]="test2"
+    (onLike)="upvote2($event)"
+    (onDislike)="downvote2($event)"
+  >
+  </app-voting>
 
   <app-article ></app-article>
 
