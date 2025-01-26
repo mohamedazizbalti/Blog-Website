@@ -4,8 +4,11 @@ import { Component } from '@angular/core';
   selector: 'app-profile',
   imports: [],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.css',
+  standalone : true
 })
 export class ProfileComponent {
+
+  isTheUserProfile  : boolean = true;
 
 }
