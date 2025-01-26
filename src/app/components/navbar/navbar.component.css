@@ -1,7 +1,7 @@
 
 .navbar-logo {
   max-width: 100%; /* Ensures the image is responsive and scales down */
-  height: 3rem; /* Maintains the aspect ratio */
+  height: 70px; /* Maintains the aspect ratio */
   display: block; /* Ensures the image behaves like a block element */
 }
 .navbar-nav {

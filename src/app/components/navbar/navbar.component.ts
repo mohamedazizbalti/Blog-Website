@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLinkActive, RouterLink } from '@angular/router';
+import { Router, RouterLinkActive, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 
 
@@ -10,7 +10,8 @@ import { AuthService } from '../../auth/services/auth.service';
   standalone: true,
   imports: [
     RouterLinkActive,
-    RouterLink
+    RouterLink,
+    
   ],
 })
 export class NavbarComponent {

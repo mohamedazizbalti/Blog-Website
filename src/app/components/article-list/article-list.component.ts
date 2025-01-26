@@ -5,10 +5,12 @@ import { Article } from '../../shared/models/article.model';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ArticleComponent } from '../article/article.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'app-article-list',
-  imports: [CommonModule,ArticleComponent],
+  imports: [NzSpinModule,CommonModule,ArticleComponent,MatProgressSpinnerModule],
   templateUrl: './article-list.component.html',
   styleUrl: './article-list.component.css'
 })

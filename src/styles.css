@@ -16,3 +16,6 @@ input, select, textarea {
   color: white; /* White text */
   border: 1px solid #444; /* Slightly lighter border */
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

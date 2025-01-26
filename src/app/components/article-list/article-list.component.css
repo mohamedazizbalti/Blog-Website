@@ -1,0 +1,14 @@
+.mat-mdc-progress-spinner {
+  stroke: #4caf50 !important;
+  /* Your custom color */
+}
+.mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic
+{
+  stroke: #4caf50 !important;
+
+}
+
+.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic{
+  stroke: #4caf50 !important;
+
+}

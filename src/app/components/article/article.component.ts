@@ -4,10 +4,11 @@ import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
 import { CommentComponent } from '../comment/comment.component';
 import {VotingComponent} from '../voting/voting.component';
 import {ArticleService} from '../../services/articleService/article.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-article',
-  imports: [Base64ToBlobPipe, CommentComponent , VotingComponent ],
+  imports: [Base64ToBlobPipe, CommentComponent , VotingComponent , CommonModule ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.css',
   standalone:true

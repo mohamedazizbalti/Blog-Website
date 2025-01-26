@@ -1,9 +1,11 @@
-<div>article</div>
-<div class="article">
+<div class="article bg-zinc-800 my-4 rounded-md p-6 ">
   <!-- Article Header -->
-  <div class="article-header">
-    <h2>{{ article()?.title }}</h2>
-    <p class="content-text">{{ article()?.content }}</p>
+  <div class=" text-slate-300">
+    <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
+    Posted at: {{article()?.createdAt | date }}
+    <hr class="pb-3"/>
+
+    <p class="">{{ article()?.content }}</p>
   </div>
 
   <!-- Article Owner Info -->
@@ -14,7 +16,7 @@
 
   <!-- Article Images -->
   @if (article()?.images?.length){
-    <h4>Images:</h4>
+    <hr/>
     <div class="image-gallery">
       @for(image of article()?.images ; track $index){
         <img  [src]="image | base64ToBlob" alt="Article image" class="article-image" />
@@ -45,8 +47,8 @@
 
   <!-- Article Comments -->
   @if(article()?.comments?.length){
-    <div class="article-comments">
-      <h4>Comments:</h4>
+    <h4>Comments:</h4>
+    <div class="article-comments border-1 border-slate-100 p-4 rounded-xl">
         @for(comment of article()?.comments; track $index){
 
         <div class="comment">
