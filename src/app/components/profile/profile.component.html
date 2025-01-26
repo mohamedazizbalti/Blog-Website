@@ -4,30 +4,49 @@
       <div class="col col-lg-9 col-xl-8">
         <div class="card">
 
-          <div class="d-flex flex-row pt-5 px-5" >
+          <div class="container pt-5 px-5">
 
-              <!-- image profile -->
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                   alt="Generic placeholder image" class="img-fluid img-thumbnail"
-                   style="width: 150px;">
+            <div class="d-flex align-items-center">
 
-              <!-- first name -->
-              <div class="pt-5 px-5 fs-1"> first name </div>
+              <!-- Image Profile -->
+              <div class="me-4">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                     alt="Generic placeholder image" class="img-fluid img-thumbnail"
+                     style="width: 150px;">
+              </div>
 
-              <!-- last name -->
-            <div class="pt-5  fs-1"> name </div>
+              <div>
+
+                <div class="d-flex flex-row fs-1">
+                  <div class="pe-2">{{user?.name}}</div>
+                  <div>{{user?.lastName}}</div>
+                </div>
+
+                @if(isTheCurrentUserProfile){
+                <!-- Username and Email Row -->
+                <div class="text-muted small ">
+                  <div> username : {{user?.username}} </div>
+                  <div> email : {{user?.email}} </div>
+                </div>
+                }
+              </div>
+            </div>
           </div>
+
 
           <div class="card-body ">
 
             <!-- bio -->
               <div class="text-gray-600! p-3 mb-4">
-                In a quiet town nestled between rolling hills, there was a small café known for its extraordinary charm. The café's walls were adorned with vintage photographs, each telling a unique story of the past. The aroma of freshly brewed coffee filled the air, mingling with the soft hum of conversation. Outside, a gentle breeze rustled the leaves of the towering oak tree, casting dancing shadows on the cobblestone path. Visitors often came not just for the delicious pastries but also for the serene atmosphere. A small black cat, affectionately named Luna, often lounged by the entrance, welcoming patrons with a lazy stretch. The town itself seemed to move at a slower pace, as if time paused to savor each moment. It was a place where strangers became friends and stories were shared over steaming cups of cappuccino.
+                {{user?.bio}}
               </div>
 
-            @if (isTheUserProfile){
-            <button  type="button" class="btn btn-outline-dark text-body m-1 mb-5" data-mdb-ripple-color="dark" style="z-index: 1;border-radius: 50px " >
+            @if (isTheCurrentUserProfile){
+            <button  type="button" class="btn btn-outline-dark text-body mx-5 mb-5" data-mdb-ripple-color="dark" style="z-index: 1;border-radius: 50px " >
                 Edit profile
+              </button>
+              <button  type="button" class="btn btn-outline-dark text-body mb-5" data-mdb-ripple-color="dark" style="z-index: 1;border-radius: 50px " >
+                new Blog
               </button>
             }
 
@@ -35,19 +54,9 @@
 
               <p class="lead fw-normal mb-0"> blogs : </p>
 
-              @if(isTheUserProfile){
-              <p class="mb-0 fw-normal">
-                <a href="#!" class="text-muted">
-                <button  type="button" class="btn btn-outline-dark text-body m-1 mb-5" data-mdb-ripple-color="dark" style="z-index: 1;border-radius: 50px " >
-                Edit profile
-                </button>
-                </a>
-              </p>
-              }
-
             </div>
+            <!-- ajouter ici les blog de ce user -->
             <div class="row g-2">
-
             </div>
           </div>
         </div>

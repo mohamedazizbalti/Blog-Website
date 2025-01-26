@@ -54,7 +54,7 @@
         </li>
         <li class="nav-item">
           <i class="bi bi-person-circle nav-link "
-             [routerLink]="['/profile']"
+             (click)="goToProfile()"
              [routerLinkActiveOptions]="{ exact: true }"
              routerLinkActive="active text-danger"
           ></i>

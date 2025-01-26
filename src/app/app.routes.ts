@@ -10,7 +10,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent }, // Default route
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:id', component: ProfileComponent  },
   { path: 'thematic' , component:  ThematicComponent },
   { path: 'notification', component: NotificationComponent },
   {path : 'blog',

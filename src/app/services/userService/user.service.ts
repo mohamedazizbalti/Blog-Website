@@ -29,4 +29,8 @@ export class UserService {
   getUserById(id : string ) : Observable<User> {
     return this.http.get<any>(API.findUserById+id);
   }
+
+  getCurrentUserInfo() : Observable<User> {
+    return this.http.get<User>(API.getCurrentUserInfo);
+  }
 }
