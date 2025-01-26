@@ -5,8 +5,8 @@ export class User {
     public lastName: string,
     public bio: string,
     public username : string,
-    public image : string,
-    public email : string 
+    public image : string ,
+    public email : string
 
   ) {}
 }

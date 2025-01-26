@@ -1,0 +1,13 @@
+<div class="md:w-[60%] mx-auto">
+  @if(!articles){
+    <div class=""> Nothing is posted yet. be the first to post 😀 </div>
+  }@else if (articles.length){
+    @for(article of articles ; track $index ){
+      <app-article [article]="article"></app-article>
+    }
+  }@else {
+    "loading"
+  }
+
+
+</div>

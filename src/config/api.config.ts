@@ -4,7 +4,9 @@ export const API = {
 
   findUserByEmail: "https://bloggy-dot-tn-backend.vercel.app/users/email/",
   findUserByUsername: "https://bloggy-dot-tn-backend.vercel.app/users/username/",
+  findUserById: "https://bloggy-dot-tn-backend.vercel.app/users/",
 
   getArticle: "https://bloggy-dot-tn-backend.vercel.app/article",
   getArticleFull: "https://bloggy-dot-tn-backend.vercel.app/article/full", //Fetches All Standalone articles with their nested comments
+
 };

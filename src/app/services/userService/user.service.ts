@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import { API } from '../../../config/api.config';
+import { User } from '../../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,4 +25,8 @@ export class UserService {
       map((response) => !!response)
     );
   }// the logic of the response backend here is different (cas email ) it return the user or nothing ( not error )
+
+  getUserById(id : string ) : Observable<User> {
+    return this.http.get<any>(API.findUserById+id);
+  }
 }

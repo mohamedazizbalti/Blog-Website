@@ -9,16 +9,17 @@ import {Article} from '../../shared/models/article.model';
   providedIn: 'root'
 })
 export class ArticleService {
-  
+
   constructor(private http: HttpClient) {}
 
   getAllArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(API.getArticle);
+    return this.http.get<Article[]>(API.getArticleFull);
   }
 
   upvote(id: string) {
     return this.http.post<any>(`${API.getArticle}/${id}/upvote`, null);
   }
+
 
   downvote(id: string) {
     return this.http.post<any>(`${API.getArticle}/${id}/downvote`, null);
