@@ -22,10 +22,24 @@ export class ArticleComponent {
   article = input<Article>() ;
 
   upvote(nb: number){
-    this.articleService.upvote(<string>this.article()?.id);
+    this.articleService.upvote(<string>this.article()?.id).subscribe({
+      next: (response) => {
+        console.log('Upvote successful', response);
+      },
+      error: (error) => {
+        console.error('Upvote failed', error);
+      }
+    });
   }
   downvote(nb: number) {
-    this.articleService.downvote(<string>this.article()?.id);
+    this.articleService.downvote(<string>this.article()?.id).subscribe({
+      next: (response) => {
+        console.log('donvote successful', response);
+      },
+      error: (error) => {
+        console.error('downvote failed', error);
+      }
+    });
   }
 
   test1 = 20 ;

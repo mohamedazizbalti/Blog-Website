@@ -9,10 +9,7 @@ import {Article} from '../../shared/models/article.model';
   providedIn: 'root'
 })
 export class ArticleService {
-
-  token = localStorage.getItem('token');
-  headers = new HttpHeaders({'Authorization': `Bearer ${this.token}`});
-
+  
   constructor(private http: HttpClient) {}
 
   getAllArticles(): Observable<Article[]> {
@@ -20,13 +17,13 @@ export class ArticleService {
   }
 
   upvote(id: string) {
-    return this.http.post<any>(`${API.getArticle}/${id}/upvote`, null, { headers: this.headers });
+    return this.http.post<any>(`${API.getArticle}/${id}/upvote`, null);
   }
 
   downvote(id: string) {
-    return this.http.post<any>(`${API.getArticle}/${id}/downvote`, null, { headers: this.headers });
+    return this.http.post<any>(`${API.getArticle}/${id}/downvote`, null);
   }
 
-  
+
 
 }
