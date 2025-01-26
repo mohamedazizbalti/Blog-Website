@@ -25,6 +25,12 @@ export class ArticleService {
     return this.http.post<any>(`${API.getArticle}/${id}/downvote`, null);
   }
 
+  getArticlesByUserId(id : string):Observable<Article[]>{
+    return this.http.get<Article[]>(API.getArticleFull+id);
+  }
 
+  getArticleOfCurrentUser():Observable<Article[]> {
+    return this.http.get<Article[]>(API.getArticleProperties);
+  }
 
 }
