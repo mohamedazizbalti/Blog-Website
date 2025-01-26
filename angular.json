@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Blog-Website": {
+    "bloggy": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/blog-website",
+            "outputPath": "dist/bloggy",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -27,13 +27,9 @@
               }
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -41,7 +37,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kB",
-                  "maximumError": "20MB"
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -63,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Blog-Website:build:production"
+              "buildTarget": "bloggy:build:production"
             },
             "development": {
-              "buildTarget": "Blog-Website:build:development"
+              "buildTarget": "bloggy:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -98,6 +94,6 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": "5ff4bc10-dea5-4589-8477-533de22ed760"
   }
 }
