@@ -4,7 +4,6 @@ import { AuthService } from '../../auth/services/auth.service';
 import {UserService} from '../../services/userService/user.service';
 import {map} from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,8 +11,7 @@ import {map} from 'rxjs/operators';
   standalone: true,
   imports: [
     RouterLinkActive,
-    RouterLink,
-    
+    RouterLink
   ],
 })
 export class NavbarComponent {
