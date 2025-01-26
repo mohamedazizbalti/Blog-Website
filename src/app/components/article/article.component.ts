@@ -1,8 +1,9 @@
-import {Component, input, Input} from '@angular/core';
+import {Component, inject, input, Input} from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
 import { CommentComponent } from '../comment/comment.component';
 import {VotingComponent} from '../voting/voting.component';
+import {ArticleService} from '../../services/articleService/article.service';
 
 @Component({
   selector: 'app-article',
@@ -17,15 +18,14 @@ export class ArticleComponent {
     console.log("hello");
   }
 
+  articleService = inject(ArticleService);
   article = input<Article>() ;
 
   upvote(nb: number){
-    // this.article.upvotes += 1;
-    // here nrmlmnt we do add the number nb , att not just increment with 1
-    // manajemech nzidd ella mane3mel el article service , so lezim zeda nchecki el backend api bech ne3rif ana api I will use
+    this.articleService.upvote(<string>this.article()?.id);
   }
   downvote(nb: number) {
-    // this.article.downvotes++;
+    this.articleService.downvote(<string>this.article()?.id);
   }
 
   test1 = 20 ;

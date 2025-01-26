@@ -11,6 +11,7 @@ import {Voter} from '../../shared/models/Voter.model';
 })
 export class VotingComponent {
 
+
   authService = inject(AuthService);
 
   numberOfDislike = input<number>(0)  ;
