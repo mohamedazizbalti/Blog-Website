@@ -1,8 +1,13 @@
 <div class="article bg-zinc-800 my-4 rounded-md p-6 ">
+  <div class="flex flex-col">
+    <app-user-card class="" [user]="article()?.ownerObject??null"> </app-user-card>
+    <div class="text-slate-300 my-auto" >{{article()?.createdAt | date }}</div>
+  </div>
   <!-- Article Header -->
   <div class=" text-slate-300">
     <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
-    Posted at: {{article()?.createdAt | date }}
+
+
     <hr class="pb-3"/>
 
     <p class="">{{ article()?.content }}</p>

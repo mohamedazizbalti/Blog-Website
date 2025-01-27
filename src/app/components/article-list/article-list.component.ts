@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { UserService } from '../../services/userService/user.service';
 import { ArticleService } from '../../services/articleService/article.service';
 import { Article } from '../../shared/models/article.model';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ArticleComponent } from '../article/article.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -20,7 +20,17 @@ export class ArticleListComponent {
   public articles :Article[];
   constructor(){
     this.articles = [];
-    this.articlesService.getAllArticles().subscribe((data)=>{this.articles=data;})
   }
+  async ngOnInit(){
+
+    this.articles = await firstValueFrom (this.articlesService.getAllArticles());
+    this.articles.forEach( (art)=>{
+      this.userService.getUserById(art.owner as string).subscribe(data=>{
+        data.image="https://avatar.iran.liara.run/public?username="+data.username
+        art.ownerObject= data
+      });
+    })
+  }
+
 
 }

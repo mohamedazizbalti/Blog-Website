@@ -5,10 +5,11 @@ import { CommentComponent } from '../comment/comment.component';
 import {VotingComponent} from '../voting/voting.component';
 import {ArticleService} from '../../services/articleService/article.service';
 import { CommonModule } from '@angular/common';
+import { UserCardComponent } from "../user-card/user-card.component";
 
 @Component({
   selector: 'app-article',
-  imports: [Base64ToBlobPipe, CommentComponent , VotingComponent , CommonModule ],
+  imports: [Base64ToBlobPipe, CommentComponent, VotingComponent, CommonModule, UserCardComponent],
   templateUrl: './article.component.html',
   styleUrl: './article.component.css',
   standalone:true
