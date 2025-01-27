@@ -43,21 +43,29 @@
             <button  type="button" class="btn btn-outline-light text-white-50 mx-5 mb-5" data-mdb-ripple-color="dark" style="z-index: 1;border-radius: 50px " >
                 Edit profile
               </button>
-              <button  type="button" class="btn btn-outline-light text-white-50 mb-5" data-mdb-ripple-color="dark" style="z-index: 1;border-radius: 50px " >
+              <button
+                type="button"
+                class="btn btn-outline-light text-white-50 mb-5"
+                data-mdb-ripple-color="dark"
+                style="z-index: 1;border-radius: 50px "
+                [routerLink]="['/blog/new']"
+              >
                 new Blog
               </button>
             }
 
-            <div class=" mb-4">
 
-              <p class="fs-4 font-bold text-white"> blogs : </p>
+          </div>
+      </div>
+      <div class=" mb-4">
 
-            </div>
+        <p class="fs-4 font-bold text-white"> blogs : </p>
+
+      </div>
             <!-- ajouter ici les blog de ce user -->
             @for(article of blogs ; track $index ){
               <app-article [article]="article"></app-article>
             }
-          </div>
-        </div>
+
       </div>
 </section>

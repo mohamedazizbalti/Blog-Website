@@ -6,6 +6,8 @@ import {SigninComponent} from './auth/signin/signin.component';
 import {SignupComponent} from './auth/signup/signup.component';
 import { BlogComponent } from './components/blog/blog.component';
 import {ProfileComponent} from './profile/profile/profile.component';
+import {CreateBlogComponent} from './components/create-blog/create-blog.component';
+import {AuthGuard} from './auth/guard/guard.guard';
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Default route
   { path: 'signin', component: SigninComponent },
@@ -15,7 +17,8 @@ export const routes: Routes = [
   { path: 'notification', component: NotificationComponent },
   {path : 'blog',
     children: [
-      { path: ':id', component: BlogComponent }
+      { path: 'new', component: CreateBlogComponent , canActivate: [AuthGuard] },
+      { path: ':id', component: BlogComponent },
     ]
   },
   { path: '**', redirectTo: '' }

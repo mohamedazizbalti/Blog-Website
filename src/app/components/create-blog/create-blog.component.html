@@ -1,1 +1,67 @@
-<p>create-blog works!</p>
+
+<form
+  class="md:w-[60%] mx-auto article bg-zinc-800 my-4 rounded-md p-6"
+  [formGroup]="form"
+>
+
+  <!-- Article Header -->
+  <div class=" text-slate-100">
+    <div class="row">
+      <input
+        class="text-[50px] font-bold bg-zinc-800 border-0 placeholder-gray-600"
+        placeholder="write here the Blog title "
+        formControlName="title"
+      >
+    </div>
+    @if(form.get("title")?.hasError("required") && form.get("title")?.touched ) {
+      <div class="text-danger small"> blog title is required to create a blog ! </div>
+    } @else {
+      <br class="small">
+    }
+    <hr class="pb-3"/>
+    <div class="row">
+      <textarea
+        class="bg-zinc-800 border-0 placeholder-gray-600"
+        placeholder="write here the Blog content"
+        formControlName="content"
+      ></textarea>
+    </div>
+    @if(form.get("content")?.hasError("required") && form.get("content")?.touched ) {
+      <div class="text-danger small"> blog content is required to create a blog ! </div>
+    } @else {
+      <br class="small">
+    }
+
+  </div>
+
+  <!-- Article Owner Info -->
+  <!--   <div class="article-owner">
+      <img [src]="article.owner.image" alt="{{ article.owner.username }}'s profile picture" class="profile-picture" />
+      <span class="owner-name">{{ article.owner.username }}</span>
+    </div> -->
+
+  <hr class="p-3"/>
+  <!-- Article Images -->
+  @if (false){
+
+    <!--div class="image-gallery">
+      @for(image of article()?.images ; track $index){
+        <img  [src]="image | base64ToBlob" alt="Article image" class="article-image" />
+      }
+    </div-->
+  }
+
+  <div class="image-gallery p-3">
+        <button  class="article-image border-2 border-gray-500  rounded-xlg hover:bg-gray-500  "  >
+          <span class="text-4xl font-bold text-gray-600">+</span>
+        </button>
+    </div>
+
+  <div class=" flex items-center justify-center h-16">
+      <button
+        class="btn btn-create"
+        [disabled]="!form.valid"
+        (click)="createBlog()"
+      > create </button>
+  </div>
+</form>

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {API} from '../../../config/api.config';
 import {map} from 'rxjs/operators';
 import {Article} from '../../shared/models/article.model';
+import {newArticle} from '../../shared/dto/new-blog.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,16 @@ export class ArticleService {
 
   getArticleOfCurrentUser():Observable<Article[]> {
     return this.http.get<Article[]>(API.getArticleProperties);
+  }
+
+  createArtcile(newBlog : newArticle ) : Observable<Article> {
+    return this.http.post<Article>(API.createArticle,{
+      title: newBlog.title,
+      content: newBlog.content,
+      fatherId: null,
+      slug: newBlog.slug,
+      images: newBlog.images,
+    });
   }
 
 }
