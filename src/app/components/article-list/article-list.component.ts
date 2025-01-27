@@ -12,7 +12,8 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
   selector: 'app-article-list',
   imports: [NzSpinModule,CommonModule,ArticleComponent,MatProgressSpinnerModule],
   templateUrl: './article-list.component.html',
-  styleUrl: './article-list.component.css'
+  styleUrl: './article-list.component.css',
+  standalone:true
 })
 export class ArticleListComponent {
   private  userService = inject(UserService) ;
