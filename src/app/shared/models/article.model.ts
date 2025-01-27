@@ -9,7 +9,6 @@ export class Article {
     public content: string,
     public images: string[],
     public owner: string ,
-    public ownerObject : User|null,
     public comments : Article[],
     public upvotes : number,
     public downvotes : number,

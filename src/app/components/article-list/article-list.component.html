@@ -3,7 +3,7 @@
     <div class=""> Nothing is posted yet. be the first to post 😀 </div>
   }@else if (articles.length){
     @for(article of articles ; track $index ){
-      <app-article [article]="article"></app-article>
+      <app-article [article]="article" [owner]="getUser(article.owner)"></app-article>
     }
   }@else {
     <div class="flex flex-col justify-center h-[400px]">
@@ -14,8 +14,4 @@
 
   }
 
-<!--   <div class="mx-auto">
-    <mat-spinner  class="w-5"> </mat-spinner>
-    <div >fetching you articles...</div>
-  </div> -->
 </div>

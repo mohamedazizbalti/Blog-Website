@@ -6,6 +6,8 @@ import {VotingComponent} from '../voting/voting.component';
 import {ArticleService} from '../../services/articleService/article.service';
 import { CommonModule } from '@angular/common';
 import { UserCardComponent } from "../user-card/user-card.component";
+import { Observable } from 'rxjs';
+import { User } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-article',
@@ -22,6 +24,7 @@ export class ArticleComponent {
 
   articleService = inject(ArticleService);
   article = input<Article>() ;
+  @Input() owner? : Observable<User> ;
 
   upvote(nb: number){
     this.articleService.upvote(<string>this.article()?.id).subscribe({

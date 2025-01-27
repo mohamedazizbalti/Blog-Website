@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { UserService } from '../../services/userService/user.service';
 import { ArticleService } from '../../services/articleService/article.service';
 import { Article } from '../../shared/models/article.model';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ArticleComponent } from '../article/article.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
-
+import { User } from '../../shared/models/user.model';
+import memo from 'memo-decorator';
 @Component({
   selector: 'app-article-list',
   imports: [NzSpinModule,CommonModule,ArticleComponent,MatProgressSpinnerModule],
@@ -22,15 +23,23 @@ export class ArticleListComponent {
   constructor(){
     this.articles = [];
   }
+  // memorizing the observable so the same user is not fetched twice
+  @memo()
+  getUser(id:string):Observable<User>{
+    console.log("observing... fetching user "+ id);
+    return this.userService.getUserById(id as string).pipe(map(user => ({
+      ...user, // Spread existing properties
+      image: user.image ?? `https://avatar.iran.liara.run/public?username=${user.username}` // Use a fallback if image is null/undefined
+    })))
+  }
   async ngOnInit(){
 
     this.articles = await firstValueFrom (this.articlesService.getAllArticles());
-    this.articles.forEach( (art)=>{
+  /*   this.articles.forEach( (art)=>{
       this.userService.getUserById(art.owner as string).subscribe(data=>{
         data.image="https://avatar.iran.liara.run/public?username="+data.username
-        art.ownerObject= data
       });
-    })
+    }) */
   }
 
 
