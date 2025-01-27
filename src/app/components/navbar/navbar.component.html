@@ -41,6 +41,7 @@
             type="search"
             placeholder="Search"
             aria-label="Search"
+            (click)="search()"
           />
         </ul>
 
@@ -79,3 +80,9 @@
     </div>
   </div>
 </nav>
+
+@if(isSearching){
+  <app-search-model
+    (completeSearch)="completeSearch()"
+  ></app-search-model>
+}

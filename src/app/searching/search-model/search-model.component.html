@@ -1,0 +1,27 @@
+<div class="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm" (click)="close()">
+    <div class="bg-black p-6 rounded-lg border shadow-lg w-1/2 h-2/3" (click)="$event.stopPropagation()">
+
+      <div class="row px-5">
+
+        <i class="col-1 bi bi-search py-1"></i>
+        <input
+            class="col search-input bg-black rounded-3xl text-white form-control"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchChange()"
+          />
+      </div>
+
+      <p class="text-center text-gray-600">search for a user</p>
+
+      <div class="h-[80%] w-[100%]  rounded-md overflow-y-auto p-4">
+        @for(user of users() ; track $index){
+          <app-user-card [user]="user" (click)="close()"> </app-user-card>
+        }
+      </div>
+
+    </div>
+</div>
+

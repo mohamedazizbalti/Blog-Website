@@ -1,0 +1,5 @@
+.search-input:hover,
+.search-input:focus {
+  border-color: #d93900 !important;
+  box-shadow: 2px 2px 10px rgba(255, 0, 0, 0.5);
+}

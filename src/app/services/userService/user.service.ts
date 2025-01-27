@@ -33,4 +33,8 @@ export class UserService {
   getCurrentUserInfo() : Observable<User> {
     return this.http.get<User>(API.getCurrentUserInfo);
   }
+
+  getAllUsers() : Observable<User[]> {
+    return this.http.get<User[]>(API.getAllUsers);
+  }
 }
