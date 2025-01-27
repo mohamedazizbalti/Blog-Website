@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {Component, OnInit, inject, signal, effect} from '@angular/core';
 import {User} from '../../shared/models/user.model';
 import {UserService} from '../../services/userService/user.service';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
@@ -17,7 +17,7 @@ import {ArticleComponent} from '../../components/article/article.component';
   styleUrl: './profile.component.css',
   standalone : true
 })
-export class ProfileComponent {
+export class ProfileComponent  {
 
   private userService = inject(UserService);
   private router = inject(Router);
@@ -26,36 +26,53 @@ export class ProfileComponent {
   private  popupService = inject(PopupService);
   private articleService = inject(ArticleService);
 
-  constructor() {}
+  id = signal<string>('');
 
-  user : User | null = null;
-  isTheCurrentUserProfile : boolean = false;
-  blogs : Article[] = [] ;
+  user = signal<User|null>(null );
 
-  ngOnInit()
-  {
-    const id = this.activatedRoute.snapshot.params['id'];
-    this.userService.getUserById(id).subscribe({
+  isTheCurrentUserProfile = signal<boolean>(false);
+
+  blogs = signal<Article[]>([]);
+
+  constructor() {
+    this.activatedRoute.params.subscribe((params) => {
+      const id = params['id'];
+      this.id.set(id); // Update the id signal
+    });
+    this.fetchUser() ;
+
+    effect(() => {
+      console.log('affected ! ');
+      const id = this.id();
+      if (id) {
+        this.fetchUser();
+      }
+    });
+  }
+
+  fetchUser() {
+    this.userService.getUserById(this.id()).subscribe({
       next: (user) => {
-        this.user = user;
+        this.user.set(user);
         if(this.authService.isAuthenticated()){
-          this.isTheCurrentUserProfile = this.user?.email == localStorage.getItem('email') ;
+          this.isTheCurrentUserProfile.set(this.user()?.email == localStorage.getItem('email') ) ;
 
         }else{
-          this.isTheCurrentUserProfile = false;
+          this.isTheCurrentUserProfile.set(false) ;
         }
       },
       error: (e) => {
-        this.popupService.show(' user with id '+id+' not found !');
+        this.popupService.show(' user with id '+this.id()+' not found !');
         this.router.navigate(['']);
       },
     });
-    this.articleService.getArticleOfCurrentUser().subscribe({
+    this.articleService.getArticlesByUserId(this.id()).subscribe({
       next: (article: Article[]) => {
-        this.blogs = article ;
+        this.blogs.set(article) ;
       }
     })
   }
+
 
 }
 

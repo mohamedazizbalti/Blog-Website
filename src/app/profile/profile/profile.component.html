@@ -8,25 +8,27 @@
 
               <!-- Image Profile -->
               <div class="me-4">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                     alt="Generic placeholder image" class="img-fluid img-thumbnail"
-                     style="width: 150px;">
+                <img
+                  [src]="user()?.image"
+                  alt="Generic placeholder image"
+                  class="img-fluid img-thumbnail h-[150px] w-[150px]"
+                >
               </div>
 
               <div>
 
                 <div class="d-flex flex-row fs-1">
-                  <div class="pe-2">{{user?.name}}</div>
-                  <div>{{user?.lastName}}</div>
+                  <div class="pe-2">{{user()?.name}}</div>
+                  <div>{{user()?.lastName}}</div>
                 </div>
 
-                @if(isTheCurrentUserProfile){
                 <!-- Username and Email Row -->
                 <div class="text-white-50 small ">
-                  <div> username : {{user?.username}} </div>
-                  <div> email : {{user?.email}} </div>
+                  <div> username : {{user()?.username}} </div>
+                  @if(isTheCurrentUserProfile()){
+                  <div> email : {{user()?.email}} </div>
+                  }
                 </div>
-                }
               </div>
             </div>
           </div>
@@ -36,10 +38,10 @@
 
             <!-- bio -->
               <div class="text-gray-600! px-5 py-3 mb-4">
-                {{user?.bio}} lkkfkernflk
+                {{user()?.bio}}
               </div>
 
-            @if (isTheCurrentUserProfile){
+            @if (isTheCurrentUserProfile()){
             <button  type="button" class="btn btn-outline-light text-white-50 mx-5 mb-5" data-mdb-ripple-color="dark" style="z-index: 1;border-radius: 50px " >
                 Edit profile
               </button>
@@ -63,8 +65,11 @@
 
       </div>
             <!-- ajouter ici les blog de ce user -->
-            @for(article of blogs ; track $index ){
+            @for(article of blogs() ; track $index ){
               <app-article [article]="article"></app-article>
+            }
+            @empty{
+              <div class="text-gray-500"> {{user()?.name}} didn't post any Blog  yet ! </div>
             }
 
       </div>

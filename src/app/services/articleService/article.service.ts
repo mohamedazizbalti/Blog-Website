@@ -27,7 +27,7 @@ export class ArticleService {
   }
 
   getArticlesByUserId(id : string):Observable<Article[]>{
-    return this.http.get<Article[]>(API.getArticleFull+id);
+    return this.http.get<Article[]>(API.getArticleByUserId+id);
   }
 
   getArticleOfCurrentUser():Observable<Article[]> {
