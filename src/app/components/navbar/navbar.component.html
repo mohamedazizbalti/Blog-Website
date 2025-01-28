@@ -53,20 +53,23 @@
           </li>
           } @else {
           <li class="nav-item">
-            <i
+            <button
+            [routerLink]="['/notification']"
+              >
+              <i
               class="bi bi-bell-fill nav-link pt-2"
-              [routerLink]="['/notification']"
               [routerLinkActiveOptions]="{ exact: true }"
               routerLinkActive="active text-danger"
             ></i>
+            </button>
           </li>
 
           <li class="nav-item">
-            <i class="bi bi-person-circle nav-link pt-2    "
-               (click)="goToProfile()"
-               [routerLinkActiveOptions]="{ exact: true }"
-               routerLinkActive="active text-danger"
-            ></i>
+            <button (click)="goToProfile()"><i class="bi bi-person-circle nav-link pt-2    "
+              [routerLinkActiveOptions]="{ exact: true }"
+              routerLinkActive="active text-danger"
+           ></i></button>
+            
           </li>
           <li class="nav-item">
             <button class="btn btn-danger signout" (click)="signout()">

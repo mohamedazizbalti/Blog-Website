@@ -12,4 +12,5 @@ export const API = {
   getArticleByUserId: "https://bloggy-dot-tn-backend.vercel.app/article/", // here waiting to omar to add it :)
   getArticleProperties: "https://bloggy-dot-tn-backend.vercel.app/article/property",
   createArticle: "https://bloggy-dot-tn-backend.vercel.app/article/create",
+  chatbot: "http://localhost:11434/api/chat",
 };

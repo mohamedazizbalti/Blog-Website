@@ -7,10 +7,11 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import {FooterComponent} from './components/footer/footer.component';
 import {PopupComponent} from './components/popup/popup.component';
+import { ChatBotComponent } from "./chatbot/chat-bot/chat-bot.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, CommonModule, FooterComponent, PopupComponent],
+  imports: [RouterOutlet, NavbarComponent, CommonModule, FooterComponent, PopupComponent, ChatBotComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   standalone: true,
