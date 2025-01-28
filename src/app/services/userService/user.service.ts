@@ -27,14 +27,35 @@ export class UserService {
   }// the logic of the response backend here is different (cas email ) it return the user or nothing ( not error )
 
   getUserById(id : string ) : Observable<User> {
-    return this.http.get<any>(API.findUserById+id);
+    return this.http.get<any>(API.findUserById+id).pipe(
+      map((user) => ({
+        ...user, // Spread existing properties
+        image:
+          user.image ??
+          `https://avatar.iran.liara.run/public?username=${user.username}`, // Use a fallback if image is null/undefined
+      }))
+    );;
   }
 
   getCurrentUserInfo() : Observable<User> {
-    return this.http.get<User>(API.getCurrentUserInfo);
+    return this.http.get<User>(API.getCurrentUserInfo).pipe(
+      map((user) => ({
+        ...user, // Spread existing properties
+        image:
+          user.image ??
+          `https://avatar.iran.liara.run/public?username=${user.username}`, // Use a fallback if image is null/undefined
+      }))
+    );;;
   }
 
   getAllUsers() : Observable<User[]> {
-    return this.http.get<User[]>(API.getAllUsers);
+    return this.http.get<User[]>(API.getAllUsers).pipe(
+      map(data=>data.map((user) => ({
+        ...user, // Spread existing properties
+        image:
+          user.image ??
+          `https://avatar.iran.liara.run/public?username=${user.username}`, // Use a fallback if image is null/undefined
+      })))
+    );;
   }
 }
