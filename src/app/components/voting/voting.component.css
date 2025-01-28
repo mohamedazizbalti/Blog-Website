@@ -1,12 +1,12 @@
 .voting-container {
   padding: 10px;
-  display: flex;
   align-items: center;
 }
 
 .voting-number{
   background-color: #444444;
-  margin: 2px;
+  margin-right: 20px;
+  margin-left: 2px;
   border-radius: 20px;
   padding-top: 2px;
   padding-bottom: 2px;
@@ -14,16 +14,12 @@
   padding-right: 10px ;
 }
 
-.voting-item-dislike {
-  padding-top: 20px;
-}
-
 .like {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   color: #28a745; /* Green color for like icon */
 }
 
 .dislike {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   color: #ff0000; /* Red color for dislike icon */
 }

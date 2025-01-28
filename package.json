@@ -27,7 +27,9 @@
     "bloggy": "file:",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "memo-decorator": "^2.0.1",
     "franc-min": "^6.2.0",
+
     "ng-zorro-antd": "^19.0.2",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",

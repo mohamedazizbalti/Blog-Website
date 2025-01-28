@@ -27,7 +27,7 @@ export class ArticleService {
   }
 
   getArticlesByUserId(id : string):Observable<Article[]>{
-    return this.http.get<Article[]>(API.getArticleFull+id);
+    return this.http.get<Article[]>(API.getArticleByUserId+id);
   }
 
   getArticleOfCurrentUser():Observable<Article[]> {
@@ -43,5 +43,8 @@ export class ArticleService {
       images: newBlog.images,
     });
   }
-
+  getArticleById(id : string) : Observable<Article> {
+    return this.http.get<any>(API.getArticleById+id) ;
+  
+}
 }

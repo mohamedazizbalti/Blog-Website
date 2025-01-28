@@ -6,6 +6,8 @@ import {VotingComponent} from '../voting/voting.component';
 import {ArticleService} from '../../services/articleService/article.service';
 import { CommonModule } from '@angular/common';
 import { UserCardComponent } from "../user-card/user-card.component";
+import { Observable } from 'rxjs';
+import { User } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-article',
@@ -22,8 +24,9 @@ export class ArticleComponent {
 
   articleService = inject(ArticleService);
   article = input<Article>() ;
+  @Input() owner? : Observable<User> ;
 
-  upvote(nb: number){
+  upvote(){
     this.articleService.upvote(<string>this.article()?.id).subscribe({
       next: (response) => {
         console.log('Upvote successful', response);
@@ -33,7 +36,7 @@ export class ArticleComponent {
       }
     });
   }
-  downvote(nb: number) {
+  downvote() {
     this.articleService.downvote(<string>this.article()?.id).subscribe({
       next: (response) => {
         console.log('donvote successful', response);
@@ -44,12 +47,4 @@ export class ArticleComponent {
     });
   }
 
-  test1 = 20 ;
-  test2 = 23 ;
-  upvote2(nb: number) {
-    this.test2 += nb ;
-  }
-  downvote2(nb: number) {
-    this.test1 += nb ;
-  }
 }

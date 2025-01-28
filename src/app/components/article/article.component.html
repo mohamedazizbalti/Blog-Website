@@ -1,6 +1,8 @@
 <div class="article bg-zinc-800 my-4 rounded-md p-6 ">
   <div class="flex flex-col">
-    <app-user-card class="" [user]="article()?.ownerObject??null"> </app-user-card>
+    @if(owner){
+      <app-user-card class="" [user]="owner | async"> </app-user-card>
+    }
     <div class="text-slate-300 my-auto" >{{article()?.createdAt | date }}</div>
   </div>
   <!-- Article Header -->
@@ -34,18 +36,8 @@
     [numberOfDislike]="article()?.downvotes ?? 0"
     [numberOfLike]="article()?.upvotes ?? 0"
     [voters]="article()?.voters ?? []"
-    (onLike)="upvote($event)"
-    (onDislike)="downvote($event)"
-  >
-  </app-voting>
-
-  <!-- these are just to test and to see how to use the voting thkss -->
-  <app-voting
-    [numberOfDislike]="test1"
-    [numberOfLike]="test2"
-    [voters]="[]"
-    (onLike)="upvote2($event)"
-    (onDislike)="downvote2($event)"
+    (onLike)="upvote()"
+    (onDislike)="downvote()"
   >
   </app-voting>
 

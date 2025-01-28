@@ -1,6 +1,7 @@
-import {Component, inject, input, output} from '@angular/core';
+import {Component, computed, effect, inject, input, output, signal} from '@angular/core';
 import {AuthService} from '../../auth/services/auth.service';
 import {Voter} from '../../shared/models/Voter.model';
+import {UserService} from '../../services/userService/user.service';
 
 @Component({
   selector: 'app-voting',
@@ -11,47 +12,64 @@ import {Voter} from '../../shared/models/Voter.model';
 })
 export class VotingComponent {
 
-
   authService = inject(AuthService);
+
+  constructor() {
+
+    effect(()=>{
+      this.userReaction = this.voters().find(voter =>  voter.voterId == localStorage.getItem("userId") || null )  ;
+      this.isLiked  = this.userReaction?.vote == "upvote";
+      this.isDisliked  = this.userReaction?.vote == "downvote";
+      this.likes = this.numberOfLike() ;
+      this.dislikes = this.numberOfDislike() ;
+    })
+
+  }
 
   numberOfDislike = input<number>(0)  ;
   numberOfLike  = input<number>(0) ;
   voters = input<Voter[]>([]);
 
-  onLike = output<number>();
-  onDislike = output<number>();
+  likes = 0;
+  dislikes = 0 ;
 
-  userReaction = this.voters().find(voter => voter.voterId === localStorage.getItem("userId"))?.vote || null;
+  onLike = output<void>();
+  onDislike = output<void>();
 
-  isLiked : boolean = this.userReaction == "upvote";
-  isDisliked : boolean = this.userReaction == "downvote";
+  userReaction : Voter | undefined = undefined ;
+
+  isLiked : boolean = false;
+  isDisliked : boolean = false ;
 
   likeCliked(){
     console.log("liked ! ");
     if(!this.isLiked ){ // ye3ni mekenitch liked 9bel
-      this.onLike.emit(1);
+      this.likes ++ ;
     }else{ // ye3ni kenit like , on va faire unlike
-      this.onLike.emit(-1);
+      this.likes -- ;
     }
 
     if(this.isDisliked ){ // ye3ni ken disliked , donc on va decrementer le nombre de dislike
-      this.onDislike.emit(-1);
+      this.dislikes -- ;
     }
     this.isLiked = !this.isLiked ;
     this.isDisliked = false ;
+
+    this.onLike.emit();
   }
 
   dislikeCliked(){
     console.log("disliked ! ");
     if(!this.isDisliked ){ // mekenitch dislike
-      this.onDislike.emit(1);
+      this.dislikes ++ ;
     }else{
-      this.onDislike.emit(-1);
+      this.dislikes -- ;
     }
     if(this.isLiked ){
-      this.onLike.emit(-1);
+      this.likes -- ;
     }
     this.isDisliked = !this.isDisliked ;
     this.isLiked = false ;
+    this.onDislike.emit();
   }
 }

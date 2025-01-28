@@ -7,6 +7,7 @@ import { API } from '../../../config/api.config';
 import { Router } from '@angular/router';
 import { RegisterDto } from '../dto/register.dto';
 import {PopupService} from '../../services/popupService/popup.service';
+import {UserService} from '../../services/userService/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class AuthService {
   private http = inject(HttpClient);
   public isAuth = signal<boolean>(false);
   private router = inject(Router);
+  private userService = inject(UserService);
 
   constructor( private popupService :PopupService  ) {
     const token = localStorage.getItem('token');
@@ -27,15 +29,14 @@ export class AuthService {
         localStorage.setItem('token', response.Authorization);
         localStorage.setItem("email", credentials.email);
         this.router.navigate(['/home']);
-        this.isAuth.set(true)
+        this.isAuth.set(true) ;
+        this.addCurrentUserInfo();
       },
       error: (error) => {
         console.log(error);
         this.popupService.show(' an error occurred while signing in ! Veuillez vérifier vos credentials ');
         this.router.navigate(['/home']);
-
-        // this.toastr.error('Veuillez vérifier vos credentials');
-      },
+        },
     });
   }
   signup(registerDto:RegisterDto){
@@ -44,7 +45,8 @@ export class AuthService {
         localStorage.setItem('token', response.Authorization);
         localStorage.setItem("email", registerDto.email);
         this.router.navigate(['/home']);
-        this.isAuth.set(true)
+        this.isAuth.set(true);
+        this.addCurrentUserInfo();
       },
       error: (error) => {
         console.log(error);
@@ -64,5 +66,15 @@ export class AuthService {
     this.isAuth.set(false)
   }
 
+  addCurrentUserInfo(){
+    this.userService.getCurrentUserInfo().subscribe({
+      next: (user) => {
+        localStorage.setItem("username", user.username);
+        localStorage.setItem("userId", user.id);
+        localStorage.setItem("name", user.name);
+        localStorage.setItem("lastName", user.lastName);
+      }
+    })
+  }
 
 }

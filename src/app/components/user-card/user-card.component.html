@@ -6,15 +6,15 @@
   <div
     class="profile-picture w-16 h-16 rounded-full flex justify-center items-center overflow-hidden"
   >
-    @if (user){
+    @if (user()){
       <ng-container >
         <a
-          [routerLink]="'/profile/' + user.id"
+          [routerLink]="'/profile/' + user()?.id"
           class="text-lg font-medium hover:underline"
         >
         <img
-          [src]="user.image"
-          alt="Profile picture of {{ user.name }}"
+          [src]="user()?.image"
+          alt="Profile picture of {{ user()?.name }}"
           class="w-full h-full object-cover"
         />
         </a>
@@ -29,15 +29,15 @@
 
   <!-- User Details -->
   <div class="user-details flex flex-col">
-    @if(user){
+    @if(user()){
       <ng-container >
         <a
-          [routerLink]="'/profile/' + user.id"
+          [routerLink]="'/profile/' + user()?.id"
           class="text-lg font-medium hover:underline"
         >
-          {{ user.name }} {{ user.lastName }}
+          {{ user()?.name }} {{ user()?.lastName }}
         </a>
-        <p class="text-sm text-gray-500">{{ user.username }}</p>
+        <p class="text-sm text-gray-500">{{ user()?.username }}</p>
       </ng-container>
     }@else {
 

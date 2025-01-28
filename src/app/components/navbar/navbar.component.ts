@@ -3,6 +3,7 @@ import { Router, RouterLinkActive, RouterLink, RouterModule } from '@angular/rou
 import { AuthService } from '../../auth/services/auth.service';
 import {UserService} from '../../services/userService/user.service';
 import {map} from 'rxjs/operators';
+import {SearchModelComponent} from '../../searching/search-model/search-model.component';
 
 @Component({
   selector: 'app-navbar',
@@ -11,13 +12,16 @@ import {map} from 'rxjs/operators';
   standalone: true,
   imports: [
     RouterLinkActive,
-    RouterLink
+    RouterLink,
+    SearchModelComponent
   ],
 })
 export class NavbarComponent {
   private router = inject(Router);
   authService = inject(AuthService);
   userService = inject(UserService);
+  isSearching = false ;
+
   constructor() {}
   signout() {
     this.authService.logout();
@@ -36,5 +40,13 @@ export class NavbarComponent {
           console.error('User ID not found');
         }
       });
+  }
+
+  search(){
+    this.isSearching = true ;
+  }
+
+  completeSearch(){
+    this.isSearching = false ;
   }
 }

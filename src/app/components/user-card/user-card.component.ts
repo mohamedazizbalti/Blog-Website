@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, input, Input} from '@angular/core';
 import { User } from '../../shared/models/user.model';
 import { RouterModule } from '@angular/router';
 
@@ -6,9 +6,10 @@ import { RouterModule } from '@angular/router';
   selector: 'app-user-card',
   imports: [RouterModule],
   templateUrl: './user-card.component.html',
-  styleUrl: './user-card.component.css'
+  styleUrl: './user-card.component.css',
+  standalone: true ,
 })
 export class UserCardComponent {
-  @Input() user: User | null = null; // Input property for the user object
+   user = input<User|null>(); // Input property for the user object
 
 }
