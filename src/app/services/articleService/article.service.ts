@@ -43,5 +43,7 @@ export class ArticleService {
       images: newBlog.images,
     });
   }
-
+  getArticleById(id : string):Observable<Article>{
+    return this.http.get<Article>(API.getArticleById+id);
+  }
 }

@@ -13,4 +13,5 @@ export const API = {
   getArticleByUserId: "https://bloggy-dot-tn-backend.vercel.app/article/full/byUserId/",
   getArticleProperties: "https://bloggy-dot-tn-backend.vercel.app/article/property",
   createArticle: "https://bloggy-dot-tn-backend.vercel.app/article/create",
+  getArticleById : "https://bloggy-dot-tn-backend.vercel.app/article/full/"
 };
