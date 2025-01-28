@@ -13,23 +13,13 @@ import {UserService} from '../../services/userService/user.service';
 export class VotingComponent {
 
   authService = inject(AuthService);
-  userService = inject(UserService);
 
   constructor() {
 
-    this.userService.getCurrentUserInfo().subscribe({
-      next: (user) => {
-
-        this.userReaction.set(this.voters().find(voter =>  voter.voterId == user.id || null ) ) ;
-        this.isLiked  = this.userReaction()?.vote == "upvote";
-        this.isDisliked  = this.userReaction()?.vote == "downvote";
-      },
-      error: () => {
-        console.log('Error in getting current user info ! ');
-      }
-    } );
-
     effect(()=>{
+      this.userReaction = this.voters().find(voter =>  voter.voterId == localStorage.getItem("userId") || null )  ;
+      this.isLiked  = this.userReaction?.vote == "upvote";
+      this.isDisliked  = this.userReaction?.vote == "downvote";
       this.likes = this.numberOfLike() ;
       this.dislikes = this.numberOfDislike() ;
     })
@@ -46,7 +36,7 @@ export class VotingComponent {
   onLike = output<void>();
   onDislike = output<void>();
 
-  userReaction = signal<Voter | undefined>(undefined);
+  userReaction : Voter | undefined = undefined ;
 
   isLiked : boolean = false;
   isDisliked : boolean = false ;
