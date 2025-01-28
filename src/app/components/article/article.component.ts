@@ -26,7 +26,7 @@ export class ArticleComponent {
   article = input<Article>() ;
   @Input() owner? : Observable<User> ;
 
-  upvote(nb: number){
+  upvote(){
     this.articleService.upvote(<string>this.article()?.id).subscribe({
       next: (response) => {
         console.log('Upvote successful', response);
@@ -36,7 +36,7 @@ export class ArticleComponent {
       }
     });
   }
-  downvote(nb: number) {
+  downvote() {
     this.articleService.downvote(<string>this.article()?.id).subscribe({
       next: (response) => {
         console.log('donvote successful', response);
@@ -47,12 +47,4 @@ export class ArticleComponent {
     });
   }
 
-  test1 = 20 ;
-  test2 = 23 ;
-  upvote2(nb: number) {
-    this.test2 += nb ;
-  }
-  downvote2(nb: number) {
-    this.test1 += nb ;
-  }
 }

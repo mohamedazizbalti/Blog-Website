@@ -7,5 +7,5 @@ export class Voter {
 enum Vote {
   Upvote = 'upvote',
   Downvote = 'downvote',
-  None = 'none',
+  None = 'null',
 }

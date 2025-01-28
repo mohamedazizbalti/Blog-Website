@@ -1,23 +1,5 @@
 <a class="voting-container">
 
-  <a class="voting-number">
-    {{ numberOfDislike() }}
-  </a>
-
-  @if(authService.isAuthenticated()){
-    <button
-      class="voting-item-dislike"
-      (click)="dislikeCliked()"
-      [disabled]="!authService.isAuthenticated()"
-    >
-    @if(isDisliked){
-        <i class="bi bi-hand-thumbs-down-fill dislike" ></i>
-    }
-    @else{
-        <i class="bi bi-hand-thumbs-down dislike" ></i>
-    }
-    </button>
-
     <button
       class="voting-item-like"
       (click)="likeCliked()"
@@ -29,23 +11,26 @@
         <i class="bi bi-hand-thumbs-up like" ></i>
     }
     </button>
+  <a class="voting-number">
+    {{ likes }}
+  </a>
 
-  }
-  @else{
-    <button class="voting-item-dislike" >
-      <i class="bi bi-hand-thumbs-down-fill dislike" ></i>
+  <button
+      class="voting-item-dislike"
+      (click)="dislikeCliked()"
+      [disabled]="!authService.isAuthenticated()"
+    >
+      @if(isDisliked){
+        <i class="bi bi-hand-thumbs-down-fill dislike" ></i>
+      }
+      @else{
+        <i class="bi bi-hand-thumbs-down dislike" ></i>
+      }
     </button>
-
-    <button class="voting-item-like" >
-      <i class="bi bi-hand-thumbs-up-fill like" ></i>
-    </button>
-  }
-
-
-
 
   <a class="voting-number">
-    {{ numberOfLike() }}
+    {{ dislikes }}
   </a>
+
 
 </a>
