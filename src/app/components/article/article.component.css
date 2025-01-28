@@ -77,3 +77,34 @@
 .comment:last-child {
   /* border-bottom: 1px solid #eee; */
 }
+
+
+.user-card {
+  /* transition: background-color 0.3s ease-in-out; */
+}
+
+.user-card.loading {
+  /* background-color: #f9f9f9; */
+  /* animation: pulse 1.5s infinite; */
+}
+
+.loader-circle {
+  animation: pulse 1.5s infinite;
+}
+
+.name-placeholder,
+.username-placeholder {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f067;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}

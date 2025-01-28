@@ -5,6 +5,7 @@ import {API} from '../../../config/api.config';
 import {map} from 'rxjs/operators';
 import {Article} from '../../shared/models/article.model';
 import {newArticle} from '../../shared/dto/new-blog.dto';
+import { User } from '../../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,13 @@ export class ArticleService {
   getArticleOfCurrentUser():Observable<Article[]> {
     return this.http.get<Article[]>(API.getArticleProperties);
   }
+  getArticlesWithoutImageWithoutComments():Observable<Article[]>{
+    return this.http.get<Article[]>(API.findArticles+'?images=false&comments=false&content=true');
+  }
+  getImagesByArticle(id: string): Observable<string[]> {
+    return this.http.get<string[]>(API.getImagesByArticle(id))
+  }
+
 
   createArticle(newBlog: newArticle): Observable<Article> {
     const formData = new FormData();
@@ -56,4 +64,15 @@ export class ArticleService {
   deleteArticle(id: string) :Observable<Article> {
     return this.http.delete<Article>(API.getArticle+'/'+id);
   }
+  find(config: {
+    content?: boolean;
+    images?: boolean;
+    ownerid?: string | null;
+    comments?: boolean;
+    page?: number;
+    limit?: number;
+  }):Observable<Article[]>{
+    return this.http.get<Article[]>(API.find(config))
+  }
+
 }
