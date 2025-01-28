@@ -1,12 +1,11 @@
-
 .article-images {
   margin-top: 15px;
 }
 
 .image-gallery {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
+  align-items: center; /* Align items in the center vertically */
 }
 
 .article-image {
@@ -14,6 +13,21 @@
   height: 100px;
   object-fit: cover;
   border-radius: 4px;
+}
+
+.article-image-upload {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.article-image-upload:hover {
+  background-color: #ccc; /* Change button color when hovered */
 }
 
 .btn {
@@ -33,3 +47,41 @@
 .btn-create:hover {
   background-color: #218838; /* Darker green on hover */
 }
+
+.uploaded-images {
+  display: flex;
+  gap: 10px; /* Space between images */
+  flex-wrap: wrap; /* Allow images to wrap if needed */
+}
+
+.image-container {
+  width: 100px;
+  height: 100px;
+}
+
+.article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.image-upload-container {
+  display: flex;
+  align-items: center; /* Vertically align button and images */
+  gap: 10px; /* Space between images and button */
+}
+
+.article-image-upload {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-hidden {
+  display: none;
+}
+
+

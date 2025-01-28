@@ -34,14 +34,20 @@ export class ArticleService {
     return this.http.get<Article[]>(API.getArticleProperties);
   }
 
-  createArtcile(newBlog : newArticle ) : Observable<Article> {
-    return this.http.post<Article>(API.createArticle,{
-      title: newBlog.title,
-      content: newBlog.content,
-      fatherId: null,
-      slug: newBlog.slug,
-      images: newBlog.images,
+  createArticle(newBlog: newArticle): Observable<Article> {
+    const formData = new FormData();
+    formData.append('title', newBlog.title);
+    formData.append('content', newBlog.content);
+    if (newBlog.slug) formData.append('slug', newBlog.slug);
+    if (newBlog.images) {
+      newBlog.images.forEach((image: File) => {
+        formData.append('images', image);
+      });
+    }
+    formData.forEach((value, key) => {
+      console.log(key, value);
     });
+    return this.http.post<Article>(API.createArticle, formData);
   }
   getArticleById(id : string) : Observable<Article> {
     return this.http.get<any>(API.getArticleById+id) ;
