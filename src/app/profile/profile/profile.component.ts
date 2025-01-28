@@ -2,17 +2,16 @@ import {Component, OnInit, inject, signal, effect} from '@angular/core';
 import {User} from '../../shared/models/user.model';
 import {UserService} from '../../services/userService/user.service';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
 import {AuthService} from '../../auth/services/auth.service';
 import {PopupService} from '../../services/popupService/popup.service';
-import {ArticleListComponent} from '../../components/article-list/article-list.component';
 import {Article} from '../../shared/models/article.model';
 import {ArticleService} from '../../services/articleService/article.service';
-import {ArticleComponent} from '../../components/article/article.component';
+import {ArticleHeaderComponent} from '../article-header/article-header.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
-  imports: [ArticleComponent, RouterLink],
+  imports: [ArticleHeaderComponent, RouterLink],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
   standalone : true
@@ -33,6 +32,8 @@ export class ProfileComponent  {
   isTheCurrentUserProfile = signal<boolean>(false);
 
   blogs = signal<Article[]>([]);
+
+  deletedArticle : string = '';
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
@@ -73,6 +74,38 @@ export class ProfileComponent  {
     })
   }
 
+  deleteArticle(id:string ){
+    this.deletedArticle = id ;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to delete this article?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.delete(); // Call the delete function
+        Swal.fire('Deleted!', 'Your article has been deleted.', 'success');
+      }
+    });
+  }
+
+  delete(){
+    this.articleService.deleteArticle(this.deletedArticle).subscribe((article: Article) => {
+        console.log("article deleted !");
+        console.log(article);
+        this.blogs.update( (blogs:Article[])=>{
+          return blogs.filter((blog: Article) => blog.id !== this.deletedArticle)
+          }
+
+        )
+      }
+    ) ;
+
+  }
 
 }
 
