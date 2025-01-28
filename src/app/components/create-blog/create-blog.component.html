@@ -1,67 +1,88 @@
-
 <form
   class="md:w-[60%] mx-auto article bg-zinc-800 my-4 rounded-md p-6"
   [formGroup]="form"
 >
-
   <!-- Article Header -->
-  <div class=" text-slate-100">
+  <div class="text-slate-100">
     <div class="row">
       <input
         class="text-[50px] font-bold bg-zinc-800 border-0 placeholder-gray-600"
-        placeholder="write here the Blog title "
+        placeholder="Write here the blog title"
         formControlName="title"
-      >
+      />
     </div>
-    @if(form.get("title")?.hasError("required") && form.get("title")?.touched ) {
-      <div class="text-danger small"> blog title is required to create a blog ! </div>
-    } @else {
-      <br class="small">
-    }
-    <hr class="pb-3"/>
+    <div
+      *ngIf="form.get('title')?.hasError('required') && form.get('title')?.touched"
+      class="text-danger small"
+    >
+      Blog title is required to create a blog!
+    </div>
+    <br class="small" />
+    <hr class="pb-3" />
+
+    <!-- Blog Content -->
     <div class="row">
       <textarea
         class="bg-zinc-800 border-0 placeholder-gray-600"
-        placeholder="write here the Blog content"
+        placeholder="Write here the blog content"
         formControlName="content"
       ></textarea>
     </div>
-    @if(form.get("content")?.hasError("required") && form.get("content")?.touched ) {
-      <div class="text-danger small"> blog content is required to create a blog ! </div>
-    } @else {
-      <br class="small">
-    }
-
+    <div
+      *ngIf="form.get('content')?.hasError('required') && form.get('content')?.touched"
+      class="text-danger small"
+    >
+      Blog content is required to create a blog!
+    </div>
+    <br class="small" />
   </div>
 
-  <!-- Article Owner Info -->
-  <!--   <div class="article-owner">
-      <img [src]="article.owner.image" alt="{{ article.owner.username }}'s profile picture" class="profile-picture" />
-      <span class="owner-name">{{ article.owner.username }}</span>
-    </div> -->
+  <hr class="p-3" />
 
-  <hr class="p-3"/>
-  <!-- Article Images -->
-  @if (false){
-
-    <!--div class="image-gallery">
-      @for(image of article()?.images ; track $index){
-        <img  [src]="image | base64ToBlob" alt="Article image" class="article-image" />
-      }
-    </div-->
-  }
-
+  <!-- Image Upload -->
   <div class="image-gallery p-3">
-        <button  class="article-image border-2 border-gray-500  rounded-xlg hover:bg-gray-500  "  >
-          <span class="text-4xl font-bold text-gray-600">+</span>
-        </button>
-    </div>
+    <!-- Flex container for images and upload button -->
+    <div class="image-upload-container flex items-center gap-4">
+      <!-- Display uploaded images -->
+      <div *ngIf="images.length > 0" class="uploaded-images">
+        <div *ngFor="let image of images" class="image-container">
+          <img [src]="image.preview" alt="Uploaded image" class="article-image" />
+        </div>
+      </div>
 
-  <div class=" flex items-center justify-center h-16">
+      <!-- Button to trigger file input (always visible) -->
       <button
-        class="btn btn-create"
-        [disabled]="!form.valid"
-        (click)="createBlog()"
-      > create </button>
+        type="button"
+        class="article-image-upload border-2 border-gray-500 rounded-xl hover:bg-gray-500"
+        (click)="fileInput.click()"
+      >
+        <span class="text-4xl font-bold text-gray-600">+</span>
+      </button>
+
+      <!-- Hidden file input -->
+      <input
+        #fileInput
+        type="file"
+        multiple
+        (change)="onFileSelected($event)"
+        class="hidden"
+      />
+    </div>
+  </div>
+
+  <!-- Display selected image names -->
+  <div class="text-slate-100">
+    <p *ngFor="let image of images">{{ image.name }}</p>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="flex items-center justify-center h-16">
+    <button
+      class="btn btn-create"
+      [disabled]="!form.valid"
+      (click)="createBlog()"
+    >
+      Create
+    </button>
   </div>
 </form>

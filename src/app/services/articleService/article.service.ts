@@ -5,6 +5,7 @@ import {API} from '../../../config/api.config';
 import {map} from 'rxjs/operators';
 import {Article} from '../../shared/models/article.model';
 import {newArticle} from '../../shared/dto/new-blog.dto';
+import { User } from '../../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,14 +34,26 @@ export class ArticleService {
   getArticleOfCurrentUser():Observable<Article[]> {
     return this.http.get<Article[]>(API.getArticleProperties);
   }
+  getArticlesWithoutImageWithoutComments():Observable<Article[]>{
+    return this.http.get<Article[]>(API.findArticles+'?images=false&comments=false&content=true');
+  }
+  getImagesByArticle(id: string): Observable<string[]> {
+    return this.http.get<string[]>(API.getImagesByArticle(id))
+  }
 
-  createArtcile(newBlog : newArticle ) : Observable<Article> {
-    return this.http.post<Article>(API.createArticle,{
-      title: newBlog.title,
-      content: newBlog.content,
-      fatherId: null,
-      slug: newBlog.slug,
-      images: newBlog.images,
+
+  createArticle(newBlog: newArticle): Observable<Article> {
+    const formData = new FormData();
+    formData.append('title', newBlog.title);
+    formData.append('content', newBlog.content);
+    if (newBlog.slug) formData.append('slug', newBlog.slug);
+    if (newBlog.images) {
+      newBlog.images.forEach((image: File) => {
+        formData.append('images', image);
+      });
+    }
+    formData.forEach((value, key) => {
+      console.log(key, value);
     });
   }  getArticleById(id : string) : Observable<Article> {
     return this.http.get<any>(API.getArticleById+id) ;
@@ -91,5 +104,18 @@ private base64ToBlob(base64: string, mimeType?: string): Blob {
   return new Blob(byteArrays, { type: mimeType || 'application/octet-stream' });
 }
 
+  deleteArticle(id: string) :Observable<Article> {
+    return this.http.delete<Article>(API.getArticle+'/'+id);
+  }
+  find(config: {
+    content?: boolean;
+    images?: boolean;
+    ownerid?: string | null;
+    comments?: boolean;
+    page?: number;
+    limit?: number;
+  }):Observable<Article[]>{
+    return this.http.get<Article[]>(API.find(config))
+  }
 
 }
