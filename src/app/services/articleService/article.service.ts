@@ -51,6 +51,9 @@ export class ArticleService {
   }
   getArticleById(id : string) : Observable<Article> {
     return this.http.get<any>(API.getArticleById+id) ;
-  
-}
+  }
+
+  deleteArticle(id: string) :Observable<Article> {
+    return this.http.delete<Article>(API.getArticle+'/'+id);
+  }
 }
