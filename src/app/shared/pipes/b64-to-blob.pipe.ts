@@ -9,7 +9,6 @@ export class Base64ToBlobPipe implements PipeTransform {
     if (!base64) {
       return '';
     }
-
     // Decode Base64 string to binary data
     const byteCharacters = atob(base64);
     const byteNumbers = new Array(byteCharacters.length)

@@ -2404,6 +2404,7 @@ bl@^4.1.0:
     bloggy "file:"
     bootstrap "^5.3.3"
     bootstrap-icons "^1.11.3"
+    franc-min "^6.2.0"
     memo-decorator "^2.0.1"
     ng-zorro-antd "^19.0.2"
     ngx-toastr "^19.0.0"

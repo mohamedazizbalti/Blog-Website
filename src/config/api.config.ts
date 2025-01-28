@@ -14,7 +14,7 @@ export const API = {
   getArticleFull: "https://bloggy-dot-tn-backend.vercel.app/article/full", //Fetches All Standalone articles with their nested comments
   getArticleByUserId: "https://bloggy-dot-tn-backend.vercel.app/article/full/byUserId/",
   getArticleProperties: "https://bloggy-dot-tn-backend.vercel.app/article/property",
-  createArticle: "https://bloggy-dot-tn-backend.vercel.app/article/create",
+  createArticle: "https://bloggy-dot-tn-backend.vercel.app/article/create/",
   getArticleById: "https://bloggy-dot-tn-backend.vercel.app/article/full/",
   chatbot: "http://localhost:11434/api/chat",
 
