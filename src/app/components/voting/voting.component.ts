@@ -1,4 +1,4 @@
-import {Component, computed, inject, input, output, signal} from '@angular/core';
+import {Component, computed, effect, inject, input, output, signal} from '@angular/core';
 import {AuthService} from '../../auth/services/auth.service';
 import {Voter} from '../../shared/models/Voter.model';
 import {UserService} from '../../services/userService/user.service';
@@ -29,17 +29,19 @@ export class VotingComponent {
       }
     } );
 
+    effect(()=>{
+      this.likes = this.numberOfLike() ;
+      this.dislikes = this.numberOfDislike() ;
+    })
 
-
-    console.log(this.userReaction()?.vote);
   }
 
   numberOfDislike = input<number>(0)  ;
   numberOfLike  = input<number>(0) ;
   voters = input<Voter[]>([]);
 
-  likes = this.numberOfDislike() ;
-  dislikes = this.numberOfLike() ;
+  likes = 0;
+  dislikes = 0 ;
 
   onLike = output<void>();
   onDislike = output<void>();
