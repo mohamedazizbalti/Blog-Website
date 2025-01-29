@@ -1,19 +1,33 @@
 <div class="article bg-zinc-800 my-4 rounded-md p-6">
   <!-- Always show user card and date -->
-  <div class="flex flex-col">
-    @if (owner) {
-      <app-user-card class="" [user]="owner | async"></app-user-card>
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-col">
+      @if (owner) {
+        <app-user-card class="" [user]="owner | async "></app-user-card>
+      }
+      <div class="text-slate-300 my-auto">{{ article()?.createdAt | date }}</div>
+    </div>
+
+    @if(showExitBtn()){
+      <div class="flex">
+        <i class="bi bi-x-lg go-back p-4"
+           [routerLink]="['']"
+           [routerLinkActiveOptions]="{ exact: true }"
+           routerLinkActive="active text-danger"
+        ></i>
+      </div>
     }
-    <div class="text-slate-300 my-auto">{{ article()?.createdAt | date }}</div>
+
+
   </div>
 
   <!-- Display only the title if showComment is false -->
-  @if (!showComment) {
+  @if (!showComment()) {
     <!-- Article Header -->
     <div class="text-slate-300">
       <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
     </div>
-  }
+
 
   <!-- Always show images -->
   @if (article()?.images?.length) {
@@ -25,8 +39,20 @@
     </div>
   }
 
+    <!-- Article Vote Counts -->
+    @if(article()?.content){
+  <app-voting
+    [numberOfDislike]="article()?.downvotes ?? 0"
+    [numberOfLike]="article()?.upvotes ?? 0"
+    [voters]="article()?.voters ?? []"
+    (onLike)="upvote()"
+    (onDislike)="downvote()"
+  >
+  </app-voting>
+    }
+  }
   <!-- Display the full article if showComment is true -->
-  @if (showComment) {
+  @if (showComment()) {
     <!-- Article Header -->
     <div class="text-slate-300">
       <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
@@ -58,48 +84,52 @@
 
     <!-- Add Comment Form -->
     <div class="add-comment-section mt-6 bg-zinc-700 p-6 rounded-lg">
-      <h3 class="text-2xl font-bold text-slate-300 mb-4">Add a Comment</h3>
 
-        <form [formGroup]="commentForm" (ngSubmit)="prepareComment()" class="space-y-4">
-          <div>
-            <label for="content" class="block text-slate-300 mb-2">Content</label>
-            <textarea
-              id="content"
-              formControlName="content"
-              class="w-full p-2 rounded bg-zinc-800 text-slate-300 border border-zinc-600 focus:border-blue-500 focus:outline-none min-h-[100px]"
-              placeholder="Write your comment here"
-            ></textarea>
+    <form [formGroup]="commentForm" (ngSubmit)="prepareComment()" class="space-y-4 bg-zinc-800 rounded-xl border border-zinc-600 focus:border-red-900 flex justify-between p-4">
+      <div class="flex flex-col flex-grow space-y-4">
+    <textarea
+      id="content"
+      formControlName="content"
+      class="w-full p-2 text-slate-300 border-0 rounded-2xl bg-zinc-800 focus:outline-none min-h-[150px]"
+      placeholder="Write your comment here"
+    ></textarea>
+
+        <!-- Preview selected images -->
+        @if (commentForm.get('images')?.value?.length) {
+          <div class="image-preview grid grid-cols-3 gap-4 pl-2 pb-2">
+            @for (image of commentForm.get('images')?.value; track image) {
+              <img [src]="image" alt="Preview" class="w-full h-40 object-cover rounded" />
+            }
           </div>
+        }
+      </div>
 
-          <div>
-            <label class="block text-slate-300 mb-2">Images</label>
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              (change)="onImageSelect($event)"
-              class="block w-full text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
-            />
-          </div>
+      <div class="flex flex-col justify-end items-center space-y-4">
+        <!-- Custom Image Upload Icon -->
+        <label class="cursor-pointer">
+          <input type="file" multiple accept="image/*" (change)="onImageSelect($event)" class="hidden" />
+          <span class="p-3 text-white rounded-full transition duration-200 flex items-center justify-center">
+        <i class="fas fa-image text-lg"></i> <!-- FontAwesome Image Icon -->
+      </span>
+        </label>
 
-          <!-- Preview selected images -->
-          @if (commentForm.get('images')?.value?.length) {
-            <div class="image-preview grid grid-cols-3 gap-4">
-              @for (image of commentForm.get('images')?.value; track image) {
-                <img [src]="image" alt="Preview" class="w-full h-32 object-cover rounded" />
-              }
-            </div>
-          }
+        <!-- Submit Button with Fixed Size -->
+        <button
+          type="submit"
+          [disabled]="!commentForm.valid"
+          (click)="addComment()"
+          class="bg-blue-500 text-white px-6 py-2 rounded-3xl hover:bg-blue-600 transition duration-200 w-[120px]"
+        >
+          comment
+        </button>
+      </div>
+    </form>
 
-          <button
-            type="submit"
-            [disabled]="!commentForm.valid"
-            (click)="addComment()"
-            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
-          >
-            Submit Comment
-          </button>
-        </form>
-    </div>
+
+
+
+
+
+  </div>
   }
 </div>
