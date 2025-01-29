@@ -16,7 +16,8 @@ import {UserService} from '../../services/userService/user.service';
 export class SignupComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
-  private  userService = inject(UserService) ;
+  private userService = inject(UserService);
+  readonly minPasswordLength = 6;
   form :FormGroup;
   constructor() {
     this.form = new FormGroup({
@@ -25,8 +26,8 @@ export class SignupComponent {
       username: new FormControl('', [Validators.required] , [UniqueValidators.usernameValidator(this.userService)]),
       bio : new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.email] , [UniqueValidators.emailValidator(this.userService)]),
-      password: new FormControl('',  [Validators.required, Validators.minLength(6)]),
-      checkPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+      password: new FormControl('',  [Validators.required, Validators.minLength(this.minPasswordLength)]),
+      checkPassword: new FormControl('', [Validators.required, Validators.minLength(this.minPasswordLength)])
 
     },
       { validators: this.passwordsMatchValidator }

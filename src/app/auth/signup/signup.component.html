@@ -103,7 +103,7 @@
     </div>
     <!-- display errors -->
     @if(form.get('password')?.hasError('minlength') && form.get('password')?.touched){
-      <div class="text-danger small"> Password must be at least 6 characters long. </div>
+      <div class="text-danger small">The password must be at least {{minPasswordLength}} characters long.</div>
     }
     @else{
       <div class="small"><br></div>
