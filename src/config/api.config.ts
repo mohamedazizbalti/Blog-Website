@@ -47,6 +47,7 @@ export const API = {
     }
     return `https://bloggy-dot-tn-backend.vercel.app/article/find?placeholder=place${query}`},
   getArticleById: "https://bloggy-dot-tn-backend.vercel.app/article/full/",
-  chatbot: "http://localhost:11434/api/chat",
+  chatbot: "https://openrouter.ai/api/v1/chat/completions",
+  chatbotKey : "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"
 
 };
