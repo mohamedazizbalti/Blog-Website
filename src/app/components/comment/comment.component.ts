@@ -70,9 +70,12 @@ export class CommentComponent implements OnInit {
       this.articleService.createComment(newComment, this.article.id).subscribe(
         (response) => {
           console.log('Comment created:', response);
-          this.articleService.getArticleById(response.id).subscribe((data=>{
-            this.article.comments.push(data)
-          }))
+          this.article.comments.push(response);
+          this.articleService.getArticleById(this.article.id).subscribe(
+            (response) => {
+              this.article = response;
+            }
+          )
         },
         (error) => {
           console.error('Error creating comment:', error);
