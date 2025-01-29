@@ -72,22 +72,22 @@
 }
 
 .comment {
-  /* border-top: 1px solid #eee; */
+  /* border-top: 1px solid #eee; /
   padding: 10px 0;
 }
 
 .comment:last-child {
-  /* border-bottom: 1px solid #eee; */
+  / border-bottom: 1px solid #eee; /
 }
 
 
 .user-card {
-  /* transition: background-color 0.3s ease-in-out; */
+  / transition: background-color 0.3s ease-in-out; /
 }
 
 .user-card.loading {
-  /* background-color: #f9f9f9; */
-  /* animation: pulse 1.5s infinite; */
+  / background-color: #f9f9f9; /
+  / animation: pulse 1.5s infinite; */
 }
 
 .loader-circle {

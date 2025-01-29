@@ -41,13 +41,11 @@ export class ArticleComponent {
       this.comments =  this.article()?.comments ?? []  ;
     } )
   }
-
-  authService = inject(AuthService);
-  articleService = inject(ArticleService);
-  article = input<Article>();
   effect = 'scrollx';
   comments : Article[]  = [] ;
-
+  articleService = inject(ArticleService);
+  authService = inject(AuthService);
+  @Input() article! : Article;
   @Input() owner?: Observable<User>;
   showComment=input<boolean>(true);
   showExitBtn = input<boolean>(false );
@@ -60,7 +58,7 @@ export class ArticleComponent {
   selectedImages: File[] = [];
 
   upvote() {
-    this.articleService.upvote(<string>this.article()?.id).subscribe({
+    this.articleService.upvote(<string>this.article.id).subscribe({
       next: (response) => {
         console.log('Upvote successful', response);
       },
@@ -71,7 +69,7 @@ export class ArticleComponent {
   }
 
   downvote() {
-    this.articleService.downvote(<string>this.article()?.id).subscribe({
+    this.articleService.downvote(<string>this.article.id).subscribe({
       next: (response) => {
         console.log('downvote successful', response);
       },
@@ -101,12 +99,12 @@ export class ArticleComponent {
   }
 
   prepareComment() {
-    if (this.article()) {
+    if (this.article) {
       console.log("preparing comment");
       const comment = {
         title: 'random title',
         content: this.commentForm.value.content || '',
-        fatherId: this.article()?.id || null,
+        fatherId: this.article.id || null,
         slug: this.generateSlug(this.commentForm.value.title || ''),
         owner: localStorage.getItem('userId'),
         images: this.commentForm.value.images || []
@@ -154,7 +152,9 @@ export class ArticleComponent {
       this.articleService.createComment(newComment, fatherId).subscribe({
         next: (response) => {
           console.log('Comment added successfully', response);
-          this.comments.push(response);
+          this.articleService.getArticleById(response.id).subscribe((data=>{
+            this.article.comments.push(data)
+          }))
         },
         error: (error) => {
           console.error('Error adding comment', error);
