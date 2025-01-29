@@ -11,11 +11,13 @@ import { User } from '../../shared/models/user.model';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import {RouterLink, RouterLinkActive} from '@angular/router';  // Make sure to import Validators
+import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 
 
 @Component({
   selector: 'app-article',
   imports: [
+    NzCarouselModule,
     Base64ToBlobPipe,
     CommentComponent,
     VotingComponent,
@@ -34,13 +36,13 @@ export class ArticleComponent {
   ngOnInit() {
     console.log("hello");
   }
-
+  effect = 'scrollx';
   articleService = inject(ArticleService);
-  article = input<Article>();
+  @Input() article! : Article;
   @Input() owner?: Observable<User>;
   showComment=input<boolean>(true);
   showExitBtn = input<boolean>(false );
-  
+
   commentForm = new FormGroup({
     title: new FormControl(''),
     content: new FormControl('', [Validators.required]),  // Make content field required
@@ -50,7 +52,7 @@ export class ArticleComponent {
   selectedImages: File[] = [];
 
   upvote() {
-    this.articleService.upvote(<string>this.article()?.id).subscribe({
+    this.articleService.upvote(<string>this.article.id).subscribe({
       next: (response) => {
         console.log('Upvote successful', response);
       },
@@ -61,7 +63,7 @@ export class ArticleComponent {
   }
 
   downvote() {
-    this.articleService.downvote(<string>this.article()?.id).subscribe({
+    this.articleService.downvote(<string>this.article.id).subscribe({
       next: (response) => {
         console.log('downvote successful', response);
       },
@@ -91,12 +93,12 @@ export class ArticleComponent {
   }
 
   prepareComment() {
-    if (this.article()) {
+    if (this.article) {
       console.log("preparing comment");
       const comment = {
         title: 'random title',
         content: this.commentForm.value.content || '',
-        fatherId: this.article()?.id || null,
+        fatherId: this.article.id || null,
         slug: this.generateSlug(this.commentForm.value.title || ''),
         owner: localStorage.getItem('userId'),
         images: this.commentForm.value.images || []
@@ -143,6 +145,9 @@ export class ArticleComponent {
       this.articleService.createComment(newComment, fatherId).subscribe({
         next: (response) => {
           console.log('Comment added successfully', response);
+          this.articleService.getArticleById(response.id).subscribe((data=>{
+            this.article.comments.push(data)
+          }))
         },
         error: (error) => {
           console.error('Error adding comment', error);

@@ -5,7 +5,7 @@
       @if (owner) {
         <app-user-card class="" [user]="owner | async " (click)="$event.stopPropagation()"></app-user-card>
       }
-      <div class="text-slate-300 my-auto">{{ article()?.createdAt | date }}</div>
+      <div class="text-slate-300 my-auto">{{ article.createdAt | date }}</div>
     </div>
 
     @if(showExitBtn()){
@@ -25,26 +25,29 @@
   @if (!showComment()) {
     <!-- Article Header -->
     <div class="text-slate-300">
-      <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
+      <h2 class="text-[50px] font-bold">{{ article.title }}</h2>
     </div>
 
 
   <!-- Always show images -->
-  @if (article()?.images?.length) {
-    <hr />
-    <div class="image-gallery">
-      @for (image of article()?.images; track image) {
-        <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
-      }
-    </div>
-  }
+    @if (article.images?.length) {
+      <nz-carousel [nzEffect]="effect">
+        @for (image of article.images; track image) {
+          <div nz-carousel-content>
+            <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
+          </div>
+        }
+      </nz-carousel>
+      <hr />
+
+    }
 
     <!-- Article Vote Counts -->
-    @if(article()?.content){
+    @if(article.content){
   <app-voting
-    [numberOfDislike]="article()?.downvotes ?? 0"
-    [numberOfLike]="article()?.upvotes ?? 0"
-    [voters]="article()?.voters ?? []"
+    [numberOfDislike]="article.downvotes ?? 0"
+    [numberOfLike]="article.upvotes ?? 0"
+    [voters]="article.voters ?? []"
     (onLike)="upvote()"
     (onDislike)="downvote()"
     (click)="$event.stopPropagation()"
@@ -56,26 +59,37 @@
   @if (showComment()) {
     <!-- Article Header -->
     <div class="text-slate-300">
-      <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
+      <h2 class="text-[50px] font-bold">{{ article.title }}</h2>
       <hr class="pb-3" />
-      <p class="">{{ article()?.content }}</p>
+      <p class="">{{ article.content }}</p>
+    @if (article.images?.length) {
+      <nz-carousel [nzEffect]="effect">
+        @for (image of article.images; track image) {
+          <div nz-carousel-content>
+            <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
+          </div>
+        }
+      </nz-carousel>
+      <hr />
+
+    }
     </div>
 
     <!-- Article Vote Counts -->
     <app-voting
-      [numberOfDislike]="article()?.downvotes ?? 0"
-      [numberOfLike]="article()?.upvotes ?? 0"
-      [voters]="article()?.voters ?? []"
+      [numberOfDislike]="article.downvotes ?? 0"
+      [numberOfLike]="article.upvotes ?? 0"
+      [voters]="article.voters ?? []"
       (onLike)="upvote()"
       (onDislike)="downvote()"
     >
     </app-voting>
 
     <!-- Article Comments -->
-    @if (article()?.comments?.length) {
+    @if (article.comments?.length) {
       <h4>Comments:</h4>
       <div class="article-comments border-1 border-slate-100 p-2 rounded-xl">
-        @for (comment of article()?.comments; track comment) {
+        @for (comment of article. comments; track comment) {
           <div class="comment">
             <app-comment [article]="comment" [canComment]="true"></app-comment>
           </div>
