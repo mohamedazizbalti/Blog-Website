@@ -1,26 +1,28 @@
+
+
 export const API = {
-  login: 'https://bloggy-dot-tn-backend.vercel.app/auth/login',
-  register: 'https://bloggy-dot-tn-backend.vercel.app/auth/register',
+  login: 'http://localhost:3000/auth/login',
+  register: 'http://localhost:3000/auth/register',
 
-  findUserByEmail: 'https://bloggy-dot-tn-backend.vercel.app/users/email/',
+  findUserByEmail: 'http://localhost:3000/users/email/',
   findUserByUsername:
-    'https://bloggy-dot-tn-backend.vercel.app/users/username/',
-  findUserById: 'https://bloggy-dot-tn-backend.vercel.app/users/',
-  getCurrentUserInfo: 'https://bloggy-dot-tn-backend.vercel.app/users/infos',
-  getAllUsers: 'https://bloggy-dot-tn-backend.vercel.app/users',
-  searchUser: "https://bloggy-dot-tn-backend.vercel.app/users/serch/",
-  searchArticle: "https://bloggy-dot-tn-backend.vercel.app/article/search/",
+    'http://localhost:3000/users/username/',
+  findUserById: 'http://localhost:3000/users/',
+  getCurrentUserInfo: 'http://localhost:3000/users/infos',
+  getAllUsers: 'http://localhost:3000/users',
+  searchUser: "http://localhost:3000/users/serch/",
+  searchArticle: "http://localhost:3000/article/search/",
 
-  getArticle: "https://bloggy-dot-tn-backend.vercel.app/article",
-  getArticleFull: "https://bloggy-dot-tn-backend.vercel.app/article/full", //Fetches All Standalone articles with their nested comments
-  getArticleByUserId: "https://bloggy-dot-tn-backend.vercel.app/article/full/byUserId/",
-  getArticleProperties: "https://bloggy-dot-tn-backend.vercel.app/article/property",
-  createArticle: "https://bloggy-dot-tn-backend.vercel.app/article/create/",
-  findArticles: 'https://bloggy-dot-tn-backend.vercel.app/article/find',
-  updateArticle: "https://bloggy-dot-tn-backend.vercel.app/article/",
-  getUserByArticleId : "https://bloggy-dot-tn-backend.vercel.app//article/owner/",
+  getArticle: "http://localhost:3000/article",
+  getArticleFull: "http://localhost:3000/article/full", //Fetches All Standalone articles with their nested comments
+  getArticleByUserId: "http://localhost:3000/article/full/byUserId/",
+  getArticleProperties: "http://localhost:3000/article/property",
+  createArticle: "http://localhost:3000/article/create/",
+  findArticles: 'http://localhost:3000/article/find',
+  updateArticle: "http://localhost:3000/article/",
+  getUserByArticleId : "http://localhost:3000//article/owner/",
   getImagesByArticle: (id: string) =>
-    'https://bloggy-dot-tn-backend.vercel.app/article/' + id + '/images',
+    'http://localhost:3000/article/' + id + '/images',
   find: (config: {
     content?: boolean;
     images?: boolean;
