@@ -7,6 +7,7 @@ import {FilterService} from '../services/filter.service';
 import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 import {Article} from '../../shared/models/article.model';
 import {CommonModule, NgStyle} from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-model',
@@ -16,9 +17,14 @@ import {CommonModule, NgStyle} from '@angular/common';
   standalone: true ,
 })
 export class SearchModelComponent {
+navigateToArticle(arg0: string) {
+  this.completeSearch.emit();
+  this.router.navigate(['blog/', arg0]);
+}
 
   completeSearch = output();
   filterService = inject(FilterService);
+  router = inject(Router);
 
   close() {
     this.completeSearch.emit();

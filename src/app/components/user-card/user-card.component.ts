@@ -10,6 +10,5 @@ import { RouterModule } from '@angular/router';
   standalone: true ,
 })
 export class UserCardComponent {
-   user = input<User|null>(); // Input property for the user object
-
+   user = input<User|null>(); 
 }

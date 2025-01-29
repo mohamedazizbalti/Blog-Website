@@ -17,6 +17,8 @@ export const API = {
   getArticleProperties: "https://bloggy-dot-tn-backend.vercel.app/article/property",
   createArticle: "https://bloggy-dot-tn-backend.vercel.app/article/create/",
   findArticles: 'https://bloggy-dot-tn-backend.vercel.app/article/find',
+  updateArticle: "https://bloggy-dot-tn-backend.vercel.app/article/",
+  getUserByArticleId : "https://bloggy-dot-tn-backend.vercel.app//article/owner/",
   getImagesByArticle: (id: string) =>
     'https://bloggy-dot-tn-backend.vercel.app/article/' + id + '/images',
   find: (config: {

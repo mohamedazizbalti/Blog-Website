@@ -38,7 +38,7 @@
         }
         @for(article of articles() ; track $index){
           <hr>
-          <div class="row px-3 py-2">
+          <div class="row px-3 py-2" (click)="navigateToArticle(article.id)">
             <p class="font-bold text-2xl text-gray-500">{{ article.title }}</p>
             <p class="text-sm ">{{ article.createdAt | date }}</p> </div>
           <hr>

@@ -1,91 +1,104 @@
 <div class="article bg-zinc-800 my-4 rounded-md p-6">
+  <!-- Always show user card and date -->
   <div class="flex flex-col">
-    @if(owner){
+    @if (owner) {
       <app-user-card class="" [user]="owner | async"></app-user-card>
     }
-    <div class="text-slate-300 my-auto">{{article()?.createdAt | date }}</div>
+    <div class="text-slate-300 my-auto">{{ article()?.createdAt | date }}</div>
   </div>
 
-  <!-- Article Header -->
-  <div class="text-slate-300">
-    <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
-    <hr class="pb-3"/>
-    <p class="">{{ article()?.content }}</p>
-  </div>
+  <!-- Display only the title if showComment is false -->
+  @if (!showComment) {
+    <!-- Article Header -->
+    <div class="text-slate-300">
+      <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
+    </div>
+  }
 
-  <!-- Article Images -->
-  @if (article()?.images?.length){
-    <hr/>
+  <!-- Always show images -->
+  @if (article()?.images?.length) {
+    <hr />
     <div class="image-gallery">
-      @for(image of article()?.images ; track $index){
+      @for (image of article()?.images; track image) {
         <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
       }
     </div>
   }
 
+  <!-- Display the full article if showComment is true -->
+  @if (showComment) {
+    <!-- Article Header -->
+    <div class="text-slate-300">
+      <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
+      <hr class="pb-3" />
+      <p class="">{{ article()?.content }}</p>
+    </div>
 
-  <!-- Article Vote Counts -->
-  <app-voting
-    [numberOfDislike]="article()?.downvotes ?? 0"
-    [numberOfLike]="article()?.upvotes ?? 0"
-    [voters]="article()?.voters ?? []"
-    (onLike)="upvote()"
-    (onDislike)="downvote()"
-  >
-  </app-voting>
+    <!-- Article Vote Counts -->
+    <app-voting
+      [numberOfDislike]="article()?.downvotes ?? 0"
+      [numberOfLike]="article()?.upvotes ?? 0"
+      [voters]="article()?.voters ?? []"
+      (onLike)="upvote()"
+      (onDislike)="downvote()"
+    >
+    </app-voting>
 
-  <!-- Article Comments -->
-  @if(article()?.comments?.length){
-    <h4>Comments:</h4>
-    <div class="article-comments border-1 border-slate-100 p-4 rounded-xl">
-      @for(comment of article()?.comments; track $index){
-        <div class="comment">
-          <app-comment [article]="comment"></app-comment>
-        </div>
-      }
+    <!-- Article Comments -->
+    @if (article()?.comments?.length) {
+      <h4>Comments:</h4>
+      <div class="article-comments border-1 border-slate-100 p-4 rounded-xl">
+        @for (comment of article()?.comments; track comment) {
+          <div class="comment">
+            <app-comment [article]="comment" [canComment] = "true"></app-comment>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Add Comment Form -->
+    <div class="add-comment-section mt-6 bg-zinc-700 p-6 rounded-lg">
+      <h3 class="text-2xl font-bold text-slate-300 mb-4">Add a Comment</h3>
+
+        <form [formGroup]="commentForm" (ngSubmit)="prepareComment()" class="space-y-4">
+          <div>
+            <label for="content" class="block text-slate-300 mb-2">Content</label>
+            <textarea
+              id="content"
+              formControlName="content"
+              class="w-full p-2 rounded bg-zinc-800 text-slate-300 border border-zinc-600 focus:border-blue-500 focus:outline-none min-h-[100px]"
+              placeholder="Write your comment here"
+            ></textarea>
+          </div>
+
+          <div>
+            <label class="block text-slate-300 mb-2">Images</label>
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              (change)="onImageSelect($event)"
+              class="block w-full text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+            />
+          </div>
+
+          <!-- Preview selected images -->
+          @if (commentForm.get('images')?.value?.length) {
+            <div class="image-preview grid grid-cols-3 gap-4">
+              @for (image of commentForm.get('images')?.value; track image) {
+                <img [src]="image" alt="Preview" class="w-full h-32 object-cover rounded" />
+              }
+            </div>
+          }
+
+          <button
+            type="submit"
+            [disabled]="!commentForm.valid"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+          >
+            Submit Comment
+          </button>
+        </form>
     </div>
   }
-
-  <!-- Add Comment Form -->
-  <div class="add-comment-section mt-6 bg-zinc-700 p-6 rounded-lg">
-    <h3 class="text-2xl font-bold text-slate-300 mb-4">Add a Comment</h3>
-    
-    <form [formGroup]="commentForm" (ngSubmit)="prepareComment()" class="space-y-4">
-      <div>
-        <label for="content" class="block text-slate-300 mb-2">Content</label>
-        <textarea 
-          id="content"
-          formControlName="content"
-          class="w-full p-2 rounded bg-zinc-800 text-slate-300 border border-zinc-600 focus:border-blue-500 focus:outline-none min-h-[100px]"
-          placeholder="Write your comment here"></textarea>
-      </div>
-
-      <div>
-        <label class="block text-slate-300 mb-2">Images</label>
-        <input 
-          type="file" 
-          multiple
-          accept="image/*"
-          (change)="onImageSelect($event)"
-          class="block w-full text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600">
-      </div>
-
-      <!-- Preview selected images -->
-      @if(commentForm.get('images')?.value?.length){
-        <div class="image-preview grid grid-cols-3 gap-4">
-          @for(image of commentForm.get('images')?.value; track $index){
-            <img [src]="image" alt="Preview" class="w-full h-32 object-cover rounded">
-          }
-        </div>
-      }
-
-      <button 
-        type="submit"
-        [disabled]="!commentForm.valid"
-        (click)="addComment()"
-        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
-        Submit Comment
-      </button>
-    </form>
-  </div>
 </div>

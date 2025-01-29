@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { User } from '../../shared/models/user.model';
 import memo from 'memo-decorator';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-article-list',
   imports: [
@@ -24,6 +25,7 @@ import memo from 'memo-decorator';
 export class ArticleListComponent {
   private userService = inject(UserService);
   private articlesService = inject(ArticleService);
+  private router = inject(Router);
   private page :number
   private limit : number;
   private end : boolean;
@@ -99,7 +101,9 @@ export class ArticleListComponent {
       this.loadArticles()
     }
   }
-
+  navigateToBlog(id: string): void {
+    this.router.navigate(['/blog', id]);
+  }
 
   async ngOnInit() {
     this.loadArticles();

@@ -27,6 +27,7 @@ import { Validators } from '@angular/forms';  // Make sure to import Validators
   standalone: true
 })
 export class ArticleComponent {
+[x: string]: any;
   ngOnInit() {
     console.log("hello");
   }
@@ -34,6 +35,7 @@ export class ArticleComponent {
   articleService = inject(ArticleService);
   article = input<Article>();
   @Input() owner?: Observable<User>;
+  @Input() showComment: boolean = true; // Default is true
 
   commentForm = new FormGroup({
     title: new FormControl(''),
@@ -104,20 +106,36 @@ export class ArticleComponent {
     console.log("adding comment");
     const comment = this.prepareComment();
     console.log('Prepared comment:', comment);
-    // Separate comment from its fatherId into two objects
-    const fatherId = comment?.fatherId || "";
-    
-    // Remove fatherId from comment object and ensure required fields have default values
-    const newComment = {
-      title: comment?.title || 'Untitled',  // Default value for title if undefined
-      content: comment?.content || '',      // Default empty string for content if undefined
-      slug: comment?.slug || '',            // Default empty string for slug if undefined
-      owner: comment?.owner || '',          // Default empty string for owner if undefined
-      images: comment?.images || []         // Default empty array for images if undefined
-    };
   
     if (comment) {
+      // Separate fatherId
+      const fatherId = comment.fatherId || "";
+  
+      // Convert base64 strings in images to File objects
+      const images = (comment.images as string[]).map((base64String, index) => {
+        const byteString = atob(base64String.split(',')[1]); // Decode base64 string
+        const mimeType = base64String.split(',')[0].split(':')[1].split(';')[0]; // Extract MIME type
+        const byteNumbers = new Uint8Array(byteString.length);
+  
+        for (let i = 0; i < byteString.length; i++) {
+          byteNumbers[i] = byteString.charCodeAt(i);
+        }
+  
+        return new File([byteNumbers], `image_${index}.jpg`, { type: mimeType });
+      });
+  
+      // Ensure required fields and construct the new comment
+      const newComment = {
+        title: comment.title || 'Untitled',
+        content: comment.content || '',
+        slug: comment.slug || '',
+        owner: comment.owner || '',
+        images // Pass File[] instead of string[]
+      };
+  
       console.log('Adding comment:', newComment);
+  
+      // Call the service to add the comment
       this.articleService.createComment(newComment, fatherId).subscribe({
         next: (response) => {
           console.log('Comment added successfully', response);
@@ -130,6 +148,7 @@ export class ArticleComponent {
       console.error('Failed to prepare comment');
     }
   }
+  
 
   private generateSlug(title: string): string {
     return title

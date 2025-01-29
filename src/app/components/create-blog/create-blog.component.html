@@ -44,9 +44,16 @@
     <!-- Flex container for images and upload button -->
     <div class="image-upload-container flex items-center gap-4">
       <!-- Display uploaded images -->
-      <div *ngIf="images.length > 0" class="uploaded-images">
-        <div *ngFor="let image of images" class="image-container">
+      <div *ngIf="images.length > 0" class="uploaded-images grid grid-cols-2 gap-2">
+        <div *ngFor="let image of images; let i = index" class="image-container relative">
           <img [src]="image.preview" alt="Uploaded image" class="article-image" />
+          <button
+            type="button"
+            class="absolute top-0 right-0 text-red-600"
+            (click)="removeImage(i)"
+          >
+            ✕
+          </button>
         </div>
       </div>
 
@@ -71,7 +78,7 @@
   </div>
 
   <!-- Display selected image names -->
-  <div class="text-slate-100">
+  <div class="text-slate-100 mt-4">
     <p *ngFor="let image of images">{{ image.name }}</p>
   </div>
 

@@ -1,40 +1,56 @@
-<div class="article bg-zinc-800 rounded-md ">
-  <!-- Article Header -->
-  <div class=" text-slate-300">
-    Commented at: {{article?.createdAt | date }}
-    <hr class="pb-3"/>
+<div class="article bg-zinc-800 rounded-md">
+  <div class="flex flex-col">
+    <!-- Article Header -->
+    <app-user-card [user]="user"></app-user-card>
 
-    <p class="">{{ article?.content }}</p>
+    <div class="text-slate-300">
+      Commented at: {{ article?.createdAt | date }}
+      <hr class="pb-3" />
+
+      <p>{{ article?.content }}</p>
+    </div>
   </div>
 
-
-  @if (article?.images?.length){
-    <hr/>
+  <!-- Images -->
+  <div *ngIf="article?.images?.length">
+    <hr />
     <div class="image-gallery">
-      @for(image of article?.images ; track $index){
-        <img  [src]="image | base64ToBlob" alt="Article image" class="article-image" />
-      }
+      <div *ngFor="let image of article?.images; trackBy: trackByIndex">
+        <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
+      </div>
     </div>
-  }
-
-  <!-- Article Vote Counts -->
-
-
-
-
+  </div>
 
   <!-- Article Comments -->
-  @if(article?.comments?.length){
+  <div *ngIf="article?.comments?.length">
     <div class="article-comments">
       <h4>Replies:</h4>
-        @for(comment of article?.comments; track $index){
-
+      <div *ngFor="let comment of article?.comments; trackBy: trackByIndex">
         <div class="comment">
-          <app-comment [article]="comment"> </app-comment>
+          <app-comment [article]="comment" [canComment]="false"></app-comment>
         </div>
-      }
-
+      </div>
     </div>
-  }
+  </div>
 
+  <!-- Comment Form -->
+  <form *ngIf="canComment" [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label for="content" class="block text-slate-300 mb-2">Content</label>
+      <textarea
+        id="content"
+        formControlName="content"
+        class="w-full p-2 rounded bg-zinc-800 text-slate-300 border border-zinc-600 focus:border-blue-500 focus:outline-none min-h-[100px]"
+        placeholder="Write your comment here"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!commentForm.valid"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
+    >
+      Submit Comment
+    </button>
+  </form>
 </div>

@@ -14,7 +14,7 @@
         >
         <img
           [src]="user()?.image"
-          alt="Profile picture of {{ user()?.name }}"
+          alt="Generic placeholder image"
           class="w-full h-full object-cover"
         />
         </a>
@@ -22,7 +22,6 @@
     }
     @else{
       <div class="loader-circle w-16 h-16 rounded-full"></div>
-
     }
 
   </div>

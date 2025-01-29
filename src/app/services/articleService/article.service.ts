@@ -55,6 +55,7 @@ export class ArticleService {
     formData.forEach((value, key) => {
       console.log(key, value);
     });
+    return this.http.post<Article>(API.createArticle, formData);
   }  getArticleById(id : string) : Observable<Article> {
     return this.http.get<any>(API.getArticleById+id) ;
   
@@ -70,42 +71,25 @@ createComment(newBlog: newArticle, id: string): Observable<Article> {
   
   // Append images (if any)
   if (newBlog.images) {
-    newBlog.images.forEach((image, index)  => {
-      // Assuming images are base64 strings, convert them to Blob
-      const imageBlob = this.base64ToBlob(image, 'image/jpg');  // Adjust MIME type as necessary
-      formData.append('images', imageBlob, `image_${index}.jpg`);
+    newBlog.images.forEach((image, index) => {
+      formData.append('images', image, `image_${index}.jpg`);  // Directly append File objects
     });
   }
-  console.log(formData);
   return this.http.post<Article>(API.createArticle, formData);
 }
-private base64ToBlob(base64: string, mimeType?: string): Blob {
-  // Extract MIME type from Base64 string if not provided
-  if (!mimeType && base64.startsWith('data:')) {
-    const mimeMatch = base64.match(/data:([^;]+);base64,/);
-    mimeType = mimeMatch ? mimeMatch[1] : '';
-    base64 = base64.replace(/^data:[^;]+;base64,/, ''); // Remove the prefix
-  } else {
-    base64 = base64.replace(/^data:[^;]+;base64,/, ''); // Remove the prefix if it exists
+
+  updateArticle(id: string, newBlog: newArticle): Observable<Article> {
+    return this.http.patch<Article>(API.updateArticle+id, newBlog);
+    
   }
-
-  const byteCharacters = atob(base64);
-  const byteArrays = [];
-
-  for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
-    const slice = byteCharacters.slice(offset, Math.min(offset + 1024, byteCharacters.length));
-    const byteNumbers = new Array(slice.length);
-    for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-    byteArrays.push(new Uint8Array(byteNumbers));
-  }
-
-  return new Blob(byteArrays, { type: mimeType || 'application/octet-stream' });
-}
-
   deleteArticle(id: string) :Observable<Article> {
     return this.http.delete<Article>(API.getArticle+'/'+id);
+  }
+  getUserByArticleId(id: string): Observable<User> {
+    return this.http.get<User>(API.getUserByArticleId+id);
+  }
+  findUserById(id: string): Observable<User> {
+    return this.http.get<User>(API.findUserById+id);
   }
   find(config: {
     content?: boolean;
@@ -117,5 +101,6 @@ private base64ToBlob(base64: string, mimeType?: string): Blob {
   }):Observable<Article[]>{
     return this.http.get<Article[]>(API.find(config))
   }
+
 
 }
