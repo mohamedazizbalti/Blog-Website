@@ -8,10 +8,11 @@ import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 import {Article} from '../../shared/models/article.model';
 import {CommonModule, NgStyle} from '@angular/common';
 import { Router } from '@angular/router';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-search-model',
-  imports: [UserCardComponent, FormsModule, NgStyle , CommonModule],
+  imports: [UserCardComponent, FormsModule, NgStyle, CommonModule, MatProgressSpinner],
   templateUrl: './search-model.component.html',
   styleUrl: './search-model.component.css',
   standalone: true ,
@@ -39,6 +40,8 @@ navigateToArticle(arg0: string) {
     userBtnColor  = "white" ;
     artcileBtnColor  = "gray" ;
 
+    loading = false;
+
   searchTerm :string = '';
   private searchUserSubject = new Subject<string>();
   private searchArticleSubject = new Subject<string>();
@@ -58,6 +61,7 @@ navigateToArticle(arg0: string) {
         this.filterService.getFilteredUsers(searchTerm).subscribe(
           (users: User[]) => {
             this.users.set(users);
+            this.loading = false ;
           }
         );
       }else{
@@ -71,13 +75,15 @@ navigateToArticle(arg0: string) {
       distinctUntilChanged()
     ).subscribe((searchTerm) => {
       if(searchTerm != "" ) {
+        this.loading = true ;
         this.filterService.getFilteredArticles(searchTerm).subscribe(
           (articles : Article[]) => {
             this.articles.set(articles);
-            console.log(articles);
+            this.loading = false ;
           }
         );
       }else{
+        this.loading = false ;
         this.users.set([]) ;
       }
 
@@ -87,6 +93,7 @@ navigateToArticle(arg0: string) {
 
 
   onSearchChange(){
+
       if(this.isUserSearch){
         this.searchUserSubject.next(this.searchTerm);
       }
@@ -97,12 +104,14 @@ navigateToArticle(arg0: string) {
 
   userSearch(){
     this.isUserSearch = true ;
+    this.onSearchChange();
     this.userBtnColor = "white";
     this.artcileBtnColor = "gray";
   }
 
   articleSearch(){
     this.isUserSearch = false ;
+    this.onSearchChange();
     this.artcileBtnColor = "white";
     this.userBtnColor = "gray";
   }
