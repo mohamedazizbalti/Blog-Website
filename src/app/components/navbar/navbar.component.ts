@@ -28,20 +28,6 @@ export class NavbarComponent {
     this.router.navigate(['']);
   }
 
-  goToProfile(){
-    this.userService.getCurrentUserInfo()
-      .pipe(
-        map(user => user?.id) // Adjust index as needed
-      )
-      .subscribe(id => {
-        if (id) {
-          this.router.navigate(['/profile/' + id]);
-        } else {
-          console.error('User ID not found');
-        }
-      });
-  }
-
   search(){
     this.isSearching = true ;
   }
@@ -49,4 +35,6 @@ export class NavbarComponent {
   completeSearch(){
     this.isSearching = false ;
   }
+
+  protected readonly localStorage = localStorage;
 }

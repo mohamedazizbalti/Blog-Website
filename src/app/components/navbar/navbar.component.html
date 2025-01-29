@@ -67,7 +67,9 @@
           </li>
 
           <li class="nav-item">
-            <button (click)="goToProfile()"><i class="bi bi-person-circle nav-link pt-2    "
+            <button [routerLink]="['/profile/'+localStorage.getItem('userId')]">
+              <i
+                class="bi bi-person-circle nav-link pt-2    "
               [routerLinkActiveOptions]="{ exact: true }"
               routerLinkActive="active text-danger"
            ></i></button>
