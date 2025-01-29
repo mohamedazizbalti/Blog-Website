@@ -97,7 +97,7 @@
       <div class="article-comments border-1 border-slate-100 p-2 rounded-xl">
         @for (comment of comments; track comment) {
           <div class="comment">
-            <app-comment [article]="comment" [canComment]="true"></app-comment>
+            <app-comment [article]="comment" [canComment]="authService.isAuthenticated()"></app-comment>
           </div>
         }
         <!-- Add Comment Form -->
