@@ -7,11 +7,13 @@ import {PopupService} from '../../services/popupService/popup.service';
 import {Article} from '../../shared/models/article.model';
 import {ArticleService} from '../../services/articleService/article.service';
 import {ArticleHeaderComponent} from '../article-header/article-header.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
-  imports: [ArticleHeaderComponent, RouterLink],
+  imports: [ArticleHeaderComponent, RouterLink,MatProgressSpinnerModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
   standalone : true
@@ -34,6 +36,7 @@ export class ProfileComponent  {
   blogs = signal<Article[]>([]);
 
   deletedArticle : string = '';
+  loading = signal<boolean>(true);
 
   constructor() {
     this.activatedRoute.params.subscribe((params) => {
@@ -71,7 +74,7 @@ export class ProfileComponent  {
       next: (article: Article[]) => {
         this.blogs.set(article) ;
       }
-    })
+    }).add(() => this.loading.set(false))
   }
 
   deleteArticle(id:string ){
@@ -108,4 +111,3 @@ export class ProfileComponent  {
   }
 
 }
-

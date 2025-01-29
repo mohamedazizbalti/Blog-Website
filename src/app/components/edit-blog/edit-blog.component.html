@@ -1,4 +1,16 @@
-
+@if(loading){
+  <div class="flex flex-col justify-center h-[200px]">
+    <mat-spinner
+      color="#4caf50"
+      diameter="80"
+      class="w-5 mx-auto"
+      style="stroke: #4caf50"
+    >
+    </mat-spinner>
+    <div class="text-center text-zinc-500"></div>
+  </div>
+  }
+  @else {
 <form
   class="md:w-[60%] mx-auto article bg-zinc-800 my-4 rounded-md p-6"
   [formGroup]="form"
@@ -57,3 +69,4 @@
     > Edit </button>
   </div>
 </form>
+  }

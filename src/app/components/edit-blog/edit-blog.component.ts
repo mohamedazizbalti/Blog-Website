@@ -10,13 +10,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { newArticle } from '../../shared/dto/new-blog.dto'; // Ensure this is the correct path for your DTO
 import { Article } from '../../shared/models/article.model';
 import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-edit-blog',
   templateUrl: './edit-blog.component.html',
   styleUrls: ['./edit-blog.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule,Base64ToBlobPipe],
+  imports: [ReactiveFormsModule,Base64ToBlobPipe,MatProgressSpinnerModule],
 })
 export class EditBlogComponent {
   // Injecting the ArticleService and Router
@@ -26,6 +27,7 @@ export class EditBlogComponent {
   private article: Article = {} as Article;
   private id: string = '';
   public images: string[] = [];
+  public loading: boolean = false;
   // Defining the form
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -35,6 +37,7 @@ export class EditBlogComponent {
 
 async LoadArticle() {
   this.id = this.route.snapshot.paramMap.get('id') as string;
+  this.loading = true;
   await this.articleService.getArticleById(this.id).subscribe(
     (data) => {
       this.article = data;
@@ -48,7 +51,7 @@ async LoadArticle() {
     (error) => {
       console.error('Error:', error); // Log error here
     }
-  );
+  ).add(() => this.loading=false);
 }
 
   ngOnInit(): void {
