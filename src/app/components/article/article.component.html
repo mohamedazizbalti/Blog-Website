@@ -26,17 +26,22 @@
     <!-- Article Header -->
     <div class="text-slate-300">
       <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
+      <hr class="pb-3" />
+      <p class="">{{ article()?.content }}</p>
     </div>
 
 
   <!-- Always show images -->
   @if (article()?.images?.length) {
-    <hr />
-    <div class="image-gallery">
+    <nz-carousel [nzEffect]="effect" (click)="$event.stopPropagation()">
       @for (image of article()?.images; track image) {
-        <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
+        <div nz-carousel-content>
+          <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
+        </div>
       }
-    </div>
+    </nz-carousel>
+    <hr />
+
   }
 
     <!-- Article Vote Counts -->
@@ -60,6 +65,20 @@
       <p class="">{{ article()?.content }}</p>
     </div>
 
+  <!-- Always show images -->
+
+
+  @if (article()?.images?.length) {
+    <nz-carousel [nzEffect]="effect">
+      @for (image of article()?.images; track image) {
+        <div nz-carousel-content>
+          <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
+        </div>
+      }
+    </nz-carousel>
+    <hr />
+
+  }
     <!-- Article Vote Counts -->
     <app-voting
       [numberOfDislike]="article()?.downvotes ?? 0"
