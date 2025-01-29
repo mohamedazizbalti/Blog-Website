@@ -58,11 +58,13 @@ export class CommentComponent implements OnInit {
   // Handle form submission
   onSubmit(): void {
     if (this.commentForm.valid) {
+
       const newComment = {
         content: this.commentForm.get('content')?.value || '',
         title: 'random title',
         images: []
       };
+      this.commentForm.setValue({'content':""});
       console.log('New comment submitted:', newComment);
 
       this.articleService.createComment(newComment, this.article.id).subscribe(

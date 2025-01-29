@@ -29,35 +29,42 @@
 
 
   <!-- Article Comments -->
-  <div *ngIf="article?.comments?.length">
-    <div class="article-comments pl-4 " [ngStyle]="{'border-left-width':hasComments}">
-      <div *ngFor="let comment of article?.comments; trackBy: trackByIndex">
-        <div class="comment">
-          <app-comment [article]="comment" [canComment]="false"></app-comment>
+   <div class="pl-4 rounded-b-2xl border-l-[1px] border-white">
+    <div *ngIf="article?.comments?.length">
+      <div class="article-comments  " >
+
+        <div *ngFor="let comment of article?.comments; trackBy: trackByIndex">
+          <div class="comment">
+            <app-comment [article]="comment" [canComment]="false"></app-comment>
+          </div>
         </div>
+
+
+
       </div>
     </div>
+    <form *ngIf="canComment" [formGroup]="commentForm" (ngSubmit)="onSubmit()" class=" flex flex-row gap-3 pt-3">
+      <div class="w-full" >
+        <textarea
+          id="content"
+          formControlName="content"
+          class="w-full p-2 rounded bg-zinc-800 text-slate-300 border border-zinc-600 focus:border-blue-500 focus:outline-none "
+          placeholder="Write your comment here"
+        ></textarea>
+      </div>
+
+      <div class="flex flex-col justify-center">
+        <button
+          type="submit"
+          [disabled]="!commentForm.valid"
+          class="bg-blue-500 text-white h-[40px] px-4 rounded hover:bg-blue-600 transition duration-200"
+        >
+          Reply
+        </button>
+      </div>
+    </form>
+
   </div>
+   </div>
 
-
-</div>
  <!-- Comment Form -->
- <form *ngIf="canComment" [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="space-y-4">
-  <div  >
-    <label for="content" class="block text-slate-300 mb-2">Content</label>
-    <textarea
-      id="content"
-      formControlName="content"
-      class="w-full p-2 rounded bg-zinc-800 text-slate-300 border border-zinc-600 focus:border-blue-500 focus:outline-none min-h-[100px]"
-      placeholder="Write your comment here"
-    ></textarea>
-  </div>
-
-  <button
-    type="submit"
-    [disabled]="!commentForm.valid"
-    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
-  >
-    Submit Comment
-  </button>
-</form>
