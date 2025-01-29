@@ -40,7 +40,7 @@ export class ArticleComponent {
   @Input() owner?: Observable<User>;
   showComment=input<boolean>(true);
   showExitBtn = input<boolean>(false );
-
+  
   commentForm = new FormGroup({
     title: new FormControl(''),
     content: new FormControl('', [Validators.required]),  // Make content field required

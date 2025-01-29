@@ -6,7 +6,7 @@
   <app-article
     [article]="article"
     [owner]="getUser(article.owner)"
-    [showComment]="true"
+    [showComment]="false"
     (click)="navigateToBlog(article.id)"
   ></app-article>
   }} @else if(!error){
