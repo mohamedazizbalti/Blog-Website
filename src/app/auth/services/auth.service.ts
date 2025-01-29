@@ -34,7 +34,7 @@ export class AuthService {
       },
       error: (error) => {
         console.log(error);
-        this.popupService.show(' an error occurred while signing in ! Veuillez vérifier vos credentials ');
+        this.popupService.show('An error occurred while signing in! Please verify your credentials');
         this.router.navigate(['/home']);
         },
     });
