@@ -9,18 +9,21 @@ import { UserCardComponent } from "../user-card/user-card.component";
 import { Observable } from 'rxjs';
 import { User } from '../../shared/models/user.model';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Validators } from '@angular/forms';  // Make sure to import Validators
+import { Validators } from '@angular/forms';
+import {RouterLink, RouterLinkActive} from '@angular/router';  // Make sure to import Validators
 
 
 @Component({
   selector: 'app-article',
   imports: [
-    Base64ToBlobPipe, 
-    CommentComponent, 
-    VotingComponent, 
-    CommonModule, 
+    Base64ToBlobPipe,
+    CommentComponent,
+    VotingComponent,
+    CommonModule,
     UserCardComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLinkActive,
+    RouterLink
   ],
   templateUrl: './article.component.html',
   styleUrl: './article.component.css',
@@ -35,7 +38,8 @@ export class ArticleComponent {
   articleService = inject(ArticleService);
   article = input<Article>();
   @Input() owner?: Observable<User>;
-  @Input() showComment: boolean = true; // Default is true
+  showComment=input<boolean>(true);
+  showExitBtn = input<boolean>(false );
 
   commentForm = new FormGroup({
     title: new FormControl(''),
@@ -106,24 +110,24 @@ export class ArticleComponent {
     console.log("adding comment");
     const comment = this.prepareComment();
     console.log('Prepared comment:', comment);
-  
+
     if (comment) {
       // Separate fatherId
       const fatherId = comment.fatherId || "";
-  
+
       // Convert base64 strings in images to File objects
       const images = (comment.images as string[]).map((base64String, index) => {
         const byteString = atob(base64String.split(',')[1]); // Decode base64 string
         const mimeType = base64String.split(',')[0].split(':')[1].split(';')[0]; // Extract MIME type
         const byteNumbers = new Uint8Array(byteString.length);
-  
+
         for (let i = 0; i < byteString.length; i++) {
           byteNumbers[i] = byteString.charCodeAt(i);
         }
-  
+
         return new File([byteNumbers], `image_${index}.jpg`, { type: mimeType });
       });
-  
+
       // Ensure required fields and construct the new comment
       const newComment = {
         title: comment.title || 'Untitled',
@@ -132,9 +136,9 @@ export class ArticleComponent {
         owner: comment.owner || '',
         images // Pass File[] instead of string[]
       };
-  
+
       console.log('Adding comment:', newComment);
-  
+
       // Call the service to add the comment
       this.articleService.createComment(newComment, fatherId).subscribe({
         next: (response) => {
@@ -148,7 +152,7 @@ export class ArticleComponent {
       console.error('Failed to prepare comment');
     }
   }
-  
+
 
   private generateSlug(title: string): string {
     return title
