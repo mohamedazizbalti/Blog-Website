@@ -7,10 +7,11 @@ import { ArticleService } from '../../services/articleService/article.service';
 import { UserCardComponent } from '../user-card/user-card.component';
 import { Observable } from 'rxjs';
 import { User } from '../../shared/models/user.model';
+import { UserCardMiniComponent } from '../user-card-mini/user-card-mini.component';
 
 @Component({
   selector: 'app-comment',
-  imports: [Base64ToBlobPipe, CommonModule, ReactiveFormsModule, UserCardComponent],
+  imports: [Base64ToBlobPipe, CommonModule, ReactiveFormsModule, UserCardMiniComponent],
   templateUrl: './comment.component.html',
   standalone: true,
   styleUrls: ['./comment.component.css']
@@ -18,6 +19,7 @@ import { User } from '../../shared/models/user.model';
 export class CommentComponent implements OnInit {
   @Input() article!: Article;
   @Input() canComment: boolean = false;
+  public hasComments ='0px'
   public user : User  = {} as User;
   private articleService = inject(ArticleService);
   commentForm: FormGroup = new FormGroup({
@@ -27,6 +29,9 @@ export class CommentComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    if(this.article.comments.length){
+      this.hasComments='1px'
+    }
     // Initialize form with a default value and validation
     this.commentForm = this.fb.group({
       content: ['', [Validators.required]]
@@ -42,7 +47,7 @@ export class CommentComponent implements OnInit {
   findUserById(id: string): void {
     this.articleService.findUserById(id).subscribe(
       (user) => {
-        this.user = user ; 
+        this.user = user ;
         this.user = {...this.user , image : this.user.image ?? `https://avatar.iran.liara.run/public?username=${this.user.username}`};
         },
         (error) => {
@@ -59,9 +64,13 @@ export class CommentComponent implements OnInit {
         images: []
       };
       console.log('New comment submitted:', newComment);
+
       this.articleService.createComment(newComment, this.article.id).subscribe(
         (response) => {
           console.log('Comment created:', response);
+          this.articleService.getArticleById(response.id).subscribe((data=>{
+            this.article.comments.push(data)
+          }))
         },
         (error) => {
           console.error('Error creating comment:', error);

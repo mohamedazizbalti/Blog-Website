@@ -47,10 +47,10 @@
     <!-- Article Comments -->
     @if (article()?.comments?.length) {
       <h4>Comments:</h4>
-      <div class="article-comments border-1 border-slate-100 p-4 rounded-xl">
+      <div class="article-comments border-1 border-slate-100 p-2 rounded-xl">
         @for (comment of article()?.comments; track comment) {
           <div class="comment">
-            <app-comment [article]="comment" [canComment] = "true"></app-comment>
+            <app-comment [article]="comment" [canComment]="true"></app-comment>
           </div>
         }
       </div>
@@ -94,6 +94,7 @@
           <button
             type="submit"
             [disabled]="!commentForm.valid"
+            (click)="addComment()"
             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
           >
             Submit Comment

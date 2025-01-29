@@ -1,0 +1,50 @@
+<div
+  class="user-card p-1 rounded-lg flex items-center gap-4"
+  [class.loading]="true"
+>
+  <!-- Profile Picture -->
+  @if(icon()){<div
+    class="profile-picture w-8 h-8 rounded-full flex justify-center items-center overflow-hidden"
+  >
+    @if (user()?.image){
+      <ng-container >
+        <a
+          [routerLink]="'/profile/' + user()?.id"
+          class="text-lg font-medium hover:underline"
+        >
+        <img
+          [src]="user()?.image"
+
+          class="w-full h-full object-cover"
+        />
+        </a>
+      </ng-container>
+    }
+    @else{
+      <div class="loader-circle w-8 h-8 rounded-full"></div>
+    }
+
+  </div>}
+
+  <!-- User Details -->
+   @if(name()){
+    <div class="user-details flex flex-col">
+      @if(user()?.name){
+        <ng-container >
+          <a
+            [routerLink]="'/profile/' + user()?.id"
+            class="text-lg font-medium hover:underline"
+          >
+            {{ user()?.name }} {{ user()?.lastName }}
+          </a>
+        </ng-container>
+      }@else {
+
+        <div class="name-placeholder w-32 h-6 mb-2 loader-circle rounded"></div>
+      }
+
+
+    </div>
+   }
+
+</div>
