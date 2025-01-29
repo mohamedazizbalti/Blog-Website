@@ -70,15 +70,15 @@
     <!-- Display validation errors -->
     @if(form.get('email')?.touched){
       @if(form.get('email')?.hasError('email')){
-        <div class="text-danger small">enter a valid email !</div>
+        <div class="text-danger small">Enter a valid email!</div>
       }
       @else{
         @if(form.get('email')?.pending){
-          <div class="text-info small">Checking username availability...</div>
+          <div class="text-info small">Checking email availability...</div>
         }
         @else{
           @if(form.get('email')?.hasError('emailTaken')){
-            <div class="text-danger small"> Username is already taken.</div>
+            <div class="text-danger small">Email is already taken.</div>
           }
           @else{
             <div class="small"><br></div>
