@@ -1,4 +1,4 @@
-import {Component, inject, input, Input} from '@angular/core';
+import {Component, effect, inject, input, Input, output, signal} from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
 import { CommentComponent } from '../comment/comment.component';
@@ -12,6 +12,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import {RouterLink, RouterLinkActive} from '@angular/router';  // Make sure to import Validators
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import {AuthService} from '../../auth/services/auth.service';
 
 
 @Component({
@@ -35,11 +36,17 @@ export class ArticleComponent {
 [x: string]: any;
   ngOnInit() {
     console.log("hello");
+
+    effect(()=>{
+      this.comments =  this.article()?.comments ?? []  ;
+    } )
   }
 
+  authService = inject(AuthService);
   articleService = inject(ArticleService);
   article = input<Article>();
   effect = 'scrollx';
+  comments : Article[]  = [] ;
 
   @Input() owner?: Observable<User>;
   showComment=input<boolean>(true);
@@ -137,7 +144,8 @@ export class ArticleComponent {
         content: comment.content || '',
         slug: comment.slug || '',
         owner: comment.owner || '',
-        images // Pass File[] instead of string[]
+        images, // Pass File[] instead of string[] ,
+
       };
 
       console.log('Adding comment:', newComment);
@@ -146,11 +154,7 @@ export class ArticleComponent {
       this.articleService.createComment(newComment, fatherId).subscribe({
         next: (response) => {
           console.log('Comment added successfully', response);
-          this.articleService.getArticleById(response.id).subscribe({
-            next: (data)=>{
-
-            }
-          })
+          this.comments.push(response);
         },
         error: (error) => {
           console.error('Error adding comment', error);
