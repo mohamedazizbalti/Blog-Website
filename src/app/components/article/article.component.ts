@@ -11,11 +11,13 @@ import { User } from '../../shared/models/user.model';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import {RouterLink, RouterLinkActive} from '@angular/router';  // Make sure to import Validators
+import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 
 
 @Component({
   selector: 'app-article',
   imports: [
+    NzCarouselModule,
     Base64ToBlobPipe,
     CommentComponent,
     VotingComponent,
@@ -37,16 +39,17 @@ export class ArticleComponent {
 
   articleService = inject(ArticleService);
   article = input<Article>();
+  effect = 'scrollx';
+
   @Input() owner?: Observable<User>;
   showComment=input<boolean>(true);
   showExitBtn = input<boolean>(false );
-  
+
   commentForm = new FormGroup({
     title: new FormControl(''),
     content: new FormControl('', [Validators.required]),  // Make content field required
     images: new FormControl<string[]>([])
   });
-
   selectedImages: File[] = [];
 
   upvote() {
@@ -143,6 +146,11 @@ export class ArticleComponent {
       this.articleService.createComment(newComment, fatherId).subscribe({
         next: (response) => {
           console.log('Comment added successfully', response);
+          this.articleService.getArticleById(response.id).subscribe({
+            next: (data)=>{
+
+            }
+          })
         },
         error: (error) => {
           console.error('Error adding comment', error);

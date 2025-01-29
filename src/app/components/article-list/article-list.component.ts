@@ -2,7 +2,7 @@ import { Component, HostListener, inject } from '@angular/core';
 import { UserService } from '../../services/userService/user.service';
 import { ArticleService } from '../../services/articleService/article.service';
 import { Article } from '../../shared/models/article.model';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable, shareReplay } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ArticleComponent } from '../article/article.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -40,12 +40,19 @@ export class ArticleListComponent {
     this.end=false;
   }
   // memorizing the observable so the same user is not fetched twice
-  @memo()
-  getUser(id: string): Observable<User> {
-    console.log('observing... fetching user ' + id);
-    return this.userService.getUserById(id as string)
-  }
 
+  private userCache = new Map<string, Observable<User>>();
+
+  getUser(id: string): Observable<User> {
+    if (this.userCache.has(id)) {
+      return this.userCache.get(id)!;
+    }
+
+    console.log('Fetching user ' + id);
+    const user$ = this.userService.getUserById(id).pipe(shareReplay(1));
+    this.userCache.set(id, user$);
+    return user$;
+  }
   getImagesOfArticle(article:Article,id:string){
     this.articlesService.getImagesByArticle(id).subscribe((data)=>article.images=data);
   }
@@ -58,7 +65,7 @@ export class ArticleListComponent {
     this.getArticles()
   }
   getArticles() {
-    this.articlesService.getArticlesWithoutImageWithoutComments().subscribe(
+    this.articlesService.find({comments:false,images:false,content:true}).subscribe(
       (data) =>{
 
         this.articles = data
