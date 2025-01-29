@@ -15,7 +15,14 @@ export class FilterService {
   constructor(private http: HttpClient) {}
 
   getFilteredUsers(searchTerm: string): Observable<User[]> {
-    return this.http.get<User[]>(API.searchUser+searchTerm);
+    return this.http.get<User[]>(API.searchUser+searchTerm).pipe(
+      map(data=>data.map((user) => ({
+        ...user, // Spread existing properties
+        image:
+          user.image ??
+          `https://avatar.iran.liara.run/public?username=${user.username}`, // Use a fallback if image is null/undefined
+      })))
+    );
   }
 
   getFilteredArticles(searchTerm : string ):Observable<Article[]> {

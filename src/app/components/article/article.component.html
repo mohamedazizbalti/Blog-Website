@@ -3,7 +3,7 @@
   <div class="flex flex-row justify-between">
     <div class="flex flex-col">
       @if (owner) {
-        <app-user-card class="" [user]="owner | async "></app-user-card>
+        <app-user-card class="" [user]="owner | async " (click)="$event.stopPropagation()"></app-user-card>
       }
       <div class="text-slate-300 my-auto">{{ article()?.createdAt | date }}</div>
     </div>
@@ -47,6 +47,7 @@
     [voters]="article()?.voters ?? []"
     (onLike)="upvote()"
     (onDislike)="downvote()"
+    (click)="$event.stopPropagation()"
   >
   </app-voting>
     }
