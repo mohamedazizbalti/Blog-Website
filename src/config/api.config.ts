@@ -20,7 +20,7 @@ export const API = {
   createArticle: "http://localhost:3000/article/create/",
   findArticles: 'http://localhost:3000/article/find',
   updateArticle: "http://localhost:3000/article/",
-  getUserByArticleId : "http://localhost:3000/article/owner/",
+  getUserByArticleId : "http://localhost:3000//article/owner/",
   getImagesByArticle: (id: string) =>
     'http://localhost:3000/article/' + id + '/images',
   find: (config: {
@@ -47,8 +47,8 @@ export const API = {
     }if (config.limit){
       query+='&limit='+config.limit
     }
-    return `http://localhost:3000/article/find?placeholder=place${query}`},
-  getArticleById: "http://localhost:3000/article/full/",
+    return `https://bloggy-dot-tn-backend.vercel.app/article/find?placeholder=place${query}`},
+  getArticleById: "https://bloggy-dot-tn-backend.vercel.app/article/full/",
   chatbot: "https://openrouter.ai/api/v1/chat/completions",
   chatbotKey : "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"
 

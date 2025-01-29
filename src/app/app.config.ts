@@ -18,7 +18,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    AuthInterceptorProvider,
     provideHttpClient(withInterceptorsFromDi()),
     FontAwesomeModule, provideAnimationsAsync(), provideNzI18n(en_US), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient(), provideServiceWorker('ngsw-worker.js', {
             enabled: !isDevMode(),

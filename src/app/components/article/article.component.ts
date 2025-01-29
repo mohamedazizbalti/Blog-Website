@@ -34,7 +34,7 @@ import {AuthService} from '../../auth/services/auth.service';
 })
 export class ArticleComponent {
 [x: string]: any;
-  constructor() {
+  ngOnInit() {
     console.log("hello");
 
     effect(()=>{
