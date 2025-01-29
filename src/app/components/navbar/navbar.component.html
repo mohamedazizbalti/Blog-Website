@@ -25,14 +25,15 @@
       [routerLinkActiveOptions]="{ exact: true }"
       routerLinkActive="active text-danger"
       >Home</a>
+      @if (authService.isAuthenticated()) {
       <a
-          class="nav-link my-auto"
-          [routerLink]="['/thematic']"
-          [routerLinkActiveOptions]="{ exact: true }"
-          routerLinkActive="active text-danger "
-          >Thematic</a
-        >
-
+        class="nav-link active px-0 my-auto w-20"
+        aria-current="page"
+        [routerLink]="['/blog/new']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="active text-danger"
+      >Add blog</a>
+      }
       <div class="flex flex-row justify-between w-full">
         <ul class="navbar-nav me-auto input-container m-auto">
           <i class="bi bi-search search-icon"></i>
@@ -70,7 +71,7 @@
               [routerLinkActiveOptions]="{ exact: true }"
               routerLinkActive="active text-danger"
            ></i></button>
-            
+
           </li>
           <li class="nav-item">
             <button class="btn btn-danger signout" (click)="signout()">

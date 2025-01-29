@@ -25,5 +25,10 @@ export class ArticleHeaderComponent {
   delete(){
     this.deleteArticle.emit(<string>this.article()?.id);
   }
+  goToArticle() {
+    if (this.article()) {
+      this.router.navigate(['/blog', this.article()?.id]);
+    }
+  }
 
 }

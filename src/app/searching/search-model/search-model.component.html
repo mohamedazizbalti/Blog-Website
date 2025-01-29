@@ -33,16 +33,56 @@
 
 
       <div class="h-[80%] w-[100%]  rounded-md overflow-y-auto p-4">
-        @for(user of users() ; track $index){
-          <app-user-card [user]="user" (click)="close()"> </app-user-card>
+
+        @if(loading){
+              <div class="flex flex-col justify-center h-[200px]">
+                <mat-spinner
+                  color="#4caf50"
+                  diameter="80"
+                  class="w-5 mx-auto"
+                  style="stroke: #4caf50"
+                >
+                </mat-spinner>
+                <div class="text-center text-zinc-500"></div>
+              </div>
+            }
+        @else{
+
+            @if(isUserSearch){
+            @for(user of users() ; track $index){
+              <app-user-card [user]="user" (click)="close()"> </app-user-card>
+            }@empty{
+              @if (searchTerm != ''){
+                <div class="py-10 text-gray-600 text-3xl ">
+                  there's no users found !
+                </div>
+              }
+            }
+
+            }@else{
+              @for(article of articles() ; track $index){
+                <hr>
+                <div class="row px-3 py-2" (click)="navigateToArticle(article.id)">
+                  <p class="font-bold text-2xl text-gray-500">{{ article.title }}</p>
+                  <p class="text-sm ">{{ article.createdAt | date }}</p> </div>
+                <hr>
+              }@empty{
+                @if (searchTerm != ''){
+                  <div class="py-10 text-gray-600 text-3xl ">
+                    there's no blogs found !
+                  </div>
+                }
+              }
+
+            }
+
+
         }
-        @for(article of articles() ; track $index){
-          <hr>
-          <div class="row px-3 py-2" (click)="navigateToArticle(article.id)">
-            <p class="font-bold text-2xl text-gray-500">{{ article.title }}</p>
-            <p class="text-sm ">{{ article.createdAt | date }}</p> </div>
-          <hr>
-        }
+
+
+
+
+
       </div>
 
     </div>
