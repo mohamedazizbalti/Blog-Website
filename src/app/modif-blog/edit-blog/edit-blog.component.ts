@@ -26,8 +26,9 @@ export class EditBlogComponent {
   private route = inject(ActivatedRoute);
   private article: Article = {} as Article;
   private id: string = '';
-  public images: string[] = [];
+  public images: ( Blob & { preview : string })[] = [];
   public loading: boolean = false;
+  private base64ToBlobPipe = new Base64ToBlobPipe;
   // Defining the form
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -45,8 +46,8 @@ async LoadArticle() {
       this.form.patchValue({
         title: this.article.title,
         content: this.article.content,
-      });  
-      this.images = this.article.images;
+      });
+      this.images = this.article.images.map((image,index) => this.base64ToBlobWithPreview(image) ) ;
     },
     (error) => {
       console.error('Error:', error); // Log error here
@@ -55,7 +56,7 @@ async LoadArticle() {
 }
 
   ngOnInit(): void {
-    this.LoadArticle(); 
+    this.LoadArticle();
 }
   // Handle form submission
   createBlog(): void {
@@ -64,9 +65,10 @@ async LoadArticle() {
       return;
     }
     // Prepare newArticle DTO
-    const newBlog: newArticle = {
+    const newBlog = {
       title: this.form.get('title')?.value || '',
       content: this.form.get('content')?.value || '',
+      images: this.images.map((img)=> new File([img] , "images")),
     };
       this.articleService.updateArticle(this.id, newBlog).subscribe(() => {
         this.router.navigate(['/blog/',this.id]);
@@ -80,4 +82,37 @@ async LoadArticle() {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)+/g, '');
   }
+
+  onFileSelected(event: any): void {
+    const files = event.target.files;
+    if (files) {
+      // Append new files to the existing images array
+      const newImages = Array.from(files).map(file => {
+        return Object.assign(file as File, { preview: URL.createObjectURL(file as Blob) }) as File & { preview: string };
+      });
+
+      this.images = [...this.images, ...newImages];
+    }
+  }
+
+  base64ToBlobWithPreview(base64: string, mimeType: string = 'image/png'): Blob & { preview: string } {
+    if (!base64) {
+      throw new Error('Base64 string is required');
+    }
+
+    // Decode Base64 string
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+    const byteArray = new Uint8Array(byteNumbers);
+
+    // Create a Blob
+    const blob = new Blob([byteArray], { type: mimeType });
+
+    // Create a preview URL
+    return Object.assign(blob, { preview: URL.createObjectURL(blob) });
+  }
+  removeImage(index: number): void {
+    this.images.splice(index, 1);
+  }
+
 }

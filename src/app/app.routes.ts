@@ -2,9 +2,9 @@ import { Routes } from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
 import { BlogComponent } from './components/blog/blog.component';
 import {ProfileComponent} from './profile/profile/profile.component';
-import {CreateBlogComponent} from './components/create-blog/create-blog.component';
+import {CreateBlogComponent} from './modif-blog/create-blog/create-blog.component';
 import {AuthGuard} from './auth/guard/guard.guard';
-import {EditBlogComponent} from './components/edit-blog/edit-blog.component';
+import {EditBlogComponent} from './modif-blog/edit-blog/edit-blog.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Default route
   { path: 'signin',
@@ -19,11 +19,11 @@ export const routes: Routes = [
   {path : 'blog',
     children: [
       { path: 'new',
-        loadComponent : ()=> import('./components/create-blog/create-blog.component').then(c=>c.CreateBlogComponent) ,
+        loadComponent : ()=> import('./modif-blog/create-blog/create-blog.component').then(c=>c.CreateBlogComponent) ,
         canActivate: [AuthGuard]
       },
       { path: 'edit/:id',
-        loadComponent : ()=> import('./components/edit-blog/edit-blog.component').then(c=>c.EditBlogComponent) ,
+        loadComponent : ()=> import('./modif-blog/edit-blog/edit-blog.component').then(c=>c.EditBlogComponent) ,
         canActivate: [AuthGuard]
       },
       { path: ':id',

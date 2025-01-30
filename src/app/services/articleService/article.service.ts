@@ -58,7 +58,7 @@ export class ArticleService {
     return this.http.post<Article>(API.createArticle, formData);
   }  getArticleById(id : string) : Observable<Article> {
     return this.http.get<any>(API.getArticleById+id) ;
-  
+
 }
 createComment(newBlog: newArticle, id: string): Observable<Article> {
   const formData = new FormData();
@@ -68,7 +68,7 @@ createComment(newBlog: newArticle, id: string): Observable<Article> {
   formData.append('content', newBlog.content || '');  // Default to an empty string if undefined
   formData.append('fatherId', id);  // 'id' should always be defined
   formData.append('slug', "");  // Default to an empty string if undefined
-  
+
   // Append images (if any)
   if (newBlog.images) {
     newBlog.images.forEach((image, index) => {
@@ -79,8 +79,21 @@ createComment(newBlog: newArticle, id: string): Observable<Article> {
 }
 
   updateArticle(id: string, newBlog: newArticle): Observable<Article> {
-    return this.http.patch<Article>(API.updateArticle+id, newBlog);
-    
+    const formData = new FormData();
+
+    // Append the data to FormData, ensuring no undefined values
+    formData.append('title', newBlog.title || '');  // Default to an empty string if undefined
+    formData.append('content', newBlog.content || '');  // Default to an empty string if undefined
+    formData.append('slug', "");  // Default to an empty string if undefined
+
+    // Append images (if any)
+    if (newBlog.images) {
+      newBlog.images.forEach((image, index) => {
+        formData.append('images', image, `image_${index}.jpg`);  // Directly append File objects
+      });
+    }
+    return this.http.patch<Article>(API.updateArticle+id, formData);
+
   }
   deleteArticle(id: string) :Observable<Article> {
     return this.http.delete<Article>(API.getArticle+'/'+id);
