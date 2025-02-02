@@ -11,7 +11,7 @@ import { UserCardMiniComponent } from '../user-card-mini/user-card-mini.componen
 
 @Component({
   selector: 'app-comment',
-  imports: [Base64ToBlobPipe, CommonModule, ReactiveFormsModule],
+  imports: [Base64ToBlobPipe, CommonModule, ReactiveFormsModule,UserCardMiniComponent],
   templateUrl: './comment.component.html',
   standalone: true,
   styleUrls: ['./comment.component.css']
