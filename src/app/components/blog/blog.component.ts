@@ -40,12 +40,14 @@ async getArticleById(id: string) {
 }
 
 async ngOnInit() {
-  //get the id from the url
-   this.id = this.route.snapshot.paramMap.get('id') as string;
-   console.log(this.id);
-   this.loading = true
-  this.getArticleById(this.id);
-  
+
+  this.route.params.subscribe((params) => {
+    this.id = params['id'];
+    console.log(this.id);
+    this.loading = true;
+    this.getArticleById(this.id);
+  });
+
 }
 @memo()
 getUser(id: string): Observable<User> {
