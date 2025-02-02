@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { ArticleService } from '../../services/articleService/article.service';
 import { ActivatedRoute } from '@angular/router';
-import { ArticleComponent } from '../article/article.component';
+import { ArticleComponent } from '../../blog/article/article.component';
 import { Observable } from 'rxjs';
 import { User } from '../../shared/models/user.model';
 import { UserService } from '../../services/userService/user.service';

@@ -1,11 +1,11 @@
 import {Component, effect, inject, input, Input, output, signal} from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
-import { CommentComponent } from '../comment/comment.component';
+import { CommentComponent } from '../../comment/comment/comment.component';
 import { VotingComponent } from '../voting/voting.component';
 import { ArticleService } from '../../services/articleService/article.service';
 import { CommonModule } from '@angular/common';
-import { UserCardComponent } from "../user-card/user-card.component";
+import { UserCardComponent } from "../../user-card/user-card/user-card.component";
 import { Observable } from 'rxjs';
 import { User } from '../../shared/models/user.model';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';

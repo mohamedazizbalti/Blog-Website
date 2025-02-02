@@ -7,14 +7,14 @@
         <div class="text-slate-300 ">
           <div class="flex justify-between">
             <app-user-card-mini [name]="true" [user]="user"></app-user-card-mini>
-            {{ article?.createdAt | date }}
+            {{ article.createdAt | date }}
           </div>
           <hr class="pb-1" />
-          <p>{{ article?.content }}</p>
-          <div *ngIf="article?.images?.length">
+          <p>{{ article.content }}</p>
+          <div *ngIf="article.images?.length">
             <hr />
             <div class="image-gallery">
-              <div *ngFor="let image of article?.images; trackBy: trackByIndex">
+              <div *ngFor="let image of article.images; trackBy: trackByIndex">
                 <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
               </div>
             </div>

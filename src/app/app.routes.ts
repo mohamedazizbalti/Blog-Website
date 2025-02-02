@@ -1,12 +1,8 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from './components/home/home.component';
-import { BlogComponent } from './components/blog/blog.component';
-import {ProfileComponent} from './profile/profile/profile.component';
-import {CreateBlogComponent} from './modif-blog/create-blog/create-blog.component';
 import {AuthGuard} from './auth/guard/guard.guard';
-import {EditBlogComponent} from './modif-blog/edit-blog/edit-blog.component';
+import {ArticleListComponent} from './components/article-list/article-list.component';
 export const routes: Routes = [
-  { path: '', component: HomeComponent }, // Default route
+  { path: '', component: ArticleListComponent }, // Default route
   { path: 'signin',
     loadComponent: ()=> import('./auth/signin/signin.component').then(c=>c.SigninComponent) ,
   },

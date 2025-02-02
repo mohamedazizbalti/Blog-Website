@@ -8,13 +8,12 @@ import {
 import { ArticleService } from '../../services/articleService/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from '../../shared/models/article.model';
-import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {Base64ToBlobWithPreviewPipe} from '../../shared/pipes/base64-to-blob-with-preview.pipe';
 
 @Component({
   selector: 'app-edit-blog-form',
-  imports: [ReactiveFormsModule,Base64ToBlobPipe,MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule,MatProgressSpinnerModule],
   templateUrl: './edit-blog-form.component.html',
   styleUrl: './edit-blog-form.component.css' ,
   standalone:true ,
