@@ -38,7 +38,7 @@ export class ArticleComponent {
     console.log("hello");
 
     effect(()=>{
-      this.comments =  this.article()?.comments ?? []  ;
+      this.comments.set( this.article()?.comments ?? [] )  ;
     } )
   }
 
@@ -46,7 +46,7 @@ export class ArticleComponent {
   articleService = inject(ArticleService);
   article = input<Article>();
   effect = 'scrollx';
-  comments : Article[]  = [] ;
+  comments  = signal<Article[]>( [] ) ;
 
   @Input() owner?: Observable<User>;
   showComment=input<boolean>(true);
@@ -59,27 +59,9 @@ export class ArticleComponent {
   });
   selectedImages: File[] = [];
 
-  upvote() {
-    this.articleService.upvote(<string>this.article()?.id).subscribe({
-      next: (response) => {
-        console.log('Upvote successful', response);
-      },
-      error: (error) => {
-        console.error('Upvote failed', error);
-      }
-    });
-  }
+  upvote() { this.articleService.upvote(<string>this.article()?.id);}
 
-  downvote() {
-    this.articleService.downvote(<string>this.article()?.id).subscribe({
-      next: (response) => {
-        console.log('downvote successful', response);
-      },
-      error: (error) => {
-        console.error('downvote failed', error);
-      }
-    });
-  }
+  downvote() { this.articleService.downvote(<string>this.article()?.id) ; }
 
   onImageSelect(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -144,7 +126,8 @@ export class ArticleComponent {
         content: comment.content || '',
         slug: comment.slug || '',
         owner: comment.owner || '',
-        images, // Pass File[] instead of string[] ,
+        images,
+        comments: [] as Article[]
 
       };
 
@@ -154,7 +137,10 @@ export class ArticleComponent {
       this.articleService.createComment(newComment, fatherId).subscribe({
         next: (response) => {
           console.log('Comment added successfully', response);
-          this.comments.push(response);
+          this.comments.update((comment : Article[]) => {
+            comment.push(response)  ;
+            return comment ;
+          }) ;
         },
         error: (error) => {
           console.error('Error adding comment', error);

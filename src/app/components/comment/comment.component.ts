@@ -11,7 +11,7 @@ import { UserCardMiniComponent } from '../user-card-mini/user-card-mini.componen
 
 @Component({
   selector: 'app-comment',
-  imports: [Base64ToBlobPipe, CommonModule, ReactiveFormsModule, UserCardMiniComponent],
+  imports: [Base64ToBlobPipe, CommonModule, ReactiveFormsModule],
   templateUrl: './comment.component.html',
   standalone: true,
   styleUrls: ['./comment.component.css']
@@ -29,7 +29,7 @@ export class CommentComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    if(this.article.comments.length){
+    if(this.article.comments && this.article.comments.length){
       this.hasComments='1px'
     }
     // Initialize form with a default value and validation
