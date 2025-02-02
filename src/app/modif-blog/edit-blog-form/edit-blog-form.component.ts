@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from '../../shared/models/article.model';
 import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {Base64ToBlobWithPreviewPipe} from '../../shared/pipes/base64-to-blob-with-preview.pipe';
 
 @Component({
   selector: 'app-edit-blog-form',
@@ -25,7 +26,7 @@ export class EditBlogFormComponent {
   private articleService = inject(ArticleService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-
+  private base64ToBlobWithPreview =  new  Base64ToBlobWithPreviewPipe() ;
   private article: Article = {} as Article;
   private id: string = '';
   public images: ( Blob & { preview : string })[] = [];
@@ -60,7 +61,7 @@ export class EditBlogFormComponent {
           title: this.article.title,
           content: this.article.content,
         });
-        this.images = this.article.images.map((image,index) => this.base64ToBlobWithPreview(image) ) ;
+        this.images = this.article.images.map((image,index) => this.base64ToBlobWithPreview.transform(image) ) ;
       },
       (error) => {
         console.error('Error:', error); // Log error here
@@ -84,10 +85,11 @@ export class EditBlogFormComponent {
       this.articleService.updateArticle(this.id, newBlog).subscribe(() => {
         this.router.navigate(['/blog/',this.id]);
       });
+    }else{
+      this.articleService.createArticle( newBlog).subscribe((article) => {
+        this.router.navigate(['/blog/',article.id]);
+      });
     }
-    this.articleService.createArticle( newBlog).subscribe((article) => {
-      this.router.navigate(['/blog/',article.id]);
-    });
 
   }
 
@@ -102,23 +104,6 @@ export class EditBlogFormComponent {
 
       this.images = [...this.images, ...newImages];
     }
-  }
-
-  base64ToBlobWithPreview(base64: string, mimeType: string = 'image/png'): Blob & { preview: string } {
-    if (!base64) {
-      throw new Error('Base64 string is required');
-    }
-
-    // Decode Base64 string
-    const byteCharacters = atob(base64);
-    const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
-    const byteArray = new Uint8Array(byteNumbers);
-
-    // Create a Blob
-    const blob = new Blob([byteArray], { type: mimeType });
-
-    // Create a preview URL
-    return Object.assign(blob, { preview: URL.createObjectURL(blob) });
   }
 
   removeImage(index: number): void {

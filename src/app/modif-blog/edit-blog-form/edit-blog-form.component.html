@@ -47,11 +47,10 @@
     <!-- Flex container for images and upload button -->
     <div class="image-upload-container flex items-center gap-4">
       <!-- Display uploaded images -->
-      @if(images.length > 0){
         <div class="uploaded-images grid grid-cols-2 gap-2">
           @for (image of images; track $index){
             <div class="image-container relative">
-              <img [src]="image.preview" alt="Uploaded image" class="article-image" />
+            <img [src]="image.preview" alt="Uploaded image" class="article-image" />
               <button
                 type="button"
                 class="absolute top-0 right-0 text-red-600"
@@ -61,26 +60,25 @@
               </button>
             </div>
           }
+            <!-- Button to trigger file input (always visible) -->
+            <button
+              type="button"
+              class="article-image-upload border-2 border-gray-500 rounded-xl hover:bg-gray-500"
+              (click)="fileInput.click()"
+            >
+              <span class="text-4xl font-bold text-gray-600">+</span>
+            </button>
+
+            <!-- Hidden file input -->
+            <input
+              #fileInput
+              type="file"
+              multiple
+              (change)="onFileSelected($event)"
+              class="hidden"
+            />
         </div>
-      }
 
-      <!-- Button to trigger file input (always visible) -->
-      <button
-        type="button"
-        class="article-image-upload border-2 border-gray-500 rounded-xl hover:bg-gray-500"
-        (click)="fileInput.click()"
-      >
-        <span class="text-4xl font-bold text-gray-600">+</span>
-      </button>
-
-      <!-- Hidden file input -->
-      <input
-        #fileInput
-        type="file"
-        multiple
-        (change)="onFileSelected($event)"
-        class="hidden"
-      />
     </div>
   </div>
 
