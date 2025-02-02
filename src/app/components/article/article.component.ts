@@ -59,10 +59,26 @@ export class ArticleComponent {
   });
   selectedImages: File[] = [];
 
-  upvote() { this.articleService.upvote(<string>this.article()?.id);}
-
-  downvote() { this.articleService.downvote(<string>this.article()?.id) ; }
-
+  upvote() {
+    this.articleService.upvote(<string>this.article()?.id).subscribe({
+      next: (response) => {
+        console.log('Upvote successful', response);
+      },
+      error: (error) => {
+        console.error('Upvote failed', error);
+      }
+    });
+  }
+  downvote() {
+    this.articleService.downvote(<string>this.article()?.id).subscribe({
+      next: (response) => {
+        console.log('downvote successful', response);
+      },
+      error: (error) => {
+        console.error('downvote failed', error);
+      }
+    });
+  }
   onImageSelect(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
