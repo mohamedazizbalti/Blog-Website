@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Socket, SocketIoConfig } from 'ngx-socket-io';
 import { ToastrService } from 'ngx-toastr';
 import { PopupService } from '../popupService/popup.service';
+import { backendUrl } from '../../../config/api.config';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class SocketService {
     console.log("token inside socket");
     console.log(token);
     const config: SocketIoConfig = {
-      url: 'ws://localhost:3000',
+      url: `ws://${backendUrl}`,
       options: {
         transports: ['websocket'], // Force WebSocket transport only
         query: {
