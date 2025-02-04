@@ -1,28 +1,29 @@
 
-
+export const backendUrl=`${"localhost:3000"}`
+const url = `http://${backendUrl}`;
 export const API = {
-  login: 'http://localhost:3000/auth/login',
-  register: 'http://localhost:3000/auth/register',
+  login: `${url}/auth/login`,
+  register: `${url}/auth/register`,
 
-  findUserByEmail: 'http://localhost:3000/users/email/',
+  findUserByEmail: `${url}/users/email/`,
   findUserByUsername:
-    'http://localhost:3000/users/username/',
-  findUserById: 'http://localhost:3000/users/',
-  getCurrentUserInfo: 'http://localhost:3000/users/infos',
-  getAllUsers: 'http://localhost:3000/users',
-  searchUser: "http://localhost:3000/users/serch/",
-  searchArticle: "http://localhost:3000/article/search/",
+    `${url}/users/username/`,
+  findUserById: `${url}/users/`,
+  getCurrentUserInfo: `${url}/users/infos`,
+  getAllUsers: `${url}/users`,
+  searchUser: `${url}/users/serch/`,
+  searchArticle: `${url}/article/search/`,
 
-  getArticle: "http://localhost:3000/article",
-  getArticleFull: "http://localhost:3000/article/full", //Fetches All Standalone articles with their nested comments
-  getArticleByUserId: "http://localhost:3000/article/full/byUserId/",
-  getArticleProperties: "http://localhost:3000/article/property",
-  createArticle: "http://localhost:3000/article/create/",
-  findArticles: 'http://localhost:3000/article/find',
-  updateArticle: "http://localhost:3000/article/",
-  getUserByArticleId : "http://localhost:3000/article/owner/",
+  getArticle: `${url}/article`,
+  getArticleFull: `${url}/article/full`, //Fetches All Standalone articles with their nested comments
+  getArticleByUserId: `${url}/article/full/byUserId/`,
+  getArticleProperties: `${url}/article/property`,
+  createArticle: `${url}/article/create/`,
+  findArticles: `${url}/article/find`,
+  updateArticle: `${url}/article/`,
+  getUserByArticleId : `${url}/article/owner/`,
   getImagesByArticle: (id: string) =>
-    'http://localhost:3000/article/' + id + '/images',
+    `${url}/article/` + id + `/images`,
   find: (config: {
     content?: boolean;
     images?: boolean;
@@ -31,25 +32,26 @@ export const API = {
     page?: number;
     limit?: number;
   }) => {
-    let query = ''
+    let query = ``
     if (config.content){
-      query+='&content='+config.content
+      query+=`&content=`+config.content
     }
     if (config.images){
-      query+='&images='+config.images
+      query+=`&images=`+config.images
     }
     if (config.ownerid){
-      query+='&ownerid='+config.ownerid
+      query+=`&ownerid=`+config.ownerid
     }if (config.comments){
-      query+='&comments='+config.comments
+      query+=`&comments=`+config.comments
     }if (config.page){
-      query+='&page='+config.page
+      query+=`&page=`+config.page
     }if (config.limit){
-      query+='&limit='+config.limit
+      query+=`&limit=`+config.limit
     }
-    return `http://localhost:3000/article/find?placeholder=place${query}`},
-  getArticleById: "http://localhost:3000/article/full/",
-  chatbot: "https://openrouter.ai/api/v1/chat/completions",
-  chatbotKey : "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"
+    return `${url}/article/find?placeholder=place${query}`},
+  getArticleById: `${url}/article/full/`,
+  chatbot: `https://openrouter.ai/api/v1/chat/completions`,
+  chatbotKey : `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`,
+  getMyNotifs : `${url}/notification`
 
 };

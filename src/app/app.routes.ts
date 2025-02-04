@@ -12,6 +12,9 @@ export const routes: Routes = [
   { path: 'profile/:id',
     loadComponent : ()=> import('./profile/profile/profile.component').then(c=>c.ProfileComponent) ,
   },
+  {path: 'notification',
+    loadComponent : ()=> import("./components/notification/notification.component").then(c=>c.NotificationComponent),
+  },
   {path : 'blog',
     children: [
       { path: 'new',
