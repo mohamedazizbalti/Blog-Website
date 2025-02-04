@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,8 @@ import { map, filter } from 'rxjs/operators';
 import {FooterComponent} from './components/footer/footer.component';
 import {PopupComponent} from './components/popup/popup.component';
 import { ChatBotComponent } from "./chatbot/chat-bot/chat-bot.component";
+import { AuthService } from './auth/services/auth.service';
+import { SocketService } from './services/socketService/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,8 @@ import { ChatBotComponent } from "./chatbot/chat-bot/chat-bot.component";
 })
 export class AppComponent {
   title = 'Blog-Website';
-
+  authService = inject(AuthService);
+  
   showNavbarAndFooter$: Observable<boolean>;
 
   constructor(private router: Router) {
@@ -29,5 +32,8 @@ export class AppComponent {
         return !hideNavbarRoutes.some(route => event.url.includes(route));
       })
     );
+  }
+  ngOnInit(){
+    this.authService.autoLogin()
   }
 }

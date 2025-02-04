@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { RegisterDto } from '../dto/register.dto';
 import {PopupService} from '../../services/popupService/popup.service';
 import {UserService} from '../../services/userService/user.service';
+import { SocketService } from '../../services/socketService/socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
   public isAuth = signal<boolean>(false);
   private router = inject(Router);
   private userService = inject(UserService);
-
+  private socketService = inject(SocketService);
   constructor( private popupService :PopupService  ) {
     const token = localStorage.getItem('token');
     this.isAuth.set(!!token);
@@ -31,6 +32,7 @@ export class AuthService {
         this.router.navigate(['/home']);
         this.isAuth.set(true) ;
         this.addCurrentUserInfo();
+        this.socketService.connect(response.Authorization);
       },
       error: (error) => {
         console.log(error);
@@ -47,6 +49,7 @@ export class AuthService {
         this.router.navigate(['/home']);
         this.isAuth.set(true);
         this.addCurrentUserInfo();
+        this.socketService.connect(response.Authorization);
       },
       error: (error) => {
         console.log(error);
@@ -60,10 +63,16 @@ export class AuthService {
     return this.isAuth()
   }
 
+  autoLogin():void{
+    if (this.isAuthenticated())
+      this.socketService.connect(localStorage.getItem("token")??"");
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     this.isAuth.set(false)
+    this.socketService.disconnect();
   }
 
   addCurrentUserInfo(){
