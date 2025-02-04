@@ -4,14 +4,14 @@ import { Article } from '../../shared/models/article.model';
 import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
 import { CommonModule } from '@angular/common';
 import { ArticleService } from '../../services/articleService/article.service';
-import { UserCardComponent } from '../user-card/user-card.component';
+import { UserCardComponent } from '../../user-card/user-card/user-card.component';
 import { Observable } from 'rxjs';
 import { User } from '../../shared/models/user.model';
-import { UserCardMiniComponent } from '../user-card-mini/user-card-mini.component';
+import { UserCardMiniComponent } from '../../user-card/user-card-mini/user-card-mini.component';
 
 @Component({
   selector: 'app-comment',
-  imports: [Base64ToBlobPipe, CommonModule, ReactiveFormsModule, UserCardMiniComponent],
+  imports: [Base64ToBlobPipe, CommonModule, ReactiveFormsModule,UserCardMiniComponent],
   templateUrl: './comment.component.html',
   standalone: true,
   styleUrls: ['./comment.component.css']
@@ -29,7 +29,7 @@ export class CommentComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    if(this.article.comments.length){
+    if(this.article.comments && this.article.comments.length){
       this.hasComments='1px'
     }
     // Initialize form with a default value and validation

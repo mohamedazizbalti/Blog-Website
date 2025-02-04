@@ -1,11 +1,11 @@
 import {Component, effect, inject, input, Input, output, signal} from '@angular/core';
 import { Article } from '../../shared/models/article.model';
 import { Base64ToBlobPipe } from '../../shared/pipes/b64-to-blob.pipe';
-import { CommentComponent } from '../comment/comment.component';
+import { CommentComponent } from '../../comment/comment/comment.component';
 import { VotingComponent } from '../voting/voting.component';
 import { ArticleService } from '../../services/articleService/article.service';
 import { CommonModule } from '@angular/common';
-import { UserCardComponent } from "../user-card/user-card.component";
+import { UserCardComponent } from "../../user-card/user-card/user-card.component";
 import { Observable } from 'rxjs';
 import { User } from '../../shared/models/user.model';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -38,7 +38,7 @@ export class ArticleComponent {
     console.log("hello");
 
     effect(()=>{
-      this.comments =  this.article()?.comments ?? []  ;
+      this.comments.set( this.article()?.comments ?? [] )  ;
     } )
   }
 
@@ -46,7 +46,7 @@ export class ArticleComponent {
   articleService = inject(ArticleService);
   article = input<Article>();
   effect = 'scrollx';
-  comments : Article[]  = [] ;
+  comments  = signal<Article[]>( [] ) ;
 
   @Input() owner?: Observable<User>;
   showComment=input<boolean>(true);
@@ -69,7 +69,6 @@ export class ArticleComponent {
       }
     });
   }
-
   downvote() {
     this.articleService.downvote(<string>this.article()?.id).subscribe({
       next: (response) => {
@@ -80,7 +79,6 @@ export class ArticleComponent {
       }
     });
   }
-
   onImageSelect(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
@@ -144,7 +142,8 @@ export class ArticleComponent {
         content: comment.content || '',
         slug: comment.slug || '',
         owner: comment.owner || '',
-        images, // Pass File[] instead of string[] ,
+        images,
+        comments: [] as Article[]
 
       };
 
@@ -154,7 +153,10 @@ export class ArticleComponent {
       this.articleService.createComment(newComment, fatherId).subscribe({
         next: (response) => {
           console.log('Comment added successfully', response);
-          this.comments.push(response);
+          this.comments.update((comment : Article[]) => {
+            comment.push(response)  ;
+            return comment ;
+          }) ;
         },
         error: (error) => {
           console.error('Error adding comment', error);

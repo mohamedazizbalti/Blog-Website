@@ -1,7 +1,7 @@
 import {Component, inject, OnInit , output, signal} from '@angular/core';
 import {UserService} from '../../services/userService/user.service';
 import {User} from '../../shared/models/user.model';
-import {UserCardComponent} from '../../components/user-card/user-card.component';
+import {UserCardComponent} from '../../user-card/user-card/user-card.component';
 import {FormsModule} from '@angular/forms';
 import {FilterService} from '../services/filter.service';
 import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';

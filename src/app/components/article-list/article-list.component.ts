@@ -4,7 +4,7 @@ import { ArticleService } from '../../services/articleService/article.service';
 import { Article } from '../../shared/models/article.model';
 import { firstValueFrom, map, Observable, shareReplay } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ArticleComponent } from '../article/article.component';
+import { ArticleComponent } from '../../blog/article/article.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { User } from '../../shared/models/user.model';

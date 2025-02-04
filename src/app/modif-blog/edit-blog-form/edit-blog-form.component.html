@@ -1,0 +1,99 @@
+<form
+  class="md:w-[60%] mx-auto article bg-zinc-800 my-4 rounded-md p-6"
+  [formGroup]="form"
+>
+  <!-- Article Header -->
+  <div class="text-slate-100">
+    <div class="row">
+      <input
+        class="text-[50px] font-bold bg-zinc-800 border-0 placeholder-gray-600"
+        placeholder="Write here the blog title"
+        formControlName="title"
+      />
+    </div>
+    @if(form.get('title')?.hasError('required') && form.get('title')?.touched){
+      <div class="text-danger small">
+        Blog title is required to create a blog!
+      </div>
+    } @else {
+     <br class="small" />
+    }
+
+    <hr class="pb-3" />
+
+    <!-- Blog Content -->
+    <div class="row">
+      <textarea
+        class="bg-zinc-800 border-0 placeholder-gray-600"
+        placeholder="Write here the blog content"
+        formControlName="content"
+      ></textarea>
+    </div>
+
+    @if (form.get('content')?.hasError('required') && form.get('content')?.touched){
+      <div class="text-danger small">
+        Blog content is required to create a blog!
+      </div>
+    }@else{
+      <br class="small" />
+    }
+
+  </div>
+
+  <hr class="p-3" />
+
+  <!-- Image Upload -->
+  <div class="image-gallery p-3">
+    <!-- Flex container for images and upload button -->
+    <div class="image-upload-container flex items-center gap-4">
+      <!-- Display uploaded images -->
+        <div class="uploaded-images grid grid-cols-2 gap-2">
+          @for (image of images; track $index){
+            <div class="image-container relative">
+            <img [src]="image.preview" alt="Uploaded image" class="article-image" />
+              <button
+                type="button"
+                class="absolute top-0 right-0 text-red-600"
+                (click)="removeImage($index)"
+              >
+                ✕
+              </button>
+            </div>
+          }
+            <!-- Button to trigger file input (always visible) -->
+            <button
+              type="button"
+              class="article-image-upload border-2 border-gray-500 rounded-xl hover:bg-gray-500"
+              (click)="fileInput.click()"
+            >
+              <span class="text-4xl font-bold text-gray-600">+</span>
+            </button>
+
+            <!-- Hidden file input -->
+            <input
+              #fileInput
+              type="file"
+              multiple
+              (change)="onFileSelected($event)"
+              class="hidden"
+            />
+        </div>
+
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="flex items-center justify-center h-16">
+    <button
+      class="btn btn-create"
+      [disabled]="!form.valid"
+      (click)="createBlog()"
+    >
+      @if (isEdit()){
+        Edit Blog
+      } @else {
+        Create
+      }
+    </button>
+  </div>
+</form>

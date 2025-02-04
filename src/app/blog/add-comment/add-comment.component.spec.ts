@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommentThreadComponent } from './comment-thread.component';
+import { AddCommentComponent } from './add-comment.component';
 
-describe('CommentThreadComponent', () => {
-  let component: CommentThreadComponent;
-  let fixture: ComponentFixture<CommentThreadComponent>;
+describe('AddCommentComponent', () => {
+  let component: AddCommentComponent;
+  let fixture: ComponentFixture<AddCommentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommentThreadComponent]
+      imports: [AddCommentComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CommentThreadComponent);
+    fixture = TestBed.createComponent(AddCommentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

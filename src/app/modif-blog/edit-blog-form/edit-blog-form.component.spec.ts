@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommentSectionComponent } from './comment-section.component';
+import { EditBlogFormComponent } from './edit-blog-form.component';
 
-describe('CommentSectionComponent', () => {
-  let component: CommentSectionComponent;
-  let fixture: ComponentFixture<CommentSectionComponent>;
+describe('EditBlogFormComponent', () => {
+  let component: EditBlogFormComponent;
+  let fixture: ComponentFixture<EditBlogFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommentSectionComponent]
+      imports: [EditBlogFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CommentSectionComponent);
+    fixture = TestBed.createComponent(EditBlogFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
