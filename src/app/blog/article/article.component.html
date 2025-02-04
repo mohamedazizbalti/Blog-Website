@@ -21,9 +21,7 @@
 
   </div>
 
-  <!-- Display only the title if showComment is false -->
-  @if (!showComment()) {
-    <!-- Article Header -->
+  <!-- Article Header -->
     <div class="text-slate-300">
       <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
       <hr class="pb-3" />
@@ -56,42 +54,9 @@
   >
   </app-voting>
     }
-  }
+
   <!-- Display the full article if showComment is true -->
   @if (showComment()) {
-    <!-- Article Header -->
-    <div class="text-slate-300">
-      <h2 class="text-[50px] font-bold">{{ article()?.title }}</h2>
-      <hr class="pb-3" />
-      <p class="">{{ article()?.content }}</p>
-    </div>
-
-  <!-- Always show images -->
-
-
-  @if (article()?.images?.length) {
-    <nz-carousel [nzEffect]="effect">
-      @for (image of article()?.images; track image) {
-        <div nz-carousel-content>
-          <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
-        </div>
-      }
-    </nz-carousel>
-    <hr />
-
-  }
-    <!-- Article Vote Counts -->
-    <app-voting
-      [numberOfDislike]="article()?.downvotes ?? 0"
-      [numberOfLike]="article()?.upvotes ?? 0"
-      [voters]="article()?.voters ?? []"
-      (onLike)="upvote()"
-      (onDislike)="downvote()"
-    >
-    </app-voting>
-
-    <!-- Article Comments -->
-
 
       <h4>Comments:</h4>
       <div class="article-comments border-1 border-slate-100 p-2 rounded-xl">
@@ -104,47 +69,11 @@
 
         <div>
           @if (authService.isAuthenticated()){
-
-
-          <form [formGroup]="commentForm" (ngSubmit)="prepareComment()" class="space-y-4 bg-zinc-800 rounded-xl border border-zinc-600 focus:border-red-900 flex justify-between p-4">
-            <div class="flex flex-col flex-grow space-y-4">
-    <textarea
-      id="content"
-      formControlName="content"
-      class="w-full p-2 text-slate-300 border-0 rounded-2xl bg-zinc-800 focus:outline-none min-h-[100px]"
-      placeholder="Write your comment here"
-    ></textarea>
-
-              <!-- Preview selected images -->
-              @if (commentForm.get('images')?.value?.length) {
-                <div class="image-preview grid grid-cols-3 gap-4 pl-2 pb-2">
-                  @for (image of commentForm.get('images')?.value; track image) {
-                    <img [src]="image" alt="Preview" class="w-full h-40 object-cover rounded" />
-                  }
-                </div>
-              }
-            </div>
-
-            <div class="flex flex-col justify-end items-center space-y-4">
-              <!-- Custom Image Upload Icon -->
-              <label class="cursor-pointer">
-                <input type="file" multiple accept="image/*" (change)="onImageSelect($event)" class="hidden" />
-                <span class="p-3 text-white rounded-full transition duration-200 flex items-center justify-center">
-        <i class="fas fa-image text-lg"></i> <!-- FontAwesome Image Icon -->
-      </span>
-              </label>
-
-              <!-- Submit Button with Fixed Size -->
-              <button
-                type="submit"
-                [disabled]="!commentForm.valid"
-                (click)="addComment()"
-                class="bg-blue-500 text-white px-6 py-2 rounded-3xl hover:bg-blue-600 transition duration-200 w-[120px]"
-              >
-                Comment
-              </button>
-            </div>
-          </form>
+            <app-add-comment
+              [articleId]="article()?.id"
+              (commentAddedEvent)="addComment($event)"
+            >
+            </app-add-comment>
           }
         </div>
 
