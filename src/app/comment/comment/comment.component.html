@@ -11,60 +11,51 @@
           </div>
           <hr class="pb-1" />
           <p>{{ article.content }}</p>
-          <div *ngIf="article.images?.length">
+          @if (article.images.length){
             <hr />
-            <div class="image-gallery">
-              <div *ngFor="let image of article.images; trackBy: trackByIndex">
-                <img [src]="image | base64ToBlob" alt="Article image" class="article-image" />
-              </div>
+            <div class="image-gallery p-2">
+              @for(image of article.images; track $index){
+                <img [src]="image | base64ToBlob" alt="Article image" class="article-image " />
+              }
             </div>
-          </div>
+          }
         </div>
       </div>
       </div>
     </div>
-
-
-  <!-- Images -->
-
 
   <!-- Article Comments -->
    <div class="pl-4 rounded-b-2xl border-l-[1px] border-white">
-    <div *ngIf="article?.comments?.length">
       <div class="article-comments  " >
-
-        <div *ngFor="let comment of article?.comments; trackBy: trackByIndex">
+        @for (comment of article.comments ; track $index){
           <div class="comment">
             <app-comment [article]="comment" [canComment]="false"></app-comment>
           </div>
-        </div>
-
-
-
+        }
       </div>
-    </div>
-    <form *ngIf="canComment" [formGroup]="commentForm" (ngSubmit)="onSubmit()" class=" flex flex-row gap-3 pt-3">
-      <div class="w-full" >
+
+     @if(canComment){
+       <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class=" flex flex-row gap-3 pt-3">
+         <div class="w-full" >
         <textarea
           id="content"
           formControlName="content"
           class="w-full p-2 rounded bg-zinc-800 text-slate-300 border border-zinc-600 focus:border-blue-500 focus:outline-none "
-          placeholder="Write your comment here"
+          placeholder="reply to this comment "
         ></textarea>
-      </div>
+         </div>
 
-      <div class="flex flex-col justify-center">
-        <button
-          type="submit"
-          [disabled]="!commentForm.valid"
-          class="bg-blue-500 text-white h-[40px] px-4 rounded hover:bg-blue-600 transition duration-200"
-        >
-          Reply
-        </button>
-      </div>
-    </form>
+         <div class="flex flex-col justify-center">
+           <button
+             type="submit"
+             [disabled]="commentForm.invalid"
+             class="bg-blue-500 text-white h-[40px] px-4 rounded  hover:bg-blue-600 transition duration-200 disabled:bg-gray-400"
+           >
+             Reply
+           </button>
+         </div>
+       </form>
+     }
 
   </div>
    </div>
-
- <!-- Comment Form -->
